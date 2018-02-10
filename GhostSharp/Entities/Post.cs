@@ -13,7 +13,9 @@ namespace GhostSharp.Entities
         public string Uuid { get; set; }
         public string Title { get; set; }
         public string Slug { get; set; }
+        public string MobileDoc { get; set; }
         public string Html { get; set; }
+        public string PlainText { get; set; }
         public string FeatureImage { get; set; }
         public bool Featured { get; set; }
         public bool Page { get; set; }
@@ -38,7 +40,8 @@ namespace GhostSharp.Entities
         public string TwitterTitle { get; set; }
         public string TwitterDescription { get; set; }
         public string CustomTemplate { get; set; }
-        public string Author { get; set; }
+        public TagResult Tags { get; set; }
+        public Author Author { get; set; }
         public string PrimaryTag { get; set; }
         public string Url { get; set; }
         public string CommentId { get; set; }

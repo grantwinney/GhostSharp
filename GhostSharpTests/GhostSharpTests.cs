@@ -23,6 +23,15 @@ namespace GhostSharpTests
         }
 
         [Fact]
+        public void GetAuthToken_ReturnsWhat_WhenCredentialsInvalid()
+        {
+            var auth = new GhostAPI(Url, ClientId, ClientSecret);
+
+            var ex = Assert.Throws<GhostSharpException>(() => auth.GetAuthToken("fake@fake.com", "12345", "678", "90$!"));
+            Assert.NotEmpty(ex.Errors);
+        }
+
+        [Fact]
         public void GetPages_ReturnsAllPages_UsingClientSecret()
         {
             var auth = new GhostAPI(Url, ClientId, ClientSecret);

@@ -10,5 +10,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
+    <Folder Include="QueryParams\" />
   </ItemGroup>
 </Project>
