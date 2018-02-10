@@ -6,7 +6,9 @@ I like Ghost, and it's been awhile since I really flexed my C# muscles, so I dec
 
 ## Problems?
 
-[Open an issue](https://github.com/grantwinney/GhostSharp/issues/new), and include errors, unexpected behavior, steps to reproduce, etc. The more details, the better! Feel free to [open a PR](https://github.com/grantwinney/GhostSharp/compare) if you'd like.
+[Open an issue](https://github.com/grantwinney/GhostSharp/issues/new), and include errors, unexpected behavior, steps to reproduce, etc. The more details, the better!
+
+Feel free to [open a PR](https://github.com/grantwinney/GhostSharp/compare) if you figure out how to fix it.
 
 ##  Ideas?
 
