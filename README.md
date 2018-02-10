@@ -1,6 +1,6 @@
 # GhostSharp
 
-This is a [wrapper](https://grantwinney.com/what-is-an-api-wrapper-and-how-do-i-write-one/) around the [Ghost API](https://api.ghost.org), a RESTful JSON API built into the core of the Ghost blogging platform.
+This is a [wrapper](https://grantwinney.com/what-is-an-api-wrapper-and-how-do-i-write-one/) around the [Ghost API](https://api.ghost.org), a RESTful JSON API built into the core of the [Ghost blogging platform](https://ghost.org/).
 
 I like Ghost, and it's been awhile since I really flexed my C# muscles, so I decided to do this as an exercise. I don't even have a use for it yet, so if you do please [let me know](https://twitter.com/GrantWinney)! Check out the [official docs](https://api.ghost.org/docs) and read about [my own experience](https://grantwinney.com/what-is-the-ghost-api/) too.
 
