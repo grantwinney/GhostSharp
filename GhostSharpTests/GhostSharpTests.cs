@@ -244,6 +244,26 @@ namespace GhostSharpTests
         }
 
         [Fact]
+        public void GetMyProfile_ReturnsUserMatchingCredentials_WhenCredentialsValid()
+        {
+            var auth = new GhostAPI(Url, AuthToken);
+
+            var user = auth.GetMyProfile();
+
+            Assert.Equal(UserId, user.Id);
+        }
+
+        [Fact]
+        public void GetMyProfile_ThrowsException_WhenCredentialsInvalid()
+        {
+            var auth = new GhostAPI(Url, "invalid_token");
+
+            var ex = Assert.Throws<GhostSharpException>(() => auth.GetMyProfile());
+            Assert.NotEmpty(ex.Errors);
+            Assert.StartsWith("Access denied", ex.Errors[0].Message);
+        }
+
+        [Fact]
         public void IsPublicApiEnabled_ReturnsCorrectValue()
         {
             var auth = new GhostAPI(Url, ClientId, ClientSecret);
