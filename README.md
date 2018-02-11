@@ -8,6 +8,12 @@ I like Ghost, and it's been awhile since I really flexed my C# muscles, so I dec
 
 This wrapper is written around v1.14.0 of the API, currently the latest version. If they update the API in the future, I'll most likely create a tag for the previous release, before updating to the newest one.
 
+## Running the Tests
+
+The tests are setup to run against a running instance of the Ghost blog.
+
+The "GhostSharpTests" class, which contains the tests, is a partial class. The other part of the class is in the "GhostSharpTestsSetup.cs" file - find the empty `const` fields and fill in the missing data.
+
 ## Problems?
 
 [Open an issue](https://github.com/grantwinney/GhostSharp/issues/new), and include errors, unexpected behavior, steps to reproduce, etc. The more details, the better!
