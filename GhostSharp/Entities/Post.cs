@@ -2,7 +2,7 @@
 
 namespace GhostSharp.Entities
 {
-    public class PostResult
+    public class PostResponse
     {
         public List<Post> Posts { get; set; }
         public Meta Meta { get; set; }

@@ -1,5 +1,13 @@
-﻿namespace GhostSharp.Entities
+﻿using System.Collections.Generic;
+
+namespace GhostSharp.Entities
 {
+    public class TagResponse
+    {
+        public List<Tag> Tags { get; set; }
+        public Meta Meta { get; set; }
+    }
+
     public class Tag
     {
         public string Id { get; set; }

@@ -18,9 +18,17 @@ namespace GhostSharpTests
         // The authorization token used to access your site
         const string AuthToken = "";
 
-        // Test data for testing posts
+        // Test data for testing posts (just pick a random post on your site)
         const string PostId = "";
         const string PostSlug = "";
+
+        // Test data for testing tags (just pick a random tag on your site)
+        const string TagId = "";
+        const string TagSlug = "";
+
+        // Test data for testing users (just pick a random user on your site)
+        const string UserId = "";
+        const string UserSlug = "";
 
         public GhostSharpTests()
         {

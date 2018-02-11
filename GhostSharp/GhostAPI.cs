@@ -70,7 +70,7 @@ namespace GhostSharp
         /// </summary>
         /// <returns>The posts.</returns>
         /// <param name="queryParams">Parameters that affect which posts are returned.</param>
-        public List<Post> GetPosts(PostQueryParams queryParams = null)
+        public PostResponse GetPosts(PostQueryParams queryParams = null)
         {
             var request = new RestRequest("posts", Method.GET);
             request.AddQueryParameter("include", "author");
@@ -104,7 +104,7 @@ namespace GhostSharp
           
             AppendSecurity(request);
 
-            return Base.Execute<PostResult>(siteUrl, request).Posts;
+            return Base.Execute<PostResponse>(siteUrl, request);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace GhostSharp
 
             AppendSecurity(request);
 
-            return Base.Execute<PostResult>(siteUrl, request).Posts[0];
+            return Base.Execute<PostResponse>(siteUrl, request).Posts.Single();
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace GhostSharp
 
             AppendSecurity(request);
 
-            return Base.Execute<PostResult>(siteUrl, request).Posts.First();
+            return Base.Execute<PostResponse>(siteUrl, request).Posts.Single();
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace GhostSharp
         /// </summary>
         /// <returns>The tags.</returns>
         /// <param name="queryParams">Parameters that affect which tags are returned.</param>
-        public List<Tag> GetTags(TagQueryParams queryParams = null)
+        public TagResponse GetTags(TagQueryParams queryParams = null)
         {
             var request = new RestRequest("tags", Method.GET);
 
@@ -180,7 +180,7 @@ namespace GhostSharp
 
             AppendSecurity(request);
 
-            return Base.Execute<List<Tag>>(siteUrl, request);
+            return Base.Execute<TagResponse>(siteUrl, request);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace GhostSharp
 
             AppendSecurity(request);
 
-            return Base.Execute<List<Tag>>(siteUrl, request).First();
+            return Base.Execute<TagResponse>(siteUrl, request).Tags.Single();
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace GhostSharp
 
             AppendSecurity(request);
 
-            return Base.Execute<List<Tag>>(siteUrl, request).First();
+            return Base.Execute<TagResponse>(siteUrl, request).Tags.Single();
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace GhostSharp
         /// </summary>
         /// <returns>The users.</returns>
         /// <param name="queryParams">Parameters that affect which users are returned.</param>
-        public List<User> GetUsers(UserQueryParams queryParams = null)
+        public UserResponse GetUsers(UserQueryParams queryParams = null)
         {
             var request = new RestRequest("users", Method.GET);
 
@@ -251,7 +251,21 @@ namespace GhostSharp
 
             AppendSecurity(request);
 
-            return Base.Execute<List<User>>(siteUrl, request);
+            return Base.Execute<UserResponse>(siteUrl, request);
+        }
+
+
+        /// <summary>
+        /// Get the user (probably you) that's calling the endpoint.
+        /// </summary>
+        /// <returns>The requesting user.</returns>
+        public User GetMyProfile()
+        {
+            var request = new RestRequest("users/me", Method.GET);
+
+            AppendSecurity(request);
+
+            return Base.Execute<UserResponse>(siteUrl, request).Users.Single();
         }
 
         /// <summary>
@@ -269,7 +283,7 @@ namespace GhostSharp
 
             AppendSecurity(request);
 
-            return Base.Execute<List<User>>(siteUrl, request).First();
+            return Base.Execute<UserResponse>(siteUrl, request).Users.Single();
         }
 
         /// <summary>
@@ -287,7 +301,7 @@ namespace GhostSharp
 
             AppendSecurity(request);
 
-            return Base.Execute<List<User>>(siteUrl, request).First();
+            return Base.Execute<UserResponse>(siteUrl, request).Users.Single();
         }
 
         /// <summary>
@@ -303,7 +317,7 @@ namespace GhostSharp
 
             try
             {
-                GetUsers(new UserQueryParams { Limit = 1 });
+                GetUsers(new UserQueryParams { Limit = 1, Fields = "id" });
                 return true;
             }
             catch (GhostSharpException)

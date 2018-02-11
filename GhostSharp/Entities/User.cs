@@ -1,5 +1,13 @@
-﻿namespace GhostSharp.Entities
+﻿using System.Collections.Generic;
+
+namespace GhostSharp.Entities
 {
+    public class UserResponse
+    {
+        public List<User> Users { get; set; }
+        public Meta Meta { get; set; }
+    }
+
     public class User
     {
         public string Id { get; set; }
