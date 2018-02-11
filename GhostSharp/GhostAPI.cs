@@ -7,6 +7,10 @@ using RestSharp;
 
 namespace GhostSharp
 {
+    /// <summary>
+    /// Provides methods for authenticating with the Ghost API,
+    /// as well as accessing its various endpoints.
+    /// </summary>
     public class GhostAPI
     {
         string siteUrl;
@@ -17,6 +21,12 @@ namespace GhostSharp
         public string AuthorizationToken { get; }
         readonly bool isAuthorized;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:GhostSharp.GhostAPI"/> class.
+        /// </summary>
+        /// <param name="siteUrl">The site URL for which to access the API.</param>
+        /// <param name="clientId">Client identifier.</param>
+        /// <param name="clientSecret">Client secret.</param>
         public GhostAPI(string siteUrl, string clientId, string clientSecret)
         {
             this.siteUrl = siteUrl;
@@ -24,6 +34,14 @@ namespace GhostSharp
             this.clientSecret = clientSecret;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:GhostSharp.GhostAPI"/> class.
+        /// </summary>
+        /// <param name="siteUrl">The site URL for which to access the API.</param>
+        /// <param name="clientId">Client identifier.</param>
+        /// <param name="clientSecret">Client secret.</param>
+        /// <param name="username">Username.</param>
+        /// <param name="password">Password.</param>
         public GhostAPI(string siteUrl, string clientId, string clientSecret, string username, string password)
         {
             this.siteUrl = siteUrl;
@@ -35,6 +53,11 @@ namespace GhostSharp
             isAuthorized = true;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:GhostSharp.GhostAPI"/> class.
+        /// </summary>
+        /// <param name="siteUrl">The site URL for which to access the API.</param>
+        /// <param name="authToken">Authorization token.</param>
         public GhostAPI(string siteUrl, string authToken)
         {
             this.siteUrl = siteUrl;
@@ -94,13 +117,13 @@ namespace GhostSharp
         {
             var request = new RestRequest($"posts/{id}", Method.GET);
             request.AddQueryParameter("include", "author");
-
+         
             if (includeTags)
                 request.AddQueryParameter("include", "tags");
 
             AppendSecurity(request);
 
-            return Base.Execute<PostResult>(siteUrl, request).Posts.First();
+            return Base.Execute<PostResult>(siteUrl, request).Posts[0];
         }
 
         /// <summary>
@@ -157,7 +180,7 @@ namespace GhostSharp
 
             AppendSecurity(request);
 
-            return Base.Execute<TagResult>(siteUrl, request).Tags;
+            return Base.Execute<List<Tag>>(siteUrl, request);
         }
 
         /// <summary>
@@ -175,7 +198,7 @@ namespace GhostSharp
 
             AppendSecurity(request);
 
-            return Base.Execute<TagResult>(siteUrl, request).Tags.First();
+            return Base.Execute<List<Tag>>(siteUrl, request).First();
         }
 
         /// <summary>
@@ -193,7 +216,7 @@ namespace GhostSharp
 
             AppendSecurity(request);
 
-            return Base.Execute<TagResult>(siteUrl, request).Tags.First();
+            return Base.Execute<List<Tag>>(siteUrl, request).First();
         }
 
         /// <summary>
@@ -228,7 +251,7 @@ namespace GhostSharp
 
             AppendSecurity(request);
 
-            return Base.Execute<UserResult>(siteUrl, request).Users;
+            return Base.Execute<List<User>>(siteUrl, request);
         }
 
         /// <summary>
@@ -239,14 +262,14 @@ namespace GhostSharp
         /// <param name="include">count.posts (I have no idea what this is for; not documented)</param>
         public User GetUserById(string id, string include = null)
         {
-            var request = new RestRequest($"tags/{id}", Method.GET);
+            var request = new RestRequest($"users/{id}", Method.GET);
 
             if (include != null)
                 request.AddQueryParameter("include", include);
 
             AppendSecurity(request);
 
-            return Base.Execute<UserResult>(siteUrl, request).Users.First();
+            return Base.Execute<List<User>>(siteUrl, request).First();
         }
 
         /// <summary>
@@ -257,14 +280,14 @@ namespace GhostSharp
         /// <param name="include">count.posts (I have no idea what this is for; not documented)</param>
         public User GetUserBySlug(string slug, string include = null)
         {
-            var request = new RestRequest($"tags/slug/{slug}", Method.GET);
+            var request = new RestRequest($"users/slug/{slug}", Method.GET);
 
             if (include != null)
                 request.AddQueryParameter("include", include);
 
             AppendSecurity(request);
 
-            return Base.Execute<UserResult>(siteUrl, request).Users.First();
+            return Base.Execute<List<User>>(siteUrl, request).First();
         }
 
         /// <summary>
@@ -313,6 +336,11 @@ namespace GhostSharp
             return Base.Execute<AuthToken>(siteUrl, request);
         }
 
+        /// <summary>
+        /// If there's an auth token available, attach it to the request.
+        /// Otherwise, attach the client id and secret.
+        /// </summary>
+        /// <param name="request">The request being made to the API.</param>
         void AppendSecurity(RestRequest request)
         {
             if (isAuthorized)

@@ -4,7 +4,8 @@ namespace GhostSharp.Entities
 {
     public class PostResult
     {
-        public List<Post> Posts { get; set; }    
+        public List<Post> Posts { get; set; }
+        public Meta Meta { get; set; }
     }
 
     public class Post
@@ -40,8 +41,8 @@ namespace GhostSharp.Entities
         public string TwitterTitle { get; set; }
         public string TwitterDescription { get; set; }
         public string CustomTemplate { get; set; }
-        public TagResult Tags { get; set; }
-        public Author Author { get; set; }
+        public List<Tag> Tags { get; set; }
+        public User Author { get; set; }
         public string PrimaryTag { get; set; }
         public string Url { get; set; }
         public string CommentId { get; set; }

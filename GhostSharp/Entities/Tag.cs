@@ -1,12 +1,5 @@
-﻿using System.Collections.Generic;
-
-namespace GhostSharp.Entities
+﻿namespace GhostSharp.Entities
 {
-    public class TagResult
-    {
-        public List<Tag> Tags { get; set; }
-    }
-
     public class Tag
     {
         public string Id { get; set; }

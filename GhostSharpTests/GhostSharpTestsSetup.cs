@@ -18,6 +18,10 @@ namespace GhostSharpTests
         // The authorization token used to access your site
         const string AuthToken = "";
 
+        // Test data for testing posts
+        const string PostId = "";
+        const string PostSlug = "";
+
         public GhostSharpTests()
         {
             if (String.IsNullOrWhiteSpace(Url) ||

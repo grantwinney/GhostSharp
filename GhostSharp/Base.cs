@@ -47,7 +47,8 @@ namespace GhostSharp
         static void TestResponseForException(IRestResponse response, RestRequest request)
         {
             if (response.ErrorException != null)
-                throw new GhostSharpException($"Unable to {request.Method} /{request.Resource}: {response.ResponseStatus}", response.ErrorException);
+                throw response.ErrorException;
+                //throw new GhostSharpException($"Unable to {request.Method} /{request.Resource}: {response.ResponseStatus}", response.ErrorException);
         }
     }
 
