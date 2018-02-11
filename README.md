@@ -28,7 +28,7 @@ To get around this shortcoming, I automatically include full author information.
 
 The Ghost API lets you filter results by using their own syntax, called [Ghost Query Language](https://github.com/TryGhost/GQL). [Read the full specs here](https://github.com/TryGhost/Ghost/issues/5604).
 
-It might be a little buggy, as I wasn't able to specify multiple filters. Trying an `OR` combination only seemed to apply the last filter, while an `AND` combination returned an error:
+GQL might be a little buggy, or else their API doesn't support it completely, as I wasn't able to specify multiple filters when calling the API directly from Postman. Trying an `OR` combination only seemed to apply the last filter, while an `AND` combination returned an error:
 
 ```json
 {
@@ -41,6 +41,8 @@ It might be a little buggy, as I wasn't able to specify multiple filters. Trying
     ]
 }
 ```
+
+Just be aware that if you set a value for any of the `xxxxQueryParams.Filter` properties, you may not get the results that you expect.
 
 ## Problems?
 
