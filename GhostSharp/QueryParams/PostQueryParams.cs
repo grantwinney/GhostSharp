@@ -23,7 +23,7 @@
         /// <summary>
         /// Which field to order by and direction of ordering (asc or desc)
         /// </summary>
-        /// <value>The field to order by and direction.</value>
+        /// <value>The field to order by and direction. (default is "published_at desc")</value>
         /// <example>published_at desc</example>
         public string Order { get; set; }
 

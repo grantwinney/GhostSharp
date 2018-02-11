@@ -12,4 +12,7 @@
     <Folder Include="Entities\" />
     <Folder Include="QueryParams\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Entities\Author %28copy%29.cs" />
+  </ItemGroup>
 </Project>

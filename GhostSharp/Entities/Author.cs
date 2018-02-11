@@ -1,5 +1,16 @@
-﻿namespace GhostSharp.Entities
+﻿using System.Collections.Generic;
+
+namespace GhostSharp.Entities
 {
+    public class UserResult
+    {
+        public List<User> Users { get; set; }
+    }
+
+    public class User : Author
+    {
+    }
+
     public class Author
     {
         public string Id { get; set; }

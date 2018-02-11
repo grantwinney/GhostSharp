@@ -1,5 +1,6 @@
 using GhostSharp;
 using GhostSharp.Entities;
+using GhostSharp.QueryParams;
 using Xunit;
 
 namespace GhostSharpTests
@@ -12,7 +13,7 @@ namespace GhostSharpTests
             var auth = new GhostAPI(Url, ClientId, ClientSecret);
 
             AuthToken token = auth.GetAuthToken(UserName, Password, ClientId, ClientSecret);
-       
+
             Assert.NotNull(token.AccessToken);
             Assert.NotEmpty(token.AccessToken);
             Assert.NotNull(token.RefreshToken);
@@ -32,24 +33,31 @@ namespace GhostSharpTests
         }
 
         [Fact]
-        public void GetPages_ReturnsAllPages_UsingClientSecret()
+        public void GetPosts_ReturnsPosts_UsingClientSecret()
         {
             var auth = new GhostAPI(Url, ClientId, ClientSecret);
 
-            var posts = auth.GetPosts();
+            var posts = auth.GetPosts(new PostQueryParams { Limit = 2 });
 
             Assert.Equal(2, posts.Count);
         }
 
         [Fact]
-        public void GetPages_ReturnsAllPages_WhenAuthTokenValid()
+        public void GetPosts_ReturnsPosts_WhenAuthTokenValid()
         {
             var auth = new GhostAPI(Url, AuthToken);
 
-            var pages = auth.GetPages();
+            var posts = auth.GetPosts(new PostQueryParams { Limit = 2 });
 
-            Assert.Equal(3, pages.Count);
-            Assert.Equal("License", pages[0].Title);
+            Assert.Equal(2, posts.Count);
+        }
+
+        [Fact]
+        public void IsPublicApiEnabled_ReturnsCorrectValue()
+        {
+            var auth = new GhostAPI(Url, ClientId, ClientSecret);
+
+            Assert.True(auth.IsPublicApiEnabled());
         }
     }
 }
