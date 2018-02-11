@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using GhostSharp.Entities;
 using GhostSharp.QueryParams;
@@ -66,7 +65,8 @@ namespace GhostSharp
         }
 
         /// <summary>
-        /// Get a collection of published posts.
+        /// Get a collection of published posts,
+        /// including meta data about pagination so you can retrieve data in chunks.
         /// </summary>
         /// <returns>The posts.</returns>
         /// <param name="queryParams">Parameters that affect which posts are returned.</param>
@@ -146,7 +146,8 @@ namespace GhostSharp
         }
 
         /// <summary>
-        /// Get a collection of tags.
+        /// Get a collection of tags,
+        /// including meta data about pagination so you can retrieve data in chunks.
         /// </summary>
         /// <returns>The tags.</returns>
         /// <param name="queryParams">Parameters that affect which tags are returned.</param>
@@ -220,7 +221,8 @@ namespace GhostSharp
         }
 
         /// <summary>
-        /// Get a collection of active users.
+        /// Get a collection of active users,
+        /// including meta data about pagination so you can retrieve data in chunks.
         /// </summary>
         /// <returns>The users.</returns>
         /// <param name="queryParams">Parameters that affect which users are returned.</param>
@@ -253,7 +255,6 @@ namespace GhostSharp
 
             return Base.Execute<UserResponse>(siteUrl, request);
         }
-
 
         /// <summary>
         /// Get the user (probably you) that's calling the endpoint.
