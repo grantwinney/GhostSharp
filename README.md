@@ -10,9 +10,9 @@ This wrapper is written around v1.14.0 of the API, currently the latest version.
 
 ## Running the Tests
 
-The tests are setup to run against an actual instance of the Ghost blog.
+The tests are setup to run against an actual instance of the Ghost blog, with its public API enabled.
 
-The "GhostSharpTests" class, which contains the tests, is a partial class. The other part of the class is in the "GhostSharpTestsSetup.cs" file - find the empty `const` fields and fill in the missing data.
+The "GhostSharpTests" class, which contains the tests, is a partial class. The other part of the class is in the "GhostSharpTestsSetup.cs" file. Find the empty `const` fields and fill in the missing data, and then the tests should run okay.
 
 ## Problems?
 
