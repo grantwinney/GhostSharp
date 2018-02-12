@@ -11,7 +11,7 @@ I like Ghost, and it's been awhile since I really flexed my C# muscles, so I dec
 If you only need to access the public API (assuming it's enabled on the site), all you need is the URL of the site and the client id and secret. 
 
 ```csharp
-var url = "https://grantwinney.com"
+var url = "https://your-site.com"
 var clientId = "ghost-frontend";
 var clientSecret = "1234abcd6789";
 
@@ -30,7 +30,7 @@ If the public API is disabled in the site settings, or you need to create or del
 You can get an authorization token by supplying a username and password in the constructor, and it'll be used in subsequent requests.
 
 ```csharp
-var url = "https://grantwinney.com"
+var url = "https://your-site.com"
 var clientId = "ghost-frontend";
 var clientSecret = "1234abcd6789";
 var username = "youremail@somewhere.com";
@@ -44,7 +44,7 @@ var post = auth.GetPostBySlug(PostSlug);
 Also, if you already have an auth token, you can just supply that:
 
 ```csharp
-var url = "https://grantwinney.com"
+var url = "https://your-site.com"
 var token = "some-auth-token";
 
 var auth = new GhostAPI(url, token);
