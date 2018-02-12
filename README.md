@@ -27,7 +27,7 @@ var posts = postResponse.Posts;
 var post = auth.GetPostBySlug(PostSlug);
 ```
 
-### Accessing Private API, Need an Auth Token
+### Accessing Private API (need a new auth token)
 
 If the public API is disabled in the site settings, or you need to create or delete data, you'll need an authorization token.
 
@@ -45,7 +45,7 @@ var auth = new GhostAPI(url, clientId, clientSecret, username, password);
 var post = auth.GetPostBySlug(PostSlug);
 ```
 
-### Accessing Private API, Use an Existing Auth Token
+### Accessing Private API (use an existing token)
 
 If you already have an auth token, you can just supply that:
 
