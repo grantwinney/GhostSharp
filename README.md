@@ -8,6 +8,8 @@ I like Ghost, and it's been awhile since I really flexed my C# muscles, so I dec
 
 ## Usage
 
+### Accessing Public API
+
 If you only need to access the public API (assuming it's enabled on the site), all you need is the URL of the site and the client id and secret. 
 
 ```csharp
@@ -25,6 +27,8 @@ var posts = postResponse.Posts;
 var post = auth.GetPostBySlug(PostSlug);
 ```
 
+### Accessing Private API, Need an Auth Token
+
 If the public API is disabled in the site settings, or you need to create or delete data, you'll need an authorization token.
 
 You can get an authorization token by supplying a username and password in the constructor, and it'll be used in subsequent requests.
@@ -41,7 +45,9 @@ var auth = new GhostAPI(url, clientId, clientSecret, username, password);
 var post = auth.GetPostBySlug(PostSlug);
 ```
 
-Also, if you already have an auth token, you can just supply that:
+### Accessing Private API, Use an Existing Auth Token
+
+If you already have an auth token, you can just supply that:
 
 ```csharp
 var url = "https://your-site.com"
