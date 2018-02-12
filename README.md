@@ -6,6 +6,52 @@ I like Ghost, and it's been awhile since I really flexed my C# muscles, so I dec
 
 ***(For now, this wrapper only implements the `GET` method on the various API endpoints.)***
 
+## Usage
+
+If you only need to access the public API (assuming it's enabled on the site), all you need is the URL of the site and the client id and secret. 
+
+```csharp
+var url = "https://grantwinney.com"
+var clientId = "ghost-frontend";
+var clientSecret = "1234abcd6789";
+
+var auth = new GhostAPI(url, clientId, clientSecret);
+
+// get a collection of posts
+var postResponse = auth.GetPosts();
+var posts = postResponse.Posts;
+
+// get a particular post, based on the slug
+var post = auth.GetPostBySlug(PostSlug);
+```
+
+If the public API is disabled in the site settings, or you need to create or delete data, you'll need an authorization token.
+
+You can get an authorization token by supplying a username and password in the constructor, and it'll be used in subsequent requests.
+
+```csharp
+var url = "https://grantwinney.com"
+var clientId = "ghost-frontend";
+var clientSecret = "1234abcd6789";
+var username = "youremail@somewhere.com";
+var password = "some-password";
+
+var auth = new GhostAPI(url, clientId, clientSecret, username, password);
+
+var post = auth.GetPostBySlug(PostSlug);
+```
+
+Also, if you already have an auth token, you can just supply that:
+
+```csharp
+var url = "https://grantwinney.com"
+var token = "some-auth-token";
+
+var auth = new GhostAPI(url, token);
+
+var post = auth.GetPostBySlug(PostSlug);
+```
+
 ## Versioning
 
 This wrapper is written around v1.14.0 of the API, currently the latest version. If they update the API in the future, I'll most likely create a tag for the previous release, before updating to the newest one.
