@@ -1,3 +1,7 @@
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Open Source Helpers](https://www.codetriage.com/grantwinney/ghostsharp/badges/users.svg)](https://www.codetriage.com/grantwinney/ghostsharp)
+
 # GhostSharp
 
 This is a [wrapper](https://grantwinney.com/what-is-an-api-wrapper-and-how-do-i-write-one/) around the [Ghost API](https://api.ghost.org), a RESTful JSON API built into the core of the [Ghost blogging platform](https://ghost.org/).
