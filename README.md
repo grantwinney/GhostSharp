@@ -8,8 +8,6 @@ This is a [wrapper](https://grantwinney.com/what-is-an-api-wrapper-and-how-do-i-
 
 I like Ghost, and it's been awhile since I really flexed my C# muscles, so I decided to do this as an exercise. I don't even have a use for it yet, so if you do please [let me know](https://twitter.com/GrantWinney)! Check out the [official docs](https://api.ghost.org/docs) and read about [my own experience](https://grantwinney.com/what-is-the-ghost-api/) too.
 
-***(For now, this wrapper only implements the `GET` method on the various API endpoints.)***
-
 ## Usage
 
 ### Accessing Public API
