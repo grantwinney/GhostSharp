@@ -19,11 +19,7 @@ namespace GhostSharp
         /// </remarks>
         /// <param name="post">The post to create.</param>
         public Post CreatePost(Post post)
-        {
-            // todo: support multiple posts at once?
-
-            // todo: create interfaces for everything
-          
+        {         
             var request = new RestRequest("posts", Method.POST);
 
             AppendSecurity(request);

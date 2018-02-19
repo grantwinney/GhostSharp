@@ -84,8 +84,6 @@ namespace GhostSharp
         /// <param name="include">count.posts (I have no idea what this is for; not documented)</param>
         public Tag GetTagById(string id, TagQueryParams queryParams = null)
         {
-            // todo: need to support count.posts, which returns a count of posts with the tag (https://api.ghost.org/docs/tag)
-          
             var request = new RestRequest($"tags/{id}", Method.GET);
 
             AppendSecurity(request);

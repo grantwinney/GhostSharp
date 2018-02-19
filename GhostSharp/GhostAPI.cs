@@ -135,8 +135,6 @@ namespace GhostSharp
             return Execute<AuthToken>(request);
         }
 
-        // todo: Add the ability to refresh token? reuse above call?
-
         /// <summary>
         /// If there's an auth token available, attach it to the request.
         /// Otherwise, attach the client id and secret.
