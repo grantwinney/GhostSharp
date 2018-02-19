@@ -3,6 +3,12 @@
     public class PostQueryParams
     {
         /// <summary>
+        /// Specify whether or not to include full data about the author
+        /// </summary>
+        /// <value>True to include the author; otherwise False</value>
+        public bool IncludeAuthor { get; set; }
+
+        /// <summary>
         /// Specify whether or not to include tags (default is to not include tags)
         /// </summary>
         /// <value>True to include tags; otherwise False</value>
@@ -62,5 +68,11 @@
         /// <value>The post formats to return. (i.e. html, mobiledoc, plaintext</value>
         /// <example>html,mobiledoc,plaintext</example>
         public string Formats { get; set; }
+
+        /// <summary>
+        /// Choose which status to return. (published (default), draft, all)
+        /// </summary>
+        /// <value>The status.</value>
+        public string Status { get; set; }
     }
 }

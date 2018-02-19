@@ -2,6 +2,7 @@
 using System.Linq;
 using GhostSharp.Entities;
 using GhostSharp.QueryParams;
+using Newtonsoft.Json;
 using RestSharp;
 
 namespace GhostSharp
@@ -10,9 +11,10 @@ namespace GhostSharp
     /// Provides methods for authenticating with the Ghost API,
     /// as well as accessing its various endpoints.
     /// </summary>
-    public class GhostAPI
+    public sealed partial class GhostAPI
     {
-        string siteUrl;
+        Uri baseUri;
+        const string BASE_REQUEST_URI = "/ghost/api/v0.1";
 
         readonly string clientId;
         readonly string clientSecret;
@@ -27,8 +29,8 @@ namespace GhostSharp
         /// <param name="clientId">Client identifier.</param>
         /// <param name="clientSecret">Client secret.</param>
         public GhostAPI(string siteUrl, string clientId, string clientSecret)
+            : this(siteUrl)
         {
-            this.siteUrl = siteUrl;
             this.clientId = clientId;
             this.clientSecret = clientSecret;
         }
@@ -42,12 +44,12 @@ namespace GhostSharp
         /// <param name="username">Username.</param>
         /// <param name="password">Password.</param>
         public GhostAPI(string siteUrl, string clientId, string clientSecret, string username, string password)
+            : this(siteUrl)
         {
-            this.siteUrl = siteUrl;
             this.clientId = clientId;
             this.clientSecret = clientSecret;
 
-            var token = GetAuthToken(username, password, clientId, clientSecret);
+            var token = GetAuthToken(clientId, clientSecret, username, password);
             AuthorizationToken = token.AccessToken;
             isAuthorized = true;
         }
@@ -58,252 +60,27 @@ namespace GhostSharp
         /// <param name="siteUrl">The site URL for which to access the API.</param>
         /// <param name="authToken">Authorization token.</param>
         public GhostAPI(string siteUrl, string authToken)
+            : this(siteUrl)
         {
-            this.siteUrl = siteUrl;
-            this.AuthorizationToken = authToken;
+            AuthorizationToken = authToken;
             isAuthorized = true;
         }
 
-        /// <summary>
-        /// Get a collection of published posts,
-        /// including meta data about pagination so you can retrieve data in chunks.
-        /// </summary>
-        /// <returns>The posts.</returns>
-        /// <param name="queryParams">Parameters that affect which posts are returned.</param>
-        public PostResponse GetPosts(PostQueryParams queryParams = null)
+        GhostAPI(string siteUrl)
         {
-            var request = new RestRequest("posts", Method.GET);
-            request.AddQueryParameter("include", "author");
-          
-            if (queryParams != null)
-            {
-                if (queryParams.IncludeTags)
-                    request.AddQueryParameter("include", "tags");
-
-                if (queryParams.Limit > 0)
-                    request.AddQueryParameter("limit", queryParams.Limit.ToString());
-
-                if (queryParams.Page > 0)
-                    request.AddQueryParameter("page", queryParams.Page.ToString());
-
-                if (!String.IsNullOrEmpty(queryParams.Order))
-                    request.AddQueryParameter("order", queryParams.Order);
-
-                if (!String.IsNullOrEmpty(queryParams.Fields))
-                    request.AddQueryParameter("fields", queryParams.Fields);
-
-                if (!String.IsNullOrEmpty(queryParams.Filter))
-                    request.AddQueryParameter("filter", queryParams.Filter);
-
-                if (!String.IsNullOrEmpty(queryParams.Resource))
-                    request.AddQueryParameter("resource", queryParams.Resource);
-              
-                if (!String.IsNullOrEmpty(queryParams.Formats))
-                    request.AddQueryParameter("formats", queryParams.Formats);
-            }
-          
-            AppendSecurity(request);
-
-            return Base.Execute<PostResponse>(siteUrl, request);
+            baseUri = new Uri(new Uri(siteUrl), BASE_REQUEST_URI);
         }
 
         /// <summary>
-        /// Get a specific post based on its ID.
+        /// Specify which exceptions to suppress, if any. Default is None.
         /// </summary>
-        /// <returns>The post matching the given ID.</returns>
-        /// <param name="id">The ID of the post to retrieve.</param>
-        /// <param name="includeTags">True if tags should be included; otherwise False.</param>
-        public Post GetPostById(string id, bool includeTags = false)
-        {
-            var request = new RestRequest($"posts/{id}", Method.GET);
-            request.AddQueryParameter("include", "author");
-         
-            if (includeTags)
-                request.AddQueryParameter("include", "tags");
-
-            AppendSecurity(request);
-
-            return Base.Execute<PostResponse>(siteUrl, request).Posts.Single();
-        }
+        public SuppressionLevel SuppressionLevel { private get; set; }
 
         /// <summary>
-        /// Get a specific post based on its slug.
+        /// Gets the last exception that was thrown.
         /// </summary>
-        /// <returns>The post matching the given slug.</returns>
-        /// <param name="slug">The slug of the post to retrieve.</param>
-        /// <param name="includeTags">True if tags should be included; otherwise False.</param>
-        public Post GetPostBySlug(string slug, bool includeTags = false)
-        {
-            var request = new RestRequest($"posts/slug/{slug}", Method.GET);
-            request.AddQueryParameter("include", "author");
-
-            if (includeTags)
-                request.AddQueryParameter("include", "tags");
-
-            AppendSecurity(request);
-
-            return Base.Execute<PostResponse>(siteUrl, request).Posts.Single();
-        }
-
-        /// <summary>
-        /// Get a collection of tags,
-        /// including meta data about pagination so you can retrieve data in chunks.
-        /// </summary>
-        /// <returns>The tags.</returns>
-        /// <param name="queryParams">Parameters that affect which tags are returned.</param>
-        public TagResponse GetTags(TagQueryParams queryParams = null)
-        {
-            var request = new RestRequest("tags", Method.GET);
-
-            if (queryParams != null)
-            {
-                if (queryParams.Limit > 0)
-                    request.AddQueryParameter("limit", queryParams.Limit.ToString());
-
-                if (queryParams.Page > 0)
-                    request.AddQueryParameter("page", queryParams.Page.ToString());
-
-                if (!String.IsNullOrEmpty(queryParams.Order))
-                    request.AddQueryParameter("order", queryParams.Order);
-
-                if (!String.IsNullOrEmpty(queryParams.Include))
-                    request.AddQueryParameter("include", queryParams.Include);
-
-                if (!String.IsNullOrEmpty(queryParams.Fields))
-                    request.AddQueryParameter("fields", queryParams.Fields);
-
-                if (!String.IsNullOrEmpty(queryParams.Filter))
-                    request.AddQueryParameter("filter", queryParams.Filter);
-
-                if (!String.IsNullOrEmpty(queryParams.Resource))
-                    request.AddQueryParameter("resource", queryParams.Resource);
-            }
-
-            AppendSecurity(request);
-
-            return Base.Execute<TagResponse>(siteUrl, request);
-        }
-
-        /// <summary>
-        /// Get a specific tag based on its ID.
-        /// </summary>
-        /// <returns>The tag matching the given ID.</returns>
-        /// <param name="id">The ID of the tag to retrieve.</param>
-        /// <param name="include">count.posts (I have no idea what this is for; not documented)</param>
-        public Tag GetTagById(string id, string include = null)
-        {
-            var request = new RestRequest($"tags/{id}", Method.GET);
-
-            if (include != null)
-                request.AddQueryParameter("include", include);
-
-            AppendSecurity(request);
-
-            return Base.Execute<TagResponse>(siteUrl, request).Tags.Single();
-        }
-
-        /// <summary>
-        /// Get a specific tag based on its slug.
-        /// </summary>
-        /// <returns>The tag matching the given slug.</returns>
-        /// <param name="slug">The slug of the tag to retrieve.</param>
-        /// <param name="include">count.posts (I have no idea what this is for; not documented)</param>
-        public Tag GetTagBySlug(string slug, string include = null)
-        {
-            var request = new RestRequest($"tags/slug/{slug}", Method.GET);
-
-            if (include != null)
-                request.AddQueryParameter("include", include);
-
-            AppendSecurity(request);
-
-            return Base.Execute<TagResponse>(siteUrl, request).Tags.Single();
-        }
-
-        /// <summary>
-        /// Get a collection of active users,
-        /// including meta data about pagination so you can retrieve data in chunks.
-        /// </summary>
-        /// <returns>The users.</returns>
-        /// <param name="queryParams">Parameters that affect which users are returned.</param>
-        public UserResponse GetUsers(UserQueryParams queryParams = null)
-        {
-            var request = new RestRequest("users", Method.GET);
-
-            if (queryParams != null)
-            {
-                if (queryParams.Limit > 0)
-                    request.AddQueryParameter("limit", queryParams.Limit.ToString());
-
-                if (queryParams.Page > 0)
-                    request.AddQueryParameter("page", queryParams.Page.ToString());
-
-                if (!String.IsNullOrEmpty(queryParams.Order))
-                    request.AddQueryParameter("order", queryParams.Order);
-
-                if (!String.IsNullOrEmpty(queryParams.Include))
-                    request.AddQueryParameter("include", queryParams.Include);
-
-                if (!String.IsNullOrEmpty(queryParams.Fields))
-                    request.AddQueryParameter("fields", queryParams.Fields);
-
-                if (!String.IsNullOrEmpty(queryParams.Filter))
-                    request.AddQueryParameter("filter", queryParams.Filter);
-            }
-
-            AppendSecurity(request);
-
-            return Base.Execute<UserResponse>(siteUrl, request);
-        }
-
-        /// <summary>
-        /// Get the user (probably you) that's calling the endpoint.
-        /// </summary>
-        /// <returns>The requesting user.</returns>
-        public User GetMyProfile()
-        {
-            var request = new RestRequest("users/me", Method.GET);
-
-            AppendSecurity(request);
-
-            return Base.Execute<UserResponse>(siteUrl, request).Users.Single();
-        }
-
-        /// <summary>
-        /// Get a specific user based on their ID.
-        /// </summary>
-        /// <returns>The user matching the given ID.</returns>
-        /// <param name="id">The ID of the user to retrieve.</param>
-        /// <param name="include">count.posts (I have no idea what this is for; not documented)</param>
-        public User GetUserById(string id, string include = null)
-        {
-            var request = new RestRequest($"users/{id}", Method.GET);
-
-            if (include != null)
-                request.AddQueryParameter("include", include);
-
-            AppendSecurity(request);
-
-            return Base.Execute<UserResponse>(siteUrl, request).Users.Single();
-        }
-
-        /// <summary>
-        /// Get a specific user based on their slug.
-        /// </summary>
-        /// <returns>The user matching the given slug.</returns>
-        /// <param name="slug">The slug of the user to retrieve.</param>
-        /// <param name="include">count.posts (I have no idea what this is for; not documented)</param>
-        public User GetUserBySlug(string slug, string include = null)
-        {
-            var request = new RestRequest($"users/slug/{slug}", Method.GET);
-
-            if (include != null)
-                request.AddQueryParameter("include", include);
-
-            AppendSecurity(request);
-
-            return Base.Execute<UserResponse>(siteUrl, request).Users.Single();
-        }
+        /// <value>The last exception.</value>
+        public Exception LastException { get; private set; }
 
         /// <summary>
         /// Determines whether or not the public API is enabled.
@@ -318,8 +95,8 @@ namespace GhostSharp
 
             try
             {
-                GetUsers(new UserQueryParams { Limit = 1, Fields = "id" });
-                return true;
+                // todo: this /should/ work if suppressing exceptions - need test
+                return GetUsers(new UserQueryParams { Limit = 1, Fields = "id" }) != null;
             }
             catch (GhostSharpException)
             {
@@ -335,7 +112,7 @@ namespace GhostSharp
         /// <param name="password">Password.</param>
         /// <param name="clientId">Client identifier.</param>
         /// <param name="clientSecret">Client secret.</param>
-        public AuthToken GetAuthToken(string username, string password, string clientId, string clientSecret)
+        public AuthToken GetAuthToken(string clientId, string clientSecret, string username, string password)
         {
             var request = new RestRequest("authentication/token", Method.POST);
 
@@ -343,13 +120,15 @@ namespace GhostSharp
             request.AddHeader("Accept", "application/json");
 
             request.AddParameter("grant_type", "password");
-            request.AddParameter("username", username);
-            request.AddParameter("password", password);
             request.AddParameter("client_id", clientId);
             request.AddParameter("client_secret", clientSecret);
+            request.AddParameter("username", username);
+            request.AddParameter("password", password);
 
-            return Base.Execute<AuthToken>(siteUrl, request);
+            return Execute<AuthToken>(request);
         }
+
+        // todo: Add the ability to refresh token? reuse above call?
 
         /// <summary>
         /// If there's an auth token available, attach it to the request.
@@ -367,6 +146,290 @@ namespace GhostSharp
                 request.AddQueryParameter("client_id", clientId);
                 request.AddQueryParameter("client_secret", clientSecret);
             }
+        }
+
+        /// <summary>
+        /// Calls the Ghost API and returns a value indicating whether or not it succeeded.
+        /// If exceptions are suppressed, returns False on failure.
+        /// </summary>
+        /// <returns>The API success status.</returns>
+        /// <param name="request">A RestRequest representing the resource being requested.</param>
+        /// <param name="suppressException">False to throw any exceptions; True to suppress them.</param>
+        bool Execute(RestRequest request, bool suppressException = false)
+        {
+            var client = new RestClient { BaseUrl = baseUri };
+
+            try
+            {
+                var response = client.Execute(request);
+
+                TestResponseForErrors(response);
+                TestResponseForException(response, request);
+
+                return response.IsSuccessful;
+            }
+            catch (GhostSharpException)
+            {
+                if (SuppressionLevel == SuppressionLevel.None)
+                    throw;
+
+                return false;
+            }
+            catch
+            {
+                if (SuppressionLevel != SuppressionLevel.All)
+                    throw;
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Calls the Ghost API and returns the response data.
+        /// If exceptions are suppressed, returns null on failure.
+        /// </summary>
+        /// <returns>The API response.</returns>
+        /// <param name="request">A RestRequest representing the resource being requested.</param>
+        /// <typeparam name="T">The type of object being requested</typeparam>
+        T Execute<T>(RestRequest request) where T : new()
+        {
+            var client = new RestClient { BaseUrl = baseUri };
+
+            try
+            {
+                var response = client.Execute<T>(request);
+
+                TestResponseForErrors(response);
+                TestResponseForException(response, request);
+
+                return response.Data;
+            }
+            catch (GhostSharpException)
+            {
+                if (SuppressionLevel == SuppressionLevel.None)
+                    throw;
+
+                return default(T);
+            }
+            catch
+            {
+                if (SuppressionLevel != SuppressionLevel.All)
+                    throw;
+
+                return default(T);
+            }
+        }
+
+        /// <summary>
+        /// If the response content has one or more error messages, throw an exception.
+        /// </summary>
+        /// <param name="response">The API response</param>
+        void TestResponseForErrors(IRestResponse response)
+        {
+            var apiFailure = JsonConvert.DeserializeObject<GhostApiFailure>(response.Content);
+            if (apiFailure != null && apiFailure.Errors != null)
+            {
+                var ex = new GhostSharpException(apiFailure.Errors);
+                LastException = ex;
+
+                if (SuppressionLevel == SuppressionLevel.None)
+                    throw ex;
+            }
+        }
+
+        /// <summary>
+        /// If the response returns an exception, add a message and throw it.
+        /// </summary>
+        /// <param name="response">The API response</param>
+        /// <param name="request">The original request to the API.</param>
+        void TestResponseForException(IRestResponse response, RestRequest request)
+        {
+            if (response.ErrorException != null)
+            {
+                var ex = new GhostSharpException($"Unable to {request.Method} /{request.Resource}: {response.ResponseStatus}", response.ErrorException);
+                LastException = ex;
+              
+                if (SuppressionLevel == SuppressionLevel.None)
+                    throw ex;
+            }
+        }
+
+        /// <summary>
+        /// If a request is made that omits author metadata in the response,
+        /// retain the author id from the response, but leave author null.
+        /// </summary>
+        /// <returns>A standardized Response instance</returns>
+        /// <param name="response">The response with only an author id in the post.</param>
+        static PostResponse StandardizePostResponseWithoutAuthor(PostResponse<PostWithoutAuthor> response)
+        {
+            return new PostResponse
+            {
+                Posts = response.Posts.Select(StandardizePostWithoutAuthor).ToList(),
+                Meta = response.Meta
+            };
+        }
+
+        /// <summary>
+        /// If a request is made to include author metadata in the response,
+        /// make sure the author id field is filled in using that metadata.
+        /// </summary>
+        /// <returns>A standardized Response instance</returns>
+        /// <param name="response">The response with full author metadata in the post.</param>
+        static PostResponse StandardizePostResponseWithAuthor(PostResponse<PostWithAuthor> response)
+        {
+            return new PostResponse
+            {
+                Posts = response.Posts.Select(StandardizePostWithAuthor).ToList(),
+                Meta = response.Meta
+            };
+        }
+
+        /// <summary>
+        /// If a request is made that omits author metadata in the response,
+        /// retain the author id from the response, but leave author null.
+        /// </summary>
+        /// <returns>A standardized Post instance</returns>
+        /// <param name="post">The post with only an author id.</param>
+        static Post StandardizePostWithoutAuthor(PostWithoutAuthor post)
+        {
+            return new Post
+            {
+                Id = post.Id,
+                Uuid = post.Uuid,
+                Title = post.Title,
+                Slug = post.Slug,
+                MobileDoc = post.MobileDoc,
+                Html = post.Html,
+                PlainText = post.PlainText,
+                FeatureImage = post.FeatureImage,
+                Featured = post.Featured,
+                Page = post.Page,
+                Status = post.Status,
+                Locale = post.Locale,
+                Visibility = post.Visibility,
+                MetaTitle = post.MetaTitle,
+                MetaDescription = post.MetaDescription,
+                CreatedAt = post.CreatedAt,
+                CreatedBy = post.CreatedBy,
+                UpdatedAt = post.UpdatedAt,
+                UpdatedBy = post.UpdatedBy,
+                PublishedAt = post.PublishedAt,
+                PublishedBy = post.PublishedBy,
+                CustomExcerpt = post.CustomExcerpt,
+                CodeInjectionHead = post.CodeInjectionHead,
+                CodeInjectionFoot = post.CodeInjectionFoot,
+                OgImage = post.OgImage,
+                OgTitle = post.OgTitle,
+                OgDescription = post.OgDescription,
+                TwitterImage = post.TwitterImage,
+                TwitterTitle = post.TwitterTitle,
+                TwitterDescription = post.TwitterDescription,
+                CustomTemplate = post.CustomTemplate,
+                Tags = post.Tags,
+                PrimaryTag = post.PrimaryTag,
+                Author = null,
+                AuthorId = post.Author,
+                Url = post.Url,
+                CommentId = post.CommentId
+            };
+        }
+
+        /// <summary>
+        /// If a request is made to include author metadata in the response,
+        /// make sure the author id field is filled in using that metadata.
+        /// </summary>
+        /// <returns>A standardized Post instance</returns>
+        /// <param name="post">The post with full author metadata.</param>
+        static Post StandardizePostWithAuthor(PostWithAuthor post)
+        {
+            return new Post
+            {
+                Id = post.Id,
+                Uuid = post.Uuid,
+                Title = post.Title,
+                Slug = post.Slug,
+                MobileDoc = post.MobileDoc,
+                Html = post.Html,
+                PlainText = post.PlainText,
+                FeatureImage = post.FeatureImage,
+                Featured = post.Featured,
+                Page = post.Page,
+                Status = post.Status,
+                Locale = post.Locale,
+                Visibility = post.Visibility,
+                MetaTitle = post.MetaTitle,
+                MetaDescription = post.MetaDescription,
+                CreatedAt = post.CreatedAt,
+                CreatedBy = post.CreatedBy,
+                UpdatedAt = post.UpdatedAt,
+                UpdatedBy = post.UpdatedBy,
+                PublishedAt = post.PublishedAt,
+                PublishedBy = post.PublishedBy,
+                CustomExcerpt = post.CustomExcerpt,
+                CodeInjectionHead = post.CodeInjectionHead,
+                CodeInjectionFoot = post.CodeInjectionFoot,
+                OgImage = post.OgImage,
+                OgTitle = post.OgTitle,
+                OgDescription = post.OgDescription,
+                TwitterImage = post.TwitterImage,
+                TwitterTitle = post.TwitterTitle,
+                TwitterDescription = post.TwitterDescription,
+                CustomTemplate = post.CustomTemplate,
+                Tags = post.Tags,
+                PrimaryTag = post.PrimaryTag,
+                Author = post.Author,
+                AuthorId = post.Author.Id,
+                Url = post.Url,
+                CommentId = post.CommentId
+            };
+        }
+
+        /// <summary>
+        /// Convert a Post to a PostWithoutAuthor before pushing it to Ghost.
+        /// </summary>
+        /// <returns>A PostWithoutAuthor instance</returns>
+        /// <param name="post">The Post to push to Ghost.</param>
+        static PostWithoutAuthor ConvertToPostWithoutAuthor(Post post)
+        {
+            return new PostWithoutAuthor
+            {
+                Id = post.Id,
+                Uuid = post.Uuid,
+                Title = post.Title,
+                Slug = post.Slug,
+                MobileDoc = post.MobileDoc,
+                Html = post.Html,
+                PlainText = post.PlainText,
+                FeatureImage = post.FeatureImage,
+                Featured = post.Featured,
+                Page = post.Page,
+                Status = post.Status,
+                Locale = post.Locale,
+                Visibility = post.Visibility,
+                MetaTitle = post.MetaTitle,
+                MetaDescription = post.MetaDescription,
+                CreatedAt = post.CreatedAt,
+                CreatedBy = post.CreatedBy,
+                UpdatedAt = post.UpdatedAt,
+                UpdatedBy = post.UpdatedBy,
+                PublishedAt = post.PublishedAt,
+                PublishedBy = post.PublishedBy,
+                CustomExcerpt = post.CustomExcerpt,
+                CodeInjectionHead = post.CodeInjectionHead,
+                CodeInjectionFoot = post.CodeInjectionFoot,
+                OgImage = post.OgImage,
+                OgTitle = post.OgTitle,
+                OgDescription = post.OgDescription,
+                TwitterImage = post.TwitterImage,
+                TwitterTitle = post.TwitterTitle,
+                TwitterDescription = post.TwitterDescription,
+                CustomTemplate = post.CustomTemplate,
+                Tags = post.Tags,
+                PrimaryTag = post.PrimaryTag,
+                Author = post.AuthorId,
+                Url = post.Url,
+                CommentId = post.CommentId
+            };
         }
     }
 }

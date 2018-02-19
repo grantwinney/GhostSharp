@@ -15,6 +15,10 @@ namespace GhostSharp.Entities
         public string Slug { get; set; }
         public string Description { get; set; }
         public string FeatureImage { get; set; }
+        /// <summary>
+        /// Gets or sets the visibility. (public)
+        /// </summary>
+        /// <value>The visibility.</value>
         public string Visibility { get; set; }
         public string MetaTitle { get; set; }
         public string MetaDescription { get; set; }

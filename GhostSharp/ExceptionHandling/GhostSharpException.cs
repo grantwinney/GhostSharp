@@ -34,7 +34,7 @@ namespace GhostSharp.Entities
         /// with a list of errors, deserialized from the Ghost API response.
         /// </summary>
         /// <param name="errors">A list of Ghost API errors.</param>
-        public GhostSharpException(List<GhostApiError> errors)
+        public GhostSharpException(List<GhostError> errors)
         {
             message = String.Join(Environment.NewLine, errors);
             this.errors = errors;
@@ -47,12 +47,12 @@ namespace GhostSharp.Entities
         /// <value>The message.</value>
         public override string Message => message ?? base.Message;
 
-        readonly List<GhostApiError> errors;
+        readonly List<GhostError> errors;
         /// <summary>
-        /// Get the list of errors, if any. If no errors, then the list is empty (not null).
+        /// Get the list of errors, if any. If no errors, then the list is empty.
         /// </summary>
         /// <value>Returns a list of errors, or an empty list.</value>
-        public List<GhostApiError> Errors => errors ?? new List<GhostApiError>();
+        public List<GhostError> Errors => errors ?? new List<GhostError>();
 
         public override string ToString() => Message;
     }
@@ -60,7 +60,7 @@ namespace GhostSharp.Entities
     /// <summary>
     /// Represents a single error returned by the Ghost API.
     /// </summary>
-    public class GhostApiError
+    public class GhostError
     {
         public string Message { get; set; }
         public string Context { get; set; }

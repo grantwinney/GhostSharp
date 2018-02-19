@@ -15,5 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Entities\Author %28copy%29.cs" />
+    <Compile Remove="Base.cs" />
   </ItemGroup>
 </Project>

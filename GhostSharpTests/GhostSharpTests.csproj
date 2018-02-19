@@ -15,4 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GhostSharp\GhostSharp.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="GhostSharpGetTests %28copy%29.cs" />
+  </ItemGroup>
 </Project>
