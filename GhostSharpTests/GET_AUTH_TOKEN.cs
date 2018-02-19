@@ -1,5 +1,6 @@
 ﻿using System;
 using GhostSharp;
+using GhostSharp.Entities;
 using Xunit;
 
 namespace GhostSharpTests
@@ -21,7 +22,10 @@ namespace GhostSharpTests
         [Fact]
         public void IsPublicApiEnabled_ReturnsCorrectValue()
         {
-            var auth = new GhostAPI(Url, ClientId, ClientSecret);
+            var auth = new GhostAPI(Url, ClientId, ClientSecret)
+            {
+                SuppressionLevel = SuppressionLevel.GhostOnly
+            };
 
             // Try disabling the API on your site and change this to Assert.False
             Assert.True(auth.IsPublicApiEnabled());

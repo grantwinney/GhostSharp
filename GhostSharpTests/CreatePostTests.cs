@@ -26,8 +26,6 @@ namespace GhostSharpTests
         [Fact]
         public void CreatePost_ReturnsPost_WhenPostCreated()
         {
-            // todo: need to figure out why most fields aren't showing in post
-
             createdPost = auth.CreatePost(GeneratePost());
 
             Assert.Equal(title, createdPost.Title);

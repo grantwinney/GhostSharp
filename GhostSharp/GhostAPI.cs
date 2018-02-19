@@ -95,12 +95,19 @@ namespace GhostSharp
 
             try
             {
-                // todo: this /should/ work if suppressing exceptions - need test
-                return GetUsers(new UserQueryParams { Limit = 1, Fields = "id" }) != null;
+                return GetUsers(new UserQueryParams { Limit = 1, Fields = "id" }).Users != null;
             }
             catch (GhostSharpException)
             {
+                if (SuppressionLevel == SuppressionLevel.None)
+                    throw;
                 return false;
+            }
+            catch (Exception)
+            {
+                if (SuppressionLevel == SuppressionLevel.All)
+                    return false;
+                throw;
             }
         }
 
