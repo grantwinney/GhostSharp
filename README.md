@@ -8,6 +8,8 @@ This is a [wrapper](https://grantwinney.com/what-is-an-api-wrapper-and-how-do-i-
 
 I like Ghost, C# and [experimenting with APIs](https://grantwinney.com/tag/api/), so this seemed like the perfect intellectual pursuit right now. I don't even have a use for it yet, but if you find one please [let me know](https://twitter.com/GrantWinney)! Check out the [official Ghost API docs](https://api.ghost.org/docs) and read about [my own experience using them](https://grantwinney.com/what-is-the-ghost-api/).
 
+I [tagged the wrapper](https://github.com/grantwinney/GhostSharp/tree/v1.0) as I wrote it to work with v1.0 of the API.
+
 ## Usage
 
 ### Accessing the Public API
