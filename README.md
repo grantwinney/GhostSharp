@@ -1,6 +1,9 @@
 [![Travis][travis badge]][travis]
 [![License: MIT][license badge]](license)
 [![Open Source Helpers][os badge]](os)
+[![Twitter][twitter-badge]][twitter-intent]
+
+[![GitHub release][img-version-badge]][repo] [![Gitter][img-gitter-badge]][gitter] [![CodeClimate][img-code-climate-badge]][code-climate] [![Build Status][img-travis-ci]][travis-ci] [![Code of Conduct][coc-badge]][coc] [![PRs Welcome][prs-badge]][prs]  <a href="#patched-fonts" title=""><img src="https://raw.githubusercontent.com/wiki/ryanoasis/nerd-fonts/images/faux-shield-badge-os-logos.svg?sanitize=true" alt="Nerd Fonts - OS Support"></a> [![Twitter][twitter-badge]][twitter-intent]
 
 # GhostSharp
 
@@ -149,3 +152,5 @@ Feel free to [open a PR](https://github.com/grantwinney/GhostSharp/compare) if y
 [license badge]: https://img.shields.io/badge/License-MIT-green.svg
 [os badge]: https://www.codetriage.com/grantwinney/ghostsharp/badges/users.svg
 [os]: https://www.codetriage.com/grantwinney/ghostsharp
+[twitter-intent]:https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2grantwinney%2FGhostSharp&via=%40nerdfonts&text=Nerd%20Fonts%20-%20Iconic%20font%20aggregator%2C%20collection%2C%20and%20patcher&hashtags=iconfont%20font%20github
+[twitter-badge]:https://img.shields.io/twitter/url/http/shields.io.svg?style=social
