@@ -146,8 +146,8 @@ Feel free to [open a PR](https://github.com/grantwinney/GhostSharp/compare) if y
 [Open an issue](https://github.com/grantwinney/GhostSharp/issues/new). I can't promise when new features or suggestions will get implemented, but I'll check them out.
 
 <!-- Badges -->
-[travis]: https://travis-ci.org/eproxus/meck
-[travis badge]: https://img.shields.io/travis/eproxus/meck/master.svg?style=flat-square
+[travis]: https://travis-ci.org/grantwinney/GhostSharp
+[travis badge]: https://img.shields.io/travis/grantwinney/GhostSharp/master.svg?style=flat-square
 [license]: https://opensource.org/licenses/MIT
 [license badge]: https://img.shields.io/badge/License-MIT-green.svg
 [os badge]: https://www.codetriage.com/grantwinney/ghostsharp/badges/users.svg
