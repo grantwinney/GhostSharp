@@ -1,6 +1,6 @@
-[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Open Source Helpers](https://www.codetriage.com/grantwinney/ghostsharp/badges/users.svg)](https://www.codetriage.com/grantwinney/ghostsharp)
+[![Travis][travis badge]][travis]
+[![License: MIT][license badge]](license)
+[![Open Source Helpers][os badge]](os)
 
 # GhostSharp
 
@@ -141,3 +141,11 @@ Feel free to [open a PR](https://github.com/grantwinney/GhostSharp/compare) if y
 ##  Ideas?
 
 [Open an issue](https://github.com/grantwinney/GhostSharp/issues/new). I can't promise when new features or suggestions will get implemented, but I'll check them out.
+
+<!-- Badges -->
+[travis]: https://travis-ci.org/eproxus/meck
+[travis badge]: https://img.shields.io/travis/eproxus/meck/master.svg?style=flat-square
+[license]: https://opensource.org/licenses/MIT
+[license badge]: https://img.shields.io/badge/License-MIT-green.svg
+[os badge]: https://www.codetriage.com/grantwinney/ghostsharp/badges/users.svg
+[os]: https://www.codetriage.com/grantwinney/ghostsharp
