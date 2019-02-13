@@ -1,10 +1,11 @@
 using System;
 using GhostSharp;
 using GhostSharp.Entities;
-using Xunit;
+using NUnit.Framework;
 
 namespace GhostSharpTests
 {
+    [TestFixture]
     public class GetTagTests : TestBase, IDisposable
     {
         readonly GhostAPI auth;
@@ -20,40 +21,40 @@ namespace GhostSharpTests
             auth = new GhostAPI(Url, AuthToken);
         }
         
-        [Fact]
+        [Test]
         public void GetTagById_ReturnsMatchingTag_WhenIdIsValid()
         {
             createdTag = auth.CreateTag(tagName, tagSlug, tagDesc);
 
             var tag = auth.GetTagById(createdTag.Id);
 
-            Assert.Equal(createdTag.Id, tag.Id);
+            Assert.AreEqual(createdTag.Id, tag.Id);
         }
 
-        [Fact]
+        [Test]
         public void GetTagById_ThrowsException_WhenIdIsInvalid()
         {
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetTagById("invalid_id"));
-            Assert.NotEmpty(ex.Errors);
-            Assert.StartsWith("Tag not found", ex.Errors[0].Message);
+            Assert.IsNotEmpty(ex.Errors);
+            StringAssert.StartsWith("Tag not found", ex.Errors[0].Message);
         }
 
-        [Fact]
+        [Test]
         public void GetTagBySlug_ReturnsMatchingTag_WhenSlugIsValid()
         {
             createdTag = auth.CreateTag(tagName, tagSlug, tagDesc);
         
             var tag = auth.GetTagBySlug(tagSlug);
 
-            Assert.Equal(tagSlug, tag.Slug);
+            Assert.AreEqual(tagSlug, tag.Slug);
         }
 
-        [Fact]
+        [Test]
         public void GetTagBySlug_ThrowsException_WhenSlugIsInvalid()
         {
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetTagBySlug("invalid_slug"));
-            Assert.NotEmpty(ex.Errors);
-            Assert.StartsWith("Tag not found", ex.Errors[0].Message);
+            Assert.IsNotEmpty(ex.Errors);
+            StringAssert.StartsWith("Tag not found", ex.Errors[0].Message);
         }
 
         public void Dispose()

@@ -1,9 +1,10 @@
 ﻿using GhostSharp;
 using GhostSharp.Entities;
-using Xunit;
+using NUnit.Framework;
 
 namespace GhostSharpTests
 {
+    [TestFixture]
     public class DeleteTagTests : TestBase
     {
         readonly GhostAPI auth;
@@ -19,7 +20,7 @@ namespace GhostSharpTests
             auth = new GhostAPI(Url, AuthToken);
         }
 
-        [Fact]
+        [Test]
         public void DeleteTagBySlug_ReturnsTrue_WhenTagDeletedById()
         {
             var tag = auth.CreateTag(tagName, tagSlug, tagDesc);
@@ -27,7 +28,7 @@ namespace GhostSharpTests
             Assert.True(auth.DeleteTagById(tag.Id));
         }
 
-        [Fact]
+        [Test]
         public void DeleteTag_ReturnsTrue_WhenTagDeletedBySlug()
         {
             var tag = auth.CreateTag(tagName, tagSlug, tagDesc);
@@ -35,24 +36,24 @@ namespace GhostSharpTests
             Assert.True(auth.DeleteTagBySlug(tagSlug));
         }
 
-        [Fact]
+        [Test]
         public void DeleteTag_ThrowsException_WhenTagDoesNotExist_AndSuppressionLevelNone()
         {
             var ex = Assert.Throws<GhostSharpException>(() => auth.DeleteTagById(nonExistentTagId));
 
-            Assert.NotEmpty(ex.Errors);
-            Assert.Equal("ValidationError", ex.Errors[0].ErrorType);
-            Assert.Equal("Validation (matches) failed for id", ex.Errors[0].Message);
+            Assert.IsNotEmpty(ex.Errors);
+            Assert.AreEqual("ValidationError", ex.Errors[0].ErrorType);
+            Assert.AreEqual("Validation (matches) failed for id", ex.Errors[0].Message);
         }
 
-        [Fact]
+        [Test]
         public void DeleteTag_ReturnsFalse_WhenTagDoesNotExist_AndSuppressionLevelGhostOnly()
         {
             auth.SuppressionLevel = SuppressionLevel.GhostOnly;
             Assert.False(auth.DeleteTagById(nonExistentTagId));
         }
 
-        [Fact]
+        [Test]
         public void DeleteTag_ReturnsFalse_WhenTagDoesNotExist_AndSuppressionLevelAll()
         {
             auth.SuppressionLevel = SuppressionLevel.All;

@@ -1,9 +1,10 @@
 ﻿using GhostSharp;
 using GhostSharp.Entities;
-using Xunit;
+using NUnit.Framework;
 
 namespace GhostSharpTests
 {
+    [TestFixture]
     public class DeleteUserTests : TestBase
     {
         readonly GhostAPI auth;
@@ -26,18 +27,18 @@ namespace GhostSharpTests
             Assert.True(auth.DeleteUserById(validUserId));
         }
 
-        [Fact]
+        [Test]
         public void DeleteUserById_ThrowsException_WhenUserDoesNotExist_AndSuppressionLevelNone()
         {
             var ex = Assert.Throws<GhostSharpException>(() => auth.DeleteUserById(invalidUserId));
 
-            Assert.NotEmpty(ex.Errors);
-            Assert.Equal("ValidationError", ex.Errors[0].ErrorType);
+            Assert.IsNotEmpty(ex.Errors);
+            Assert.AreEqual("ValidationError", ex.Errors[0].ErrorType);
         }
 
         // It's not possible to create users via the API (resource not found),
         // so you'd have to create a user manually, get the Slug, and then run this test.
-        //[Fact]
+        //[Test]
         public void DeleteUserBySlug_ReturnsTrue_WhenUserExists()
         {
             var validUserSlug = "???";
@@ -45,7 +46,7 @@ namespace GhostSharpTests
             Assert.True(auth.DeleteUserBySlug(validUserSlug));
         }
 
-        [Fact]
+        [Test]
         public void DeleteUserBySlug_ThrowsException_WhenUserDoesNotExist_AndSuppressionLevelNone()
         {
             var ex = Assert.Throws<GhostSharpException>(() => auth.DeleteUserBySlug(invalidUserSlug));
@@ -53,14 +54,13 @@ namespace GhostSharpTests
             // The error is different than DELETE by ID, because DELETE by Slug is unsupported
             // and requires a GET by Slug first. When the GET fails, it throws a "NotFoundError".
 
-            Assert.NotEmpty(ex.Errors);
-            Assert.Equal("NotFoundError", ex.Errors[0].ErrorType);
-            Assert.StartsWith("User not found", ex.Errors[0].Message);
+            Assert.IsNotEmpty(ex.Errors);
+            Assert.AreEqual("NotFoundError", ex.Errors[0].ErrorType);
+            StringAssert.StartsWith("User not found", ex.Errors[0].Message);
         }
 
-        [Theory]
-        [InlineData(SuppressionLevel.GhostOnly)]
-        [InlineData(SuppressionLevel.All)]
+        [TestCase(SuppressionLevel.GhostOnly)]
+        [TestCase(SuppressionLevel.All)]
         public void DeleteUserById_ReturnsFalse_WhenUserDoesNotExist_AndSuppressionLevelNotNone(SuppressionLevel level)
         {
             auth.SuppressionLevel = level;

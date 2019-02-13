@@ -1,9 +1,10 @@
 ﻿using GhostSharp;
 using GhostSharp.Entities;
-using Xunit;
+using NUnit.Framework;
 
 namespace GhostSharpTests
 {
+    [TestFixture]
     public class DeletePostTests : TestBase
     {
         readonly GhostAPI auth;
@@ -16,7 +17,7 @@ namespace GhostSharpTests
             auth = new GhostAPI(Url, AuthToken);
         }
 
-        [Fact]
+        [Test]
         public void DeletePostById_ReturnsTrue_WhenIdIsValid()
         {
             var postId = auth.CreatePost(new Post { Title = unlikelyTitle }).Id;
@@ -24,7 +25,7 @@ namespace GhostSharpTests
             Assert.True(auth.DeletePostById(postId));
         }
 
-        [Fact]
+        [Test]
         public void DeletePostBySlug_ReturnsTrue_WhenSlugIsValid()
         {
             var slug = auth.CreatePost(new Post { Title = unlikelyTitle }).Slug;
@@ -32,23 +33,23 @@ namespace GhostSharpTests
             Assert.True(auth.DeletePostBySlug(slug));
         }
 
-        [Fact]
+        [Test]
         public void DeletePostById_ThrowsException_WhenIdIsInvalid_AndSuppressionLevelNone()
         {
             var ex = Assert.Throws<GhostSharpException>(() => auth.DeletePostById(nonExistentPostId));
-            Assert.NotEmpty(ex.Errors);
-            Assert.StartsWith("ValidationError", ex.Errors[0].ErrorType);
-            Assert.StartsWith("Validation (matches) failed for id", ex.Errors[0].Message);
+            Assert.IsNotEmpty(ex.Errors);
+            StringAssert.StartsWith("ValidationError", ex.Errors[0].ErrorType);
+            StringAssert.StartsWith("Validation (matches) failed for id", ex.Errors[0].Message);
         }
 
-        [Fact]
+        [Test]
         public void DeletePostById_ReturnsFalse_WhenIdIsInvalid_AndSuppressionLevelGhostOnly()
         {
             auth.SuppressionLevel = SuppressionLevel.GhostOnly;
             Assert.False(auth.DeletePostById(nonExistentPostId));
         }
 
-        [Fact]
+        [Test]
         public void DeletePostById_ReturnsFalse_WhenIdIsInvalid_AndSuppressionLevelAll()
         {
             auth.SuppressionLevel = SuppressionLevel.All;

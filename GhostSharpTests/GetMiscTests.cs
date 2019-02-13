@@ -1,10 +1,11 @@
 using System;
 using GhostSharp;
 using GhostSharp.Entities;
-using Xunit;
+using NUnit.Framework;
 
 namespace GhostSharpTests
 {
+    [TestFixture]
     public class GetMiscTests : TestBase
     {
       

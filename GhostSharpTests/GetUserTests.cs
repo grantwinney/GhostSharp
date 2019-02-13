@@ -1,9 +1,10 @@
 using GhostSharp;
 using GhostSharp.Entities;
-using Xunit;
+using NUnit.Framework;
 
 namespace GhostSharpTests
 {
+    [TestFixture]
     public class GetUserTests : TestBase
     {
         readonly GhostAPI auth;
@@ -13,44 +14,44 @@ namespace GhostSharpTests
             auth = new GhostAPI(Url, AuthToken);
         }
 
-        [Fact]
+        [Test]
         public void GetUserById_ReturnsMatchingUser_WhenIdIsValid()
         {
             var user = auth.GetUserById(UserId);
 
-            Assert.Equal(UserId, user.Id);
+            Assert.AreEqual(UserId, user.Id);
         }
 
-        [Fact]
+        [Test]
         public void GetUserById_ThrowsException_WhenIdIsInvalid()
         {
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetUserById("invalid_id"));
-            Assert.NotEmpty(ex.Errors);
-            Assert.StartsWith("User not found", ex.Errors[0].Message);
+            Assert.IsNotEmpty(ex.Errors);
+            StringAssert.StartsWith("User not found", ex.Errors[0].Message);
         }
 
-        [Fact]
+        [Test]
         public void GetUserBySlug_ReturnsMatchingUser_WhenSlugIsValid()
         {
             var user = auth.GetUserBySlug(UserSlug);
 
-            Assert.Equal(UserSlug, user.Slug);
+            Assert.AreEqual(UserSlug, user.Slug);
         }
 
-        [Fact]
+        [Test]
         public void GetUserBySlug_ThrowsException_WhenSlugIsInvalid()
         {
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetUserBySlug("invalid_slug"));
-            Assert.NotEmpty(ex.Errors);
-            Assert.StartsWith("User not found", ex.Errors[0].Message);
+            Assert.IsNotEmpty(ex.Errors);
+            StringAssert.StartsWith("User not found", ex.Errors[0].Message);
         }
 
-        [Fact]
+        [Test]
         public void GetMyProfile_ReturnsUserMatchingCredentials()
         {
             var user = auth.GetMyProfile();
 
-            Assert.Equal(UserId, user.Id);
+            Assert.AreEqual(UserId, user.Id);
         }
     }
 }

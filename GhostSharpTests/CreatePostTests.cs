@@ -1,10 +1,12 @@
 ﻿using System;
 using GhostSharp;
 using GhostSharp.Entities;
-using Xunit;
+using NUnit;
+using NUnit.Framework;
 
 namespace GhostSharpTests
 {
+    [TestFixture]
     public class CreatePostTests : TestBase, IDisposable
     {
         readonly GhostAPI auth;
@@ -23,25 +25,25 @@ namespace GhostSharpTests
             auth = new GhostAPI(Url, AuthToken);
         }
 
-        [Fact]
+        [Test]
         public void CreatePost_ReturnsPost_WhenPostCreated()
         {
             createdPost = auth.CreatePost(GeneratePost());
 
-            Assert.Equal(title, createdPost.Title);
-            Assert.Equal(slug, createdPost.Slug);
+            Assert.AreEqual(title, createdPost.Title);
+            Assert.AreEqual(slug, createdPost.Slug);
             //Assert.Equal(html, createdPost.Html);
             //Assert.Equal(plainText, createdPost.PlainText);
             //Assert.Equal(customExcerpt, createdPost.CustomExcerpt);
-            Assert.Equal("draft", createdPost.Status);
+            Assert.AreEqual("draft", createdPost.Status);
         }
 
-        [Fact]
+        [Test]
         public void CreatePost_IgnoresUserSpecifiedId()
         {
             createdPost = auth.CreatePost(GeneratePost());
 
-            Assert.NotEqual(id, createdPost.Id);
+            Assert.AreNotEqual(id, createdPost.Id);
         }
 
         // This passes when it should not, because most fields aren't being carried over in a POST.
@@ -50,15 +52,14 @@ namespace GhostSharpTests
         {
             var ex = Assert.Throws<GhostSharpException>(() => createdPost = auth.CreatePost(new Post { CreatedAt = "invalid_creation_time" }));
 
-            Assert.NotEmpty(ex.Errors);
-            Assert.Equal("", ex.Errors[0].ErrorType);
-            Assert.Equal("", ex.Errors[0].Message);
+            Assert.IsNotEmpty(ex.Errors);
+            Assert.AreEqual("", ex.Errors[0].ErrorType);
+            Assert.AreEqual("", ex.Errors[0].Message);
         }
 
         // These pass when they should not, because most fields aren't being carried over in a POST.
-        //[Theory]
-        //[InlineData(SuppressionLevel.GhostOnly)]
-        //[InlineData(SuppressionLevel.All)]
+        //[TestCase(SuppressionLevel.GhostOnly)]
+        //[TestCase(SuppressionLevel.All)]
         public void CreatePost_ReturnsNull_WhenSuppressionLevelNotNone(SuppressionLevel level)
         {
             auth.SuppressionLevel = level;

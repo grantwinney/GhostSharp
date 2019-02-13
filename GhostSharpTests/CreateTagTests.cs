@@ -1,10 +1,11 @@
 ﻿using System;
 using GhostSharp;
 using GhostSharp.Entities;
-using Xunit;
+using NUnit.Framework;
 
 namespace GhostSharpTests
 {
+    [TestFixture]
     public class CreateTagTests : TestBase, IDisposable
     {
         readonly GhostAPI auth;
@@ -16,7 +17,7 @@ namespace GhostSharpTests
             auth = new GhostAPI(Url, AuthToken);
         }
 
-        [Fact]
+        [Test]
         public void CreateTag_ReturnsTag_WhenTagCreated()
         {
             string tagName = "tag_name_that_likely_does_not_exist";
@@ -25,12 +26,12 @@ namespace GhostSharpTests
 
             createdTag = auth.CreateTag(tagName, tagSlug, tagDesc);
 
-            Assert.Equal(tagName, createdTag.Name);
-            Assert.Equal(tagSlug, createdTag.Slug);
-            Assert.Equal(tagDesc, createdTag.Description);
+            Assert.AreEqual(tagName, createdTag.Name);
+            Assert.AreEqual(tagSlug, createdTag.Slug);
+            Assert.AreEqual(tagDesc, createdTag.Description);
         }
 
-        [Fact]
+        [Test]
         public void CreateTag_ReturnsTagWithSlugMatchingName_WhenSlugOmitted()
         {
             string tagName = "tag_name_that_likely_does_not_exist";
@@ -38,12 +39,12 @@ namespace GhostSharpTests
 
             createdTag = auth.CreateTag(tagName, null, tagDesc);
 
-            Assert.Equal(tagName, createdTag.Name);
-            Assert.Equal(tagName, createdTag.Slug);
-            Assert.Equal(tagDesc, createdTag.Description);
+            Assert.AreEqual(tagName, createdTag.Name);
+            Assert.AreEqual(tagName, createdTag.Slug);
+            Assert.AreEqual(tagDesc, createdTag.Description);
         }
 
-        [Fact]
+        [Test]
         public void CreateTag_ReturnsTagWithEmptyDescription_WhenDescriptionOmitted()
         {
             string tagName = "tag_name_that_likely_does_not_exist";
@@ -51,25 +52,24 @@ namespace GhostSharpTests
 
             createdTag = auth.CreateTag(tagName, tagSlug, null);
 
-            Assert.Equal(tagName, createdTag.Name);
-            Assert.Equal(tagSlug, createdTag.Slug);
-            Assert.Equal("", createdTag.Description);
+            Assert.AreEqual(tagName, createdTag.Name);
+            Assert.AreEqual(tagSlug, createdTag.Slug);
+            Assert.AreEqual("", createdTag.Description);
         }
 
-        [Fact]
+        [Test]
         public void CreateTag_ThrowsException_WhenNameOmitted_AndSuppressionLevelNone()
         {
             auth.SuppressionLevel = SuppressionLevel.None;
             var ex = Assert.Throws<GhostSharpException>(() => createdTag = auth.CreateTag(null, "slug", "description"));
 
-            Assert.NotEmpty(ex.Errors);
-            Assert.StartsWith("ValidationError", ex.Errors[0].ErrorType);
-            Assert.StartsWith("Value in [tags.name] cannot be blank", ex.Errors[0].Message);
+            Assert.IsNotEmpty(ex.Errors);
+            StringAssert.StartsWith("ValidationError", ex.Errors[0].ErrorType);
+            StringAssert.StartsWith("Value in [tags.name] cannot be blank", ex.Errors[0].Message);
         }
 
-        [Theory]
-        [InlineData(SuppressionLevel.GhostOnly)]
-        [InlineData(SuppressionLevel.All)]
+        [TestCase(SuppressionLevel.GhostOnly)]
+        [TestCase(SuppressionLevel.All)]
         public void CreateTag_ReturnsNull_WhenNameOmitted_AndSuppressionLevelNotNone(SuppressionLevel level)
         {
             auth.SuppressionLevel = level;

@@ -1,13 +1,14 @@
 ﻿using System;
 using GhostSharp;
 using GhostSharp.Entities;
-using Xunit;
+using NUnit.Framework;
 
 namespace GhostSharpTests
 {
+    [TestFixture]
     public class GET_AUTH_TOKEN : TestBase
     {
-        //[Fact]
+        //[Test]
         public void GetYourVeryOwnAuthToken()
         {
             // IF YOU NEED AN AUTH TOKEN, UNCOMMENT THE ATTRIBUTE AND RUN THIS TEST.
@@ -19,7 +20,7 @@ namespace GhostSharpTests
             throw new Exception(auth.AuthorizationToken);
         }
 
-        [Fact]
+        [Test]
         public void IsPublicApiEnabled_ReturnsCorrectValue()
         {
             var auth = new GhostAPI(Url, ClientId, ClientSecret)
