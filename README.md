@@ -1,9 +1,9 @@
 [![Travis][travis badge]][travis]
 [![License: MIT][license badge]][license]
+[![NuGet][nuget badge]][nuget]
 [![Open Source Helpers][os badge]][os]
 [![Twitter][twitter-badge]][twitter-intent]
-[![NuGet][nuget badge]][nuget]
-![Language][lang badge]]
+![Language][lang badge]
 
 # GhostSharp
 
