@@ -2,6 +2,6 @@ dist: xenial
 language: csharp
 solution: GhostSharp.sln
 mono: none
-dotnet: 2.0
+dotnet: 2.2.104
 script:
  - dotnet restore
