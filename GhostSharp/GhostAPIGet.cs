@@ -17,20 +17,23 @@ namespace GhostSharp
         public PostResponse GetPosts(PostQueryParams queryParams = null)
         {
             var request = new RestRequest("posts", Method.GET);
-          
-            AppendSecurity(request);
 
-            ApplyPostQueryParams(request, queryParams);
+            request.AddQueryParameter("key", key);
 
-            if (queryParams != null && queryParams.IncludeTags)
+            if (queryParams != null)
             {
-                request.AddQueryParameter("include", "author");
-                var authorResponse = Execute<PostResponse<PostWithAuthor>>(request);
-                return StandardizePostResponseWithAuthor(authorResponse);
+                ApplyPostQueryParams(request, queryParams);
+
+                if (queryParams.IncludeTags)
+                {
+                    request.AddQueryParameter("include", "author");
+                    var authorResponse = Execute<PostResponse<PostWithAuthor>>(request);
+                    return StandardizePostResponseWithAuthor(authorResponse);
+                }
             }
 
             var plainResponse = Execute<PostResponse<PostWithoutAuthor>>(request);
-            return StandardizePostResponseWithoutAuthor(plainResponse);
+            return plainResponse == null ? null : StandardizePostResponseWithoutAuthor(plainResponse);
         }
 
         /// <summary>
@@ -69,7 +72,7 @@ namespace GhostSharp
         {
             var request = new RestRequest("tags", Method.GET);
 
-            AppendSecurity(request);
+            request.AddQueryParameter("key", key);
 
             ApplyTagQueryParams(request, queryParams);
 
@@ -86,11 +89,11 @@ namespace GhostSharp
         {
             var request = new RestRequest($"tags/{id}", Method.GET);
 
-            AppendSecurity(request);
+            request.AddQueryParameter("key", key);
 
             ApplyTagQueryParams(request, queryParams);
 
-            return Execute<TagResponse>(request).Tags.Single();
+            return Execute<TagResponse>(request)?.Tags?.Single();
         }
 
         /// <summary>
@@ -103,75 +106,62 @@ namespace GhostSharp
         {
             var request = new RestRequest($"tags/slug/{slug}", Method.GET);
 
-            AppendSecurity(request);
+            request.AddQueryParameter("key", key);
 
             ApplyTagQueryParams(request, queryParams);
 
-            return Execute<TagResponse>(request).Tags.Single();
+            return Execute<TagResponse>(request)?.Tags?.Single();
         }
 
         /// <summary>
-        /// Get a collection of active users,
+        /// Get a collection of active authors,
         /// including meta data about pagination so you can retrieve data in chunks.
         /// </summary>
-        /// <returns>The users.</returns>
-        /// <param name="queryParams">Parameters that affect which users are returned.</param>
-        public UserResponse GetUsers(UserQueryParams queryParams = null)
+        /// <returns>The authors.</returns>
+        /// <param name="queryParams">Parameters that affect which authors are returned.</param>
+        public AuthorResponse GetAuthors(AuthorQueryParams queryParams = null)
         {
-            var request = new RestRequest("users", Method.GET);
+            var request = new RestRequest("authors", Method.GET);
 
-            AppendSecurity(request);
+            request.AddQueryParameter("key", key);
 
-            ApplyUserQueryParams(request, queryParams);
+            ApplyAuthorQueryParams(request, queryParams);
 
-            return Execute<UserResponse>(request);
+            return Execute<AuthorResponse>(request);
         }
 
         /// <summary>
-        /// Get the user (probably you) that's calling the endpoint.
+        /// Get a specific author based on their ID.
         /// </summary>
-        /// <returns>The requesting user.</returns>
-        public User GetMyProfile()
+        /// <returns>The author matching the given ID.</returns>
+        /// <param name="id">The ID of the author to retrieve.</param>
+        /// <param name="queryParams">Query parameters.</param>
+        public Author GetAuthorById(string id, AuthorQueryParams queryParams = null)
         {
-            var request = new RestRequest("users/me", Method.GET);
+            var request = new RestRequest($"authors/{id}", Method.GET);
 
-            AppendSecurity(request);
+            request.AddQueryParameter("key", key);
 
-            return Execute<UserResponse>(request).Users.Single();
+            ApplyAuthorQueryParams(request, queryParams);
+
+            return Execute<AuthorResponse>(request)?.Authors?.Single();
         }
 
         /// <summary>
-        /// Get a specific user based on their ID.
+        /// Get a specific author based on their slug.
         /// </summary>
-        /// <returns>The user matching the given ID.</returns>
-        /// <param name="id">The ID of the user to retrieve.</param>
-        /// <param name="include">count.posts (I have no idea what this is for; not documented)</param>
-        public User GetUserById(string id, UserQueryParams queryParams = null)
+        /// <returns>The author matching the given slug.</returns>
+        /// <param name="slug">The slug of the author to retrieve.</param>
+        /// <param name="queryParams">Query parameters.</param>
+        public Author GetAuthorBySlug(string slug, AuthorQueryParams queryParams = null)
         {
-            var request = new RestRequest($"users/{id}", Method.GET);
+            var request = new RestRequest($"authors/slug/{slug}", Method.GET);
 
-            AppendSecurity(request);
+            request.AddQueryParameter("key", key);
 
-            ApplyUserQueryParams(request, queryParams);
+            ApplyAuthorQueryParams(request, queryParams);
 
-            return Execute<UserResponse>(request).Users.Single();
-        }
-
-        /// <summary>
-        /// Get a specific user based on their slug.
-        /// </summary>
-        /// <returns>The user matching the given slug.</returns>
-        /// <param name="slug">The slug of the user to retrieve.</param>
-        /// <param name="include">count.posts (I have no idea what this is for; not documented)</param>
-        public User GetUserBySlug(string slug, UserQueryParams queryParams = null)
-        {
-            var request = new RestRequest($"users/slug/{slug}", Method.GET);
-
-            AppendSecurity(request);
-
-            ApplyUserQueryParams(request, queryParams);
-
-            return Execute<UserResponse>(request).Users.Single();
+            return Execute<AuthorResponse>(request)?.Authors?.Single();
         }
 
         /// <summary>
@@ -249,7 +239,7 @@ namespace GhostSharp
         /// </summary>
         /// <param name="request">A user REST request.</param>
         /// <param name="queryParams">Query parameters.</param>
-        void ApplyUserQueryParams(RestRequest request, UserQueryParams queryParams)
+        void ApplyAuthorQueryParams(RestRequest request, AuthorQueryParams queryParams)
         {
             if (queryParams != null)
             {
@@ -281,19 +271,19 @@ namespace GhostSharp
         /// <param name="queryParams">Parameters that affect the resultset.</param>
         Post GetSinglePost(RestRequest request, PostQueryParams queryParams)
         {
-            AppendSecurity(request);
+            request.AddQueryParameter("key", key);
 
             ApplyPostQueryParams(request, queryParams);
 
             if (queryParams != null && queryParams.IncludeTags)
             {
                 request.AddQueryParameter("include", "author");
-                var postWithAuthor = Execute<PostResponse<PostWithAuthor>>(request).Posts.Single();
-                return StandardizePostWithAuthor(postWithAuthor);
+                var postWithAuthor = Execute<PostResponse<PostWithAuthor>>(request).Posts?.Single();
+                return postWithAuthor == null ? null : StandardizePostWithAuthor(postWithAuthor);
             }
 
-            var postWithoutAuthor = Execute<PostResponse<PostWithoutAuthor>>(request).Posts.Single();
-            return StandardizePostWithoutAuthor(postWithoutAuthor);
+            var postWithoutAuthor = Execute<PostResponse<PostWithoutAuthor>>(request)?.Posts?.Single();
+            return postWithoutAuthor == null ? null : StandardizePostWithoutAuthor(postWithoutAuthor);
         }
     }
 }

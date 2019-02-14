@@ -16,13 +16,13 @@ namespace GhostSharp.Entities
 
     public class Post : BasePost
     {
-        public User Author { get; set; }
+        public Author Author { get; set; }
         public string AuthorId { get; set; }
     }
 
     class PostWithAuthor : BasePost
     {
-        public User Author { get; set; }
+        public Author Author { get; set; }
     }
 
     class PostWithoutAuthor : BasePost

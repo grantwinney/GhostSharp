@@ -36,7 +36,7 @@ namespace GhostSharp.Entities
         /// <param name="errors">A list of Ghost API errors.</param>
         public GhostSharpException(List<GhostError> errors)
         {
-            message = String.Join(Environment.NewLine, errors);
+            message = string.Join(Environment.NewLine, errors);
             this.errors = errors;
         }
 

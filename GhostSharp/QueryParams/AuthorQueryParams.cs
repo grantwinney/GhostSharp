@@ -1,9 +1,9 @@
 ﻿namespace GhostSharp.QueryParams
 {
-    public class UserQueryParams
+    public class AuthorQueryParams
     {
         /// <summary>
-        /// How many users to retrieve, use "all" to retrieve all users. (default is 15)
+        /// How many authors to retrieve, use "all" to retrieve all authors. (default is 15)
         /// </summary>
         /// <value>The number of tags to retrieve, or "all".</value>
         public int Limit { get; set; }

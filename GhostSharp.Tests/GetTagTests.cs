@@ -6,62 +6,74 @@ using NUnit.Framework;
 namespace GhostSharpTests
 {
     [TestFixture]
-    public class GetTagTests : TestBase, IDisposable
+    public class GetTagTests : TestBase
     {
         readonly GhostAPI auth;
 
-        Tag createdTag;
-        const string tagName = "some_completely_random_tag_name";
-        const string tagSlug = "some_completely_random_tag_slug";
-        const string tagDesc = "some_completely_random_tag_description";
-
         public GetTagTests()
         {
-            createdTag = null;
-            auth = new GhostAPI(Url, AuthToken);
+            auth = new GhostAPI(Host, ValidApiKey);
         }
         
         [Test]
         public void GetTagById_ReturnsMatchingTag_WhenIdIsValid()
         {
-            createdTag = auth.CreateTag(tagName, tagSlug, tagDesc);
+            var tag = auth.GetTagById(ValidTagId);
 
-            var tag = auth.GetTagById(createdTag.Id);
-
-            Assert.AreEqual(createdTag.Id, tag.Id);
+            Assert.AreEqual(ValidTagId, tag.Id);
         }
 
-        [Test]
-        public void GetTagById_ThrowsException_WhenIdIsInvalid()
+
+        [TestCase(ExceptionLevel.Ghost)]
+        [TestCase(ExceptionLevel.All)]
+        public void GetTagById_ThrowsGhostSharpException_WhenIdIsInvalid(ExceptionLevel exceptionLevel)
         {
-            var ex = Assert.Throws<GhostSharpException>(() => auth.GetTagById("invalid_id"));
+            auth.ExceptionLevel = exceptionLevel;
+
+            var ex = Assert.Throws<GhostSharpException>(() => auth.GetTagById(InvalidTagId));
+
             Assert.IsNotEmpty(ex.Errors);
-            StringAssert.StartsWith("Tag not found", ex.Errors[0].Message);
+            Assert.AreEqual("Validation (matches) failed for id", ex.Errors[0].Message);
         }
+
+        [TestCase(ExceptionLevel.None)]
+        [TestCase(ExceptionLevel.NonGhost)]
+        public void GetTagById_DoesNotThrow_ReturnsNull_WhenIdIsInvalid(ExceptionLevel exceptionLevel)
+        {
+            auth.ExceptionLevel = exceptionLevel;
+
+            Assert.IsNull(auth.GetTagById(InvalidTagId));
+        }
+
 
         [Test]
         public void GetTagBySlug_ReturnsMatchingTag_WhenSlugIsValid()
         {
-            createdTag = auth.CreateTag(tagName, tagSlug, tagDesc);
-        
-            var tag = auth.GetTagBySlug(tagSlug);
+            var tag = auth.GetTagBySlug(ValidTagSlug);
 
-            Assert.AreEqual(tagSlug, tag.Slug);
+            Assert.AreEqual(ValidTagSlug, tag.Slug);
         }
 
-        [Test]
-        public void GetTagBySlug_ThrowsException_WhenSlugIsInvalid()
+
+        [TestCase(ExceptionLevel.Ghost)]
+        [TestCase(ExceptionLevel.All)]
+        public void GetTagBySlug_ThrowsGhostSharpException_WhenSlugIsInvalid(ExceptionLevel exceptionLevel)
         {
-            var ex = Assert.Throws<GhostSharpException>(() => auth.GetTagBySlug("invalid_slug"));
+            auth.ExceptionLevel = exceptionLevel;
+
+            var ex = Assert.Throws<GhostSharpException>(() => auth.GetTagBySlug(InvalidTagSlug));
+
             Assert.IsNotEmpty(ex.Errors);
-            StringAssert.StartsWith("Tag not found", ex.Errors[0].Message);
+            Assert.AreEqual("Validation (isSlug) failed for slug", ex.Errors[0].Message);
         }
 
-        public void Dispose()
+        [TestCase(ExceptionLevel.None)]
+        [TestCase(ExceptionLevel.NonGhost)]
+        public void GetTagBySlug_DoesNotThrow_ReturnsNull_WhenSlugIsInvalid(ExceptionLevel exceptionLevel)
         {
-            if (createdTag != null)
-                auth.DeleteTagById(createdTag.Id);
-            createdTag = null;
+            auth.ExceptionLevel = exceptionLevel;
+
+            Assert.IsNull(auth.GetTagBySlug(InvalidTagSlug));
         }
     }
 }

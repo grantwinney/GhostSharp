@@ -1,37 +1,44 @@
 ﻿using System;
+using System.Linq;
 
 namespace GhostSharpTests
 {
     public class TestBase
     {
-        // The base URL of your Ghost site, like https://your-blog.com
-        public const string Url = "";
+        /// <summary>
+        /// The base host URL of your Ghost site, like https://your-blog.com
+        /// </summary>
+        public static string Host = "https://grantwinney.com";
 
-        // The username and password used to access your site
-        public const string UserName = "";
-        public const string Password = "";
+        /// <summary>
+        /// Content API key
+        /// </summary>
+        /// <remarks>
+        /// Instructions on generating a key: https://docs.ghost.org/api/content/#key
+        /// </remarks>
+        public static string ValidApiKey = "";
+        public static string ValidPostId = "";
+        public static string ValidPostSlug = "";
+        public static string ValidAuthorId = "1";
+        public static string ValidAuthorSlug = "";
+        public static string ValidTagId = "";
+        public static string ValidTagSlug = "";
 
-        // The client id and secret for your site
-        public const string ClientId = "";
-        public const string ClientSecret = "";
-
-        // The authorization token used to access your site
-        // If you don't have one, uncomment and run the GET_AUTH_TOKEN.GetYourVeryOwnAuthToken() test
-        public const string AuthToken = "";
-
-        // The ID and Slug of the user who generated the auth token (for GET tests in GetUserTests)
-        public const string UserId = "";
-        public const string UserSlug = "";
+        public static string InvalidApiKey = "{1D356678-846C-4C1F-97B3-3B87C008A2B2}";
+        public static string InvalidPostId = "{1D356678-846C-4C1F-97B3-3B87C008A2B2}";
+        public static string InvalidPostSlug = "{1D356678-846C-4C1F-97B3-3B87C008A2B2}";
+        public static string InvalidAuthorId = "{1D356678-846C-4C1F-97B3-3B87C008A2B2}";
+        public static string InvalidAuthorSlug = "{1D356678-846C-4C1F-97B3-3B87C008A2B2}";
+        public static string InvalidTagId = "{1D356678-846C-4C1F-97B3-3B87C008A2B2}";
+        public static string InvalidTagSlug = "{1D356678-846C-4C1F-97B3-3B87C008A2B2}";
 
         public TestBase()
         {
-            if (String.IsNullOrWhiteSpace(Url) ||
-                String.IsNullOrWhiteSpace(UserName) || String.IsNullOrWhiteSpace(Password) ||
-                String.IsNullOrWhiteSpace(ClientId) || String.IsNullOrWhiteSpace(ClientSecret) ||
-                String.IsNullOrWhiteSpace(AuthToken))
-            {
-                throw new ApplicationException("Fill in all configuration values before running tests.");
-            }
+            var testValues = new[] { ValidApiKey, ValidPostId, ValidPostSlug,
+                                     ValidAuthorId, ValidAuthorSlug, ValidTagId, ValidTagSlug};
+
+            if (testValues.Any(x => string.IsNullOrWhiteSpace(x)))
+                throw new ApplicationException("Fill in test values in TestBase before running tests.");
         }
     }
 }

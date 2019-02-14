@@ -7,60 +7,72 @@ using NUnit.Framework;
 namespace GhostSharpTests
 {
     [TestFixture]
-    public class GetPostTests : TestBase, IDisposable
+    public class GetPostTests : TestBase
     {
-        readonly GhostAPI auth;
-        Post createdPost;
+        GhostAPI auth;
 
-        const string unlikelyTitle = "some-really-random-title-that-i-hope-no-one-uses-234566";
-
-        public GetPostTests()
+        [SetUp]
+        public void SetUp()
         {
-            createdPost = null;
-            auth = new GhostAPI(Url, AuthToken);
+            auth = new GhostAPI(Host, ValidApiKey);
         }
 
         [Test]
         public void GetPostById_ReturnsMatchingPost_WhenIdIsValid()
         {
-            createdPost = auth.CreatePost(new Post { Title = unlikelyTitle });
+            var actualPostId = auth.GetPostById(ValidPostId).Id;
 
-            var actualPostId = auth.GetPostById(createdPost.Id, new PostQueryParams { Status = "draft" }).Id;
-
-            Assert.AreEqual(createdPost.Id, actualPostId);
+            Assert.AreEqual(ValidPostId, actualPostId);
         }
 
-        [Test]
-        public void GetPostById_ThrowsException_WhenIdIsInvalid()
+        [TestCase(ExceptionLevel.Ghost)]
+        [TestCase(ExceptionLevel.All)]
+        public void GetPostById_ThrowsGhostSharpException_WhenIdIsInvalid(ExceptionLevel exceptionLevel)
         {
-            var ex = Assert.Throws<GhostSharpException>(() => auth.GetPostById("invalid_id"));
-        
+            auth.ExceptionLevel = exceptionLevel;
+
+            var ex = Assert.Throws<GhostSharpException>(() => auth.GetPostById(InvalidPostId));
+
             Assert.IsNotEmpty(ex.Errors);
-            StringAssert.StartsWith("Post not found", ex.Errors[0].Message);
+            Assert.AreEqual("Validation (matches) failed for id", ex.Errors[0].Message);
+        }
+
+        [TestCase(ExceptionLevel.None)]
+        [TestCase(ExceptionLevel.NonGhost)]
+        public void GetPostById_DoesNotThrow_ReturnsNull_WhenIdIsInvalid(ExceptionLevel exceptionLevel)
+        {
+            auth.ExceptionLevel = exceptionLevel;
+
+            Assert.IsNull(auth.GetPostById(InvalidPostId));
         }
 
         [Test]
         public void GetPostBySlug_ReturnsMatchingPost_WhenSlugIsValid()
         {
-            createdPost = auth.CreatePost(new Post { Title = unlikelyTitle, Slug = unlikelyTitle });
+            var actualSlug = auth.GetPostBySlug(ValidPostSlug).Slug;
 
-            Assert.AreEqual(createdPost.Slug, auth.GetPostBySlug(createdPost.Slug, new PostQueryParams { Status = "draft" }).Slug);
+            Assert.AreEqual(ValidPostSlug, actualSlug);
         }
 
-        [Test]
-        public void GetPostBySlug_ThrowsException_WhenSlugIsInvalid()
+        [TestCase(ExceptionLevel.Ghost)]
+        [TestCase(ExceptionLevel.All)]
+        public void GetPostBySlug_ThrowsGhostSharpException_WhenSlugIsInvalid(ExceptionLevel exceptionLevel)
         {
-            var ex = Assert.Throws<GhostSharpException>(() => auth.GetPostBySlug("invalid_slug"));
-        
+            auth.ExceptionLevel = exceptionLevel;
+
+            var ex = Assert.Throws<GhostSharpException>(() => auth.GetPostBySlug(InvalidPostSlug));
+
             Assert.IsNotEmpty(ex.Errors);
-            StringAssert.StartsWith("Post not found", ex.Errors[0].Message);
+            Assert.AreEqual("Validation (isSlug) failed for slug", ex.Errors[0].Message);
         }
 
-        public void Dispose()
+        [TestCase(ExceptionLevel.None)]
+        [TestCase(ExceptionLevel.NonGhost)]
+        public void GetPostBySlug_DoesNotThrow_ReturnsNull_WhenSlugIsInvalid(ExceptionLevel exceptionLevel)
         {
-            if (createdPost != null)
-                auth.DeletePostById(createdPost.Id);
-            createdPost = null;
+            auth.ExceptionLevel = exceptionLevel;
+
+            Assert.IsNull(auth.GetPostBySlug(InvalidPostSlug));
         }
     }
 }

@@ -2,13 +2,13 @@
 
 namespace GhostSharp.Entities
 {
-    public class UserResponse
+    public class AuthorResponse
     {
-        public List<User> Users { get; set; }
+        public List<Author> Authors { get; set; }
         public Meta Meta { get; set; }
     }
 
-    public class User
+    public class Author
     {
         public string Id { get; set; }
         public string Name { get; set; }

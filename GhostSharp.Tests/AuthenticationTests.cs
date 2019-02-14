@@ -9,129 +9,96 @@ namespace GhostSharpTests
     public class AuthenticationTests : TestBase
     {
         [Test]
-        public void GetAuthToken_ReturnsToken_WhenCredentialsValid()
+        public void GetPosts_ReturnsPosts_WhenKeyIsValid()
         {
-            var auth = new GhostAPI(Url, ClientId, ClientSecret);
-
-            var token = auth.GetAuthToken(ClientId, ClientSecret, UserName, Password);
-
-            Assert.NotNull(token.AccessToken);
-            Assert.IsNotEmpty(token.AccessToken);
-            Assert.NotNull(token.RefreshToken);
-            Assert.IsNotEmpty(token.RefreshToken);
-
-            Assert.AreEqual(2628000, token.ExpiresIn);
-            Assert.AreEqual("Bearer", token.TokenType);
-        }
-
-        [Test]
-        public void GetAuthToken_ThrowsException_WhenCredentialsInvalid()
-        {
-            var auth = new GhostAPI(Url, ClientId, ClientSecret);
-
-            var ex = Assert.Throws<GhostSharpException>(() => auth.GetAuthToken("678", "90$!", "fake@fake.com", "12345"));
-            Assert.IsNotEmpty(ex.Errors);
-            StringAssert.StartsWith("Access denied", ex.Errors[0].Message);
-        }
-
-        [Test]
-        public void GetPosts_ReturnsPosts_WhenClientIdAndSecretValid()
-        {
-            var auth = new GhostAPI(Url, ClientId, ClientSecret);
+            var auth = new GhostAPI(Host, ValidApiKey);
 
             var postResponse = auth.GetPosts(new PostQueryParams { Limit = 2, Fields = "id" });
 
             Assert.AreEqual(2, postResponse.Posts.Count);
         }
 
-        [Test]
-        public void GetPosts_ReturnsPosts_WhenAuthTokenValid()
+        [TestCase(ExceptionLevel.Ghost)]
+        [TestCase(ExceptionLevel.All)]
+        public void GetPosts_ThrowsException_WhenKeyIsInvalid(ExceptionLevel exceptionLevel)
         {
-            var auth = new GhostAPI(Url, AuthToken);
-
-            var postResponse = auth.GetPosts(new PostQueryParams { Limit = 2, Fields = "id" });
-
-            Assert.AreEqual(2, postResponse.Posts.Count);
-        }
-
-        [Test]
-        public void GetPosts_ThrowsException_WhenAuthTokenInvalid()
-        {
-            var auth = new GhostAPI(Url, "invalid_token");
+            var auth = new GhostAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
 
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetPosts());
             Assert.IsNotEmpty(ex.Errors);
-            StringAssert.StartsWith("Access denied", ex.Errors[0].Message);
+            Assert.AreEqual("Unknown Content API Key", ex.Errors[0].Message);
+        }
+
+        [TestCase(ExceptionLevel.None)]
+        [TestCase(ExceptionLevel.NonGhost)]
+        public void GetPosts_DoesNotThrow_ReturnsNull_WhenKeyIsInvalid(ExceptionLevel exceptionLevel)
+        {
+            var auth = new GhostAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
+
+            Assert.IsNull(auth.GetPosts());
+            Assert.IsNotNull(auth.LastException);
         }
 
         [Test]
-        public void GetTags_ReturnsTags_WhenClientIdAndSecretValid()
+        public void GetTags_ReturnsTags_WhenKeyIsValid()
         {
-            var auth = new GhostAPI(Url, ClientId, ClientSecret);
+            var auth = new GhostAPI(Host, ValidApiKey);
 
             var tagResponse = auth.GetTags(new TagQueryParams { Limit = 2, Fields = "id" });
 
             Assert.AreEqual(2, tagResponse.Tags.Count);
         }
 
-        [Test]
-        public void GetTags_ReturnsTags_WhenAuthTokenValid()
+        [TestCase(ExceptionLevel.Ghost)]
+        [TestCase(ExceptionLevel.All)]
+        public void GetTags_ThrowsException_WhenKeyIsInvalid(ExceptionLevel exceptionLevel)
         {
-            var auth = new GhostAPI(Url, AuthToken);
-
-            var tagResponse = auth.GetTags(new TagQueryParams { Limit = 2, Fields = "id" });
-
-            Assert.AreEqual(2, tagResponse.Tags.Count);
-        }
-
-        [Test]
-        public void GetTags_ThrowsException_WhenAuthTokenInvalid()
-        {
-            var auth = new GhostAPI(Url, "invalid_token");
+            var auth = new GhostAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
 
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetTags());
             Assert.IsNotEmpty(ex.Errors);
-            StringAssert.StartsWith("Access denied", ex.Errors[0].Message);
+            Assert.AreEqual("Unknown Content API Key", ex.Errors[0].Message);
+        }
+
+        [TestCase(ExceptionLevel.None)]
+        [TestCase(ExceptionLevel.NonGhost)]
+        public void GetTags_DoesNotThrow_ReturnsNull_WhenKeyIsInvalid(ExceptionLevel exceptionLevel)
+        {
+            var auth = new GhostAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
+
+            Assert.IsNull(auth.GetTags());
+            Assert.IsNotNull(auth.LastException);
         }
 
         [Test]
-        public void GetUsers_ReturnsUsers_WhenClientIdAndSecretValid()
+        public void GetAuthors_ReturnsAuthors_WhenKeyIsValid()
         {
-            var auth = new GhostAPI(Url, ClientId, ClientSecret);
+            var auth = new GhostAPI(Host, ValidApiKey);
 
-            var userResponse = auth.GetUsers(new UserQueryParams { Limit = 1, Fields = "id" });
+            var authorResponse = auth.GetAuthors(new AuthorQueryParams { Limit = 1, Fields = "id" });
 
-            Assert.AreEqual(1, userResponse.Users.Count);
+            Assert.AreEqual(1, authorResponse.Authors.Count);
         }
 
-        [Test]
-        public void GetUsers_ReturnsUsers_WhenAuthTokenValid()
+        [TestCase(ExceptionLevel.Ghost)]
+        [TestCase(ExceptionLevel.All)]
+        public void GetAuthors_ThrowsException_WhenKeyIsInvalid(ExceptionLevel exceptionLevel)
         {
-            var auth = new GhostAPI(Url, AuthToken);
+            var auth = new GhostAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
 
-            var userResponse = auth.GetUsers(new UserQueryParams { Limit = 1, Fields = "id" });
-
-            Assert.AreEqual(1, userResponse.Users.Count);
-        }
-
-        [Test]
-        public void GetUsers_ThrowsException_WhenAuthTokenInvalid()
-        {
-            var auth = new GhostAPI(Url, "invalid_token");
-
-            var ex = Assert.Throws<GhostSharpException>(() => auth.GetUsers());
+            var ex = Assert.Throws<GhostSharpException>(() => auth.GetAuthors());
             Assert.IsNotEmpty(ex.Errors);
-            StringAssert.StartsWith("Access denied", ex.Errors[0].Message);
+            Assert.AreEqual("Unknown Content API Key", ex.Errors[0].Message);
         }
 
-        [Test]
-        public void GetMyProfile_ThrowsException_WhenCredentialsInvalid()
+        [TestCase(ExceptionLevel.None)]
+        [TestCase(ExceptionLevel.NonGhost)]
+        public void GetAuthors_DoesNotThrow_ReturnsNull_WhenKeyIsInvalid(ExceptionLevel exceptionLevel)
         {
-            var auth = new GhostAPI(Url, "invalid_token");
-        
-            var ex = Assert.Throws<GhostSharpException>(() => auth.GetMyProfile());
-            Assert.IsNotEmpty(ex.Errors);
-            StringAssert.StartsWith("Access denied", ex.Errors[0].Message);
+            var auth = new GhostAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
+
+            Assert.IsNull(auth.GetAuthors());
+            Assert.IsNotNull(auth.LastException);
         }
     }
 }

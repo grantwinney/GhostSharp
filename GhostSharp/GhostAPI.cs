@@ -8,186 +8,37 @@ using RestSharp;
 namespace GhostSharp
 {
     /// <summary>
-    /// Provides methods for authenticating with the Ghost API,
-    /// as well as accessing its various endpoints.
+    /// Processing successful and error responses from the Ghost API.
     /// </summary>
     public sealed partial class GhostAPI
     {
-        Uri baseUri;
-        const string BASE_REQUEST_URI = "/ghost/api/v0.1";
+        Uri host;
+        const string PATH_AND_VERSION = "/ghost/api/v2/content/";
 
-        readonly string clientId;
-        readonly string clientSecret;
-
-        public string AuthorizationToken { get; }
-        readonly bool isAuthorized;
+        readonly string key;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:GhostSharp.GhostAPI"/> class.
         /// </summary>
-        /// <param name="siteUrl">The site URL for which to access the API.</param>
-        /// <param name="clientId">Client identifier.</param>
-        /// <param name="clientSecret">Client secret.</param>
-        public GhostAPI(string siteUrl, string clientId, string clientSecret)
-            : this(siteUrl)
+        /// <param name="host">The Host for which to access the API.</param>
+        /// <param name="key">Content API key.</param>
+        public GhostAPI(string host, string key)
         {
-            this.clientId = clientId;
-            this.clientSecret = clientSecret;
+            this.key = key;
+            this.host = new Uri(new Uri(host), PATH_AND_VERSION);
+            ExceptionLevel = ExceptionLevel.All;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:GhostSharp.GhostAPI"/> class.
+        /// Specify which exceptions to rethrow, if any. Default is All.
         /// </summary>
-        /// <param name="siteUrl">The site URL for which to access the API.</param>
-        /// <param name="clientId">Client identifier.</param>
-        /// <param name="clientSecret">Client secret.</param>
-        /// <param name="username">Username.</param>
-        /// <param name="password">Password.</param>
-        public GhostAPI(string siteUrl, string clientId, string clientSecret, string username, string password)
-            : this(siteUrl)
-        {
-            this.clientId = clientId;
-            this.clientSecret = clientSecret;
-
-            var token = GetAuthToken(clientId, clientSecret, username, password);
-            AuthorizationToken = token.AccessToken;
-            isAuthorized = true;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:GhostSharp.GhostAPI"/> class.
-        /// </summary>
-        /// <param name="siteUrl">The site URL for which to access the API.</param>
-        /// <param name="authToken">Authorization token.</param>
-        public GhostAPI(string siteUrl, string authToken)
-            : this(siteUrl)
-        {
-            AuthorizationToken = authToken;
-            isAuthorized = true;
-        }
-
-        GhostAPI(string siteUrl)
-        {
-            baseUri = new Uri(new Uri(siteUrl), BASE_REQUEST_URI);
-        }
-
-        /// <summary>
-        /// Specify which exceptions to suppress, if any. Default is None.
-        /// </summary>
-        public SuppressionLevel SuppressionLevel { private get; set; }
+        public ExceptionLevel ExceptionLevel { private get; set; }
 
         /// <summary>
         /// Gets the last exception that was thrown.
         /// </summary>
         /// <value>The last exception.</value>
         public Exception LastException { get; private set; }
-
-        /// <summary>
-        /// Determines whether or not the public API is enabled.
-        /// </summary>
-        /// <returns><c>true</c>, if the public API is enabled, <c>false</c> otherwise.</returns>
-        /// <param name="clientId">Client identifier.</param>
-        /// <param name="clientSecret">Client secret.</param>
-        public bool IsPublicApiEnabled(string clientId = null, string clientSecret = null)
-        {
-            var id = clientId ?? this.clientId;
-            var secret = clientSecret ?? this.clientSecret;
-
-            try
-            {
-                return GetUsers(new UserQueryParams { Limit = 1, Fields = "id" }).Users != null;
-            }
-            catch (GhostSharpException)
-            {
-                if (SuppressionLevel == SuppressionLevel.None)
-                    throw;
-                return false;
-            }
-            catch (Exception)
-            {
-                if (SuppressionLevel == SuppressionLevel.All)
-                    return false;
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the authorization token.
-        /// </summary>
-        /// <returns>The authorization token.</returns>
-        /// <param name="username">Username.</param>
-        /// <param name="password">Password.</param>
-        /// <param name="clientId">Client identifier.</param>
-        /// <param name="clientSecret">Client secret.</param>
-        public AuthToken GetAuthToken(string clientId, string clientSecret, string username, string password)
-        {
-            var request = new RestRequest("authentication/token", Method.POST);
-
-            request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-            request.AddHeader("Accept", "application/json");
-
-            request.AddParameter("grant_type", "password");
-            request.AddParameter("client_id", clientId);
-            request.AddParameter("client_secret", clientSecret);
-            request.AddParameter("username", username);
-            request.AddParameter("password", password);
-
-            return Execute<AuthToken>(request);
-        }
-
-        /// <summary>
-        /// If there's an auth token available, attach it to the request.
-        /// Otherwise, attach the client id and secret.
-        /// </summary>
-        /// <param name="request">The request being made to the API.</param>
-        void AppendSecurity(RestRequest request)
-        {
-            if (isAuthorized)
-            {
-                request.AddParameter("Authorization", $"Bearer {AuthorizationToken}", ParameterType.HttpHeader);
-            }
-            else
-            {
-                request.AddQueryParameter("client_id", clientId);
-                request.AddQueryParameter("client_secret", clientSecret);
-            }
-        }
-
-        /// <summary>
-        /// Calls the Ghost API and returns a value indicating whether or not it succeeded.
-        /// If exceptions are suppressed, returns False on failure.
-        /// </summary>
-        /// <returns>The API success status.</returns>
-        /// <param name="request">A RestRequest representing the resource being requested.</param>
-        /// <param name="suppressException">False to throw any exceptions; True to suppress them.</param>
-        bool Execute(RestRequest request, bool suppressException = false)
-        {
-            var client = new RestClient { BaseUrl = baseUri };
-
-            try
-            {
-                var response = client.Execute(request);
-
-                TestResponseForErrors(response);
-                TestResponseForException(response, request);
-
-                return response.IsSuccessful;
-            }
-            catch (GhostSharpException)
-            {
-                if (SuppressionLevel == SuppressionLevel.None)
-                    throw;
-
-                return false;
-            }
-            catch
-            {
-                if (SuppressionLevel != SuppressionLevel.All)
-                    throw;
-
-                return false;
-            }
-        }
 
         /// <summary>
         /// Calls the Ghost API and returns the response data.
@@ -198,7 +49,7 @@ namespace GhostSharp
         /// <typeparam name="T">The type of object being requested</typeparam>
         T Execute<T>(RestRequest request) where T : new()
         {
-            var client = new RestClient { BaseUrl = baseUri };
+            var client = new RestClient { BaseUrl = host };
 
             try
             {
@@ -211,14 +62,14 @@ namespace GhostSharp
             }
             catch (GhostSharpException)
             {
-                if (SuppressionLevel == SuppressionLevel.None)
+                if (ExceptionLevel == ExceptionLevel.Ghost || ExceptionLevel == ExceptionLevel.All)
                     throw;
 
                 return default(T);
             }
             catch
             {
-                if (SuppressionLevel != SuppressionLevel.All)
+                if (ExceptionLevel == ExceptionLevel.NonGhost || ExceptionLevel == ExceptionLevel.All)
                     throw;
 
                 return default(T);
@@ -236,9 +87,7 @@ namespace GhostSharp
             {
                 var ex = new GhostSharpException(apiFailure.Errors);
                 LastException = ex;
-
-                if (SuppressionLevel == SuppressionLevel.None)
-                    throw ex;
+                throw ex;
             }
         }
 
@@ -253,9 +102,7 @@ namespace GhostSharp
             {
                 var ex = new GhostSharpException($"Unable to {request.Method} /{request.Resource}: {response.ResponseStatus}", response.ErrorException);
                 LastException = ex;
-              
-                if (SuppressionLevel == SuppressionLevel.None)
-                    throw ex;
+                throw ex;
             }
         }
 
