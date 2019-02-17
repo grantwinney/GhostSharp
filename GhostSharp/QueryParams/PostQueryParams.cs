@@ -1,24 +1,44 @@
-﻿namespace GhostSharp.QueryParams
+﻿using GhostSharp.Enums;
+using System;
+using System.Collections.Generic;
+
+namespace GhostSharp.QueryParams
 {
     public class PostQueryParams
     {
         /// <summary>
-        /// Specify whether or not to include full data about the author
+        /// Specify whether or not to include full data about the authors (default is to not include)
         /// </summary>
-        /// <value>True to include the author; otherwise False</value>
-        public bool IncludeAuthor { get; set; }
+        /// <value>True to include the authors; otherwise False</value>
+        public bool IncludeAuthors { get; set; }
 
         /// <summary>
-        /// Specify whether or not to include tags (default is to not include tags)
+        /// Specify whether or not to include tags (default is to not include)
         /// </summary>
         /// <value>True to include tags; otherwise False</value>
         public bool IncludeTags { get; set; }
 
         /// <summary>
-        /// How many posts to retrieve, use "all" to retrieve all posts. (default is 15)
+        /// Choose which resource fields you want to retrieve values for.
         /// </summary>
-        /// <value>The number of posts to retrieve, or "all".</value>
+        /// <value>The resource fields to retrieve values for.</value>
+        public PostFields Fields { get; set; }
+
+        /// <summary>
+        /// The format(s) in which to return the body of the page or post.
+        /// </summary>
+        public PostFormat Formats { get; set; }
+
+        /// <summary>
+        /// How many posts or pages to retrieve. (default is 15)
+        /// </summary>
+        /// <value>The number of posts to retrieve.</value>
         public int Limit { get; set; }
+
+        /// <summary>
+        /// Return all posts or pages (no limit) - use carefully! If set to True, then Limit is ignored.
+        /// </summary>
+        public bool NoLimit { get; set; }
 
         /// <summary>
         /// Which page of paginated results to retrieve. (default is 1)
@@ -27,52 +47,12 @@
         public int Page { get; set; }
 
         /// <summary>
-        /// Which field to order by and direction of ordering (asc or desc)
+        /// A list of fields to order by and direction of ordering.
         /// </summary>
-        /// <value>The field to order by and direction. (default is "published_at desc")</value>
-        /// <example>published_at desc</example>
-        public string Order { get; set; }
-
-        /// <summary>
-        /// Choose which fields you want to retrieve values for. (comma-delimited list)
-        /// </summary>
-        /// <value>The fields to retrieve values for.</value>
-        /// <example>id,title,slug</example>
-        public string Fields { get; set; }
-
-        /// <summary>
-        /// Use Ghost Query Language to build complex query.
-        /// (warning: their implementation seems buggy, returning "Error parsing filter" when combining rules)
-        /// </summary>
-        /// <value>A query using the Ghost Query Language.</value>
-        /// <example>
-        /// Get pages instead of posts => page:true
-        /// Combine rules (AND) => filter=status:published+page:false
-        /// Combine rules (OR)  => filter=featured:true,feature_image:-null
-        /// </example>
-        /// <remarks>
-        /// Ghost Query Language: https://github.com/TryGhost/GQL
-        /// Filters with multiple rules: https://api.ghost.org/docs/filter#filters-with-multiple-rules
-        /// </remarks>
-        public string Filter { get; set; }
-
-        /// <summary>
-        /// id or slug changes query to a read request.
-        /// </summary>
-        /// <value>The resource.</value>
-        public string Resource { get; set; }
-
-        /// <summary>
-        /// Choose which post formats to return. (default is HTML, comma-delimited list)
-        /// </summary>
-        /// <value>The post formats to return. (i.e. html, mobiledoc, plaintext</value>
-        /// <example>html,mobiledoc,plaintext</example>
-        public string Formats { get; set; }
-
-        /// <summary>
-        /// Choose which status to return. (published (default), draft, all)
-        /// </summary>
-        /// <value>The status.</value>
-        public string Status { get; set; }
+        /// <value>
+        /// The field(s) to order by and direction.
+        /// (default is "title ASC" for pages, and "published_at DESC" for posts)
+        /// </value>
+        public List<Tuple<PostFields, OrderDirection>> Order { get; set; }
     }
 }

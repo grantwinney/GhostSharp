@@ -20,11 +20,9 @@ namespace GhostSharp.Entities
         public string Location { get; set; }
         public string Facebook { get; set; }
         public string Twitter { get; set; }
-        public string Accessibility { get; set; }
-        public string Locale { get; set; }
-        public string Visibility { get; set; }
         public string MetaTitle { get; set; }
         public string MetaDescription { get; set; }
-        public string Tour { get; set; }
+        public Count Count { get; set; }
+        public string Url { get; set; }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Linq;
 using GhostSharp.Entities;
-using GhostSharp.QueryParams;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -65,14 +63,14 @@ namespace GhostSharp
                 if (ExceptionLevel == ExceptionLevel.Ghost || ExceptionLevel == ExceptionLevel.All)
                     throw;
 
-                return default(T);
+                return default;
             }
             catch
             {
                 if (ExceptionLevel == ExceptionLevel.NonGhost || ExceptionLevel == ExceptionLevel.All)
                     throw;
 
-                return default(T);
+                return default;
             }
         }
 
@@ -104,184 +102,6 @@ namespace GhostSharp
                 LastException = ex;
                 throw ex;
             }
-        }
-
-        /// <summary>
-        /// If a request is made that omits author metadata in the response,
-        /// retain the author id from the response, but leave author null.
-        /// </summary>
-        /// <returns>A standardized Response instance</returns>
-        /// <param name="response">The response with only an author id in the post.</param>
-        static PostResponse StandardizePostResponseWithoutAuthor(PostResponse<PostWithoutAuthor> response)
-        {
-            return new PostResponse
-            {
-                Posts = response.Posts.Select(StandardizePostWithoutAuthor).ToList(),
-                Meta = response.Meta
-            };
-        }
-
-        /// <summary>
-        /// If a request is made to include author metadata in the response,
-        /// make sure the author id field is filled in using that metadata.
-        /// </summary>
-        /// <returns>A standardized Response instance</returns>
-        /// <param name="response">The response with full author metadata in the post.</param>
-        static PostResponse StandardizePostResponseWithAuthor(PostResponse<PostWithAuthor> response)
-        {
-            return new PostResponse
-            {
-                Posts = response.Posts.Select(StandardizePostWithAuthor).ToList(),
-                Meta = response.Meta
-            };
-        }
-
-        /// <summary>
-        /// If a request is made that omits author metadata in the response,
-        /// retain the author id from the response, but leave author null.
-        /// </summary>
-        /// <returns>A standardized Post instance</returns>
-        /// <param name="post">The post with only an author id.</param>
-        static Post StandardizePostWithoutAuthor(PostWithoutAuthor post)
-        {
-            return new Post
-            {
-                Id = post.Id,
-                Uuid = post.Uuid,
-                Title = post.Title,
-                Slug = post.Slug,
-                MobileDoc = post.MobileDoc,
-                Html = post.Html,
-                PlainText = post.PlainText,
-                FeatureImage = post.FeatureImage,
-                Featured = post.Featured,
-                Page = post.Page,
-                Status = post.Status,
-                Locale = post.Locale,
-                Visibility = post.Visibility,
-                MetaTitle = post.MetaTitle,
-                MetaDescription = post.MetaDescription,
-                CreatedAt = post.CreatedAt,
-                CreatedBy = post.CreatedBy,
-                UpdatedAt = post.UpdatedAt,
-                UpdatedBy = post.UpdatedBy,
-                PublishedAt = post.PublishedAt,
-                PublishedBy = post.PublishedBy,
-                CustomExcerpt = post.CustomExcerpt,
-                CodeInjectionHead = post.CodeInjectionHead,
-                CodeInjectionFoot = post.CodeInjectionFoot,
-                OgImage = post.OgImage,
-                OgTitle = post.OgTitle,
-                OgDescription = post.OgDescription,
-                TwitterImage = post.TwitterImage,
-                TwitterTitle = post.TwitterTitle,
-                TwitterDescription = post.TwitterDescription,
-                CustomTemplate = post.CustomTemplate,
-                Tags = post.Tags,
-                PrimaryTag = post.PrimaryTag,
-                Author = null,
-                AuthorId = post.Author,
-                Url = post.Url,
-                CommentId = post.CommentId
-            };
-        }
-
-        /// <summary>
-        /// If a request is made to include author metadata in the response,
-        /// make sure the author id field is filled in using that metadata.
-        /// </summary>
-        /// <returns>A standardized Post instance</returns>
-        /// <param name="post">The post with full author metadata.</param>
-        static Post StandardizePostWithAuthor(PostWithAuthor post)
-        {
-            return new Post
-            {
-                Id = post.Id,
-                Uuid = post.Uuid,
-                Title = post.Title,
-                Slug = post.Slug,
-                MobileDoc = post.MobileDoc,
-                Html = post.Html,
-                PlainText = post.PlainText,
-                FeatureImage = post.FeatureImage,
-                Featured = post.Featured,
-                Page = post.Page,
-                Status = post.Status,
-                Locale = post.Locale,
-                Visibility = post.Visibility,
-                MetaTitle = post.MetaTitle,
-                MetaDescription = post.MetaDescription,
-                CreatedAt = post.CreatedAt,
-                CreatedBy = post.CreatedBy,
-                UpdatedAt = post.UpdatedAt,
-                UpdatedBy = post.UpdatedBy,
-                PublishedAt = post.PublishedAt,
-                PublishedBy = post.PublishedBy,
-                CustomExcerpt = post.CustomExcerpt,
-                CodeInjectionHead = post.CodeInjectionHead,
-                CodeInjectionFoot = post.CodeInjectionFoot,
-                OgImage = post.OgImage,
-                OgTitle = post.OgTitle,
-                OgDescription = post.OgDescription,
-                TwitterImage = post.TwitterImage,
-                TwitterTitle = post.TwitterTitle,
-                TwitterDescription = post.TwitterDescription,
-                CustomTemplate = post.CustomTemplate,
-                Tags = post.Tags,
-                PrimaryTag = post.PrimaryTag,
-                Author = post.Author,
-                AuthorId = post.Author.Id,
-                Url = post.Url,
-                CommentId = post.CommentId
-            };
-        }
-
-        /// <summary>
-        /// Convert a Post to a PostWithoutAuthor before pushing it to Ghost.
-        /// </summary>
-        /// <returns>A PostWithoutAuthor instance</returns>
-        /// <param name="post">The Post to push to Ghost.</param>
-        static PostWithoutAuthor ConvertToPostWithoutAuthor(Post post)
-        {
-            return new PostWithoutAuthor
-            {
-                Id = post.Id,
-                Uuid = post.Uuid,
-                Title = post.Title,
-                Slug = post.Slug,
-                MobileDoc = post.MobileDoc,
-                Html = post.Html,
-                PlainText = post.PlainText,
-                FeatureImage = post.FeatureImage,
-                Featured = post.Featured,
-                Page = post.Page,
-                Status = post.Status,
-                Locale = post.Locale,
-                Visibility = post.Visibility,
-                MetaTitle = post.MetaTitle,
-                MetaDescription = post.MetaDescription,
-                CreatedAt = post.CreatedAt,
-                CreatedBy = post.CreatedBy,
-                UpdatedAt = post.UpdatedAt,
-                UpdatedBy = post.UpdatedBy,
-                PublishedAt = post.PublishedAt,
-                PublishedBy = post.PublishedBy,
-                CustomExcerpt = post.CustomExcerpt,
-                CodeInjectionHead = post.CodeInjectionHead,
-                CodeInjectionFoot = post.CodeInjectionFoot,
-                OgImage = post.OgImage,
-                OgTitle = post.OgTitle,
-                OgDescription = post.OgDescription,
-                TwitterImage = post.TwitterImage,
-                TwitterTitle = post.TwitterTitle,
-                TwitterDescription = post.TwitterDescription,
-                CustomTemplate = post.CustomTemplate,
-                Tags = post.Tags,
-                PrimaryTag = post.PrimaryTag,
-                Author = post.AuthorId,
-                Url = post.Url,
-                CommentId = post.CommentId
-            };
         }
     }
 }

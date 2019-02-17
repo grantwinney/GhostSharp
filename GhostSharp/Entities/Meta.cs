@@ -1,7 +1,7 @@
 ﻿namespace GhostSharp.Entities
 {
     /// <summary>
-    /// Holds information about the request, such as metadata about the 'page' of data that was requested.
+    /// Holds meta information about the request, such as the 'page' of data that was requested.
     /// </summary>
     public class Meta   
     {
@@ -23,7 +23,7 @@
     /// When browsing the posts, users and tags endpoints you will retrieve an array of your
     /// queried resource and a meta object that includes a pagination object.
     /// 
-    /// Source: https://api.ghost.org/docs/pagination
+    /// Source: https://docs.ghost.org/api/content/#pagination
     /// </remarks>
     public class Pagination
     {
@@ -50,11 +50,11 @@
         /// <summary>
         /// Next page number in result set.
         /// </summary>
-        public int Next { get; set; }
+        public int? Next { get; set; }
 
         /// <summary>
         /// Previous page number in result set.
         /// </summary>
-        public int Prev { get; set; }
+        public int? Prev { get; set; }
     }
 }
