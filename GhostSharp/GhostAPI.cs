@@ -8,7 +8,7 @@ namespace GhostSharp
     /// <summary>
     /// Processing successful and error responses from the Ghost API.
     /// </summary>
-    public sealed partial class GhostAPI
+    public partial class GhostAPI
     {
         Uri host;
         const string PATH_AND_VERSION = "/ghost/api/v2/content/";
@@ -52,10 +52,7 @@ namespace GhostSharp
             try
             {
                 var response = client.Execute<T>(request);
-
-                TestResponseForErrors(response);
-                TestResponseForException(response, request);
-
+                TestResponseForErrors(response, request);
                 return response.Data;
             }
             catch (GhostSharpException)
@@ -78,7 +75,7 @@ namespace GhostSharp
         /// If the response content has one or more error messages, throw an exception.
         /// </summary>
         /// <param name="response">The API response</param>
-        void TestResponseForErrors(IRestResponse response)
+        void TestResponseForErrors(IRestResponse response, RestRequest request)
         {
             var apiFailure = JsonConvert.DeserializeObject<GhostApiFailure>(response.Content);
             if (apiFailure != null && apiFailure.Errors != null)
@@ -87,15 +84,7 @@ namespace GhostSharp
                 LastException = ex;
                 throw ex;
             }
-        }
 
-        /// <summary>
-        /// If the response returns an exception, add a message and throw it.
-        /// </summary>
-        /// <param name="response">The API response</param>
-        /// <param name="request">The original request to the API.</param>
-        void TestResponseForException(IRestResponse response, RestRequest request)
-        {
             if (response.ErrorException != null)
             {
                 var ex = new GhostSharpException($"Unable to {request.Method} /{request.Resource}: {response.ResponseStatus}", response.ErrorException);

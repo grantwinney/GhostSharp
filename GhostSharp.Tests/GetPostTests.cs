@@ -1,7 +1,5 @@
-using System;
 using GhostSharp;
 using GhostSharp.Entities;
-using GhostSharp.QueryParams;
 using NUnit.Framework;
 
 namespace GhostSharpTests

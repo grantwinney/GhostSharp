@@ -7,8 +7,8 @@ namespace GhostSharpTests
     public class TestBase
     {
         // The base host URL of your Ghost site, like https://your-blog.com
-        public static string Host = "https://grantwinney.com";
-        public static string SiteTitle = "Grant Winney";
+        public static string Host = "";
+        public static string SiteTitle = "";
 
         public static string ValidApiKey = "";
         public static string ValidPostId = "";

@@ -30,6 +30,14 @@ namespace GhostSharp.QueryParams
         public PostFormat Formats { get; set; }
 
         /// <summary>
+        /// A filter string using NQL syntax.
+        /// </summary>
+        /// <example>
+        /// See documentation: https://docs.ghost.org/api/content/#filtering
+        /// </example>
+        public string Filter { get; set; }
+
+        /// <summary>
         /// How many posts or pages to retrieve. (default is 15)
         /// </summary>
         /// <value>The number of posts to retrieve.</value>
