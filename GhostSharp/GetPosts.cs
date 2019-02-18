@@ -17,7 +17,6 @@ namespace GhostSharp
         public PostResponse GetPosts(PostQueryParams queryParams = null)
         {
             var request = new RestRequest("posts", Method.GET);
-            request.AddQueryParameter("key", key);
             ApplyPostQueryParams(request, queryParams);
             return Execute<PostResponse>(request);
         }
@@ -31,7 +30,6 @@ namespace GhostSharp
         public Post GetPostById(string id, PostQueryParams queryParams = null)
         {
             var request = new RestRequest($"posts/{id}", Method.GET);
-            request.AddQueryParameter("key", key);
             ApplyPostQueryParams(request, queryParams);
             return Execute<PostResponse>(request)?.Posts?.Single();
         }
@@ -45,7 +43,6 @@ namespace GhostSharp
         public Post GetPostBySlug(string slug, PostQueryParams queryParams = null)
         {
             var request = new RestRequest($"posts/slug/{slug}", Method.GET);
-            request.AddQueryParameter("key", key);
             ApplyPostQueryParams(request, queryParams);
             return Execute<PostResponse>(request)?.Posts?.Single();
         }

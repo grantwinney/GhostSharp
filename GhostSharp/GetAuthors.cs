@@ -17,7 +17,6 @@ namespace GhostSharp
         public AuthorResponse GetAuthors(AuthorQueryParams queryParams = null)
         {
             var request = new RestRequest("authors", Method.GET);
-            request.AddQueryParameter("key", key);
             ApplyAuthorQueryParams(request, queryParams);
             return Execute<AuthorResponse>(request);
         }
@@ -31,7 +30,6 @@ namespace GhostSharp
         public Author GetAuthorById(string id, AuthorQueryParams queryParams = null)
         {
             var request = new RestRequest($"authors/{id}", Method.GET);
-            request.AddQueryParameter("key", key);
             ApplyAuthorQueryParams(request, queryParams);
             return Execute<AuthorResponse>(request)?.Authors?.Single();
         }
@@ -45,7 +43,6 @@ namespace GhostSharp
         public Author GetAuthorBySlug(string slug, AuthorQueryParams queryParams = null)
         {
             var request = new RestRequest($"authors/slug/{slug}", Method.GET);
-            request.AddQueryParameter("key", key);
             ApplyAuthorQueryParams(request, queryParams);
             return Execute<AuthorResponse>(request)?.Authors?.Single();
         }

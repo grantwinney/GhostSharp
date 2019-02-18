@@ -10,10 +10,9 @@ namespace GhostSharp
     /// </summary>
     public partial class GhostAPI
     {
-        Uri host;
-        const string PATH_AND_VERSION = "/ghost/api/v2/content/";
-
         readonly string key;
+
+        private IRestClient Client { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:GhostSharp.GhostAPI"/> class.
@@ -23,7 +22,7 @@ namespace GhostSharp
         public GhostAPI(string host, string key)
         {
             this.key = key;
-            this.host = new Uri(new Uri(host), PATH_AND_VERSION);
+            Client = new RestClient { BaseUrl = new Uri(new Uri(host), "/ghost/api/v2/content/") };
             ExceptionLevel = ExceptionLevel.All;
         }
 
@@ -47,11 +46,11 @@ namespace GhostSharp
         /// <typeparam name="T">The type of object being requested</typeparam>
         T Execute<T>(RestRequest request) where T : new()
         {
-            var client = new RestClient { BaseUrl = host };
+            request.AddQueryParameter("key", key);
 
             try
             {
-                var response = client.Execute<T>(request);
+                var response = Client.Execute<T>(request);
                 TestResponseForErrors(response, request);
                 return response.Data;
             }

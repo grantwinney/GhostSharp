@@ -16,7 +16,6 @@ namespace GhostSharp
         public PageResponse GetPages(PageQueryParams queryParams = null)
         {
             var request = new RestRequest("pages", Method.GET);
-            request.AddQueryParameter("key", key);
             ApplyPageQueryParams(request, queryParams);
             return Execute<PageResponse>(request);
         }
@@ -30,7 +29,6 @@ namespace GhostSharp
         public Page GetPageById(string id, PageQueryParams queryParams = null)
         {
             var request = new RestRequest($"pages/{id}", Method.GET);
-            request.AddQueryParameter("key", key);
             ApplyPageQueryParams(request, queryParams);
             return Execute<PageResponse>(request)?.Pages?.Single();
         }
@@ -44,7 +42,6 @@ namespace GhostSharp
         public Post GetPageBySlug(string slug, PageQueryParams queryParams = null)
         {
             var request = new RestRequest($"pages/slug/{slug}", Method.GET);
-            request.AddQueryParameter("key", key);
             ApplyPageQueryParams(request, queryParams);
             return Execute<PageResponse>(request)?.Pages?.Single();
         }
