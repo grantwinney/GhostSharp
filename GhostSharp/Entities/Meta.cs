@@ -27,15 +27,33 @@
     /// </remarks>
     public class Pagination
     {
+        const int DEFAULT_LIMIT = 15;
+
         /// <summary>
         /// Current page of result set.
         /// </summary>
         public int Page { get; set; }
 
         /// <summary>
-        /// Items per page.
+        /// Items per page. Default is 15.
         /// </summary>
-        public int Limit { get; set; }
+        public string Limit { get; set; }
+
+        /// <summary>
+        /// Converts Limit to an integer, for convenience.
+        /// </summary>
+        public int LimitNumber
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(Limit))
+                    return DEFAULT_LIMIT;
+                else if (Limit == "all")
+                    return int.MaxValue;
+                else
+                    return int.Parse(Limit);
+            }
+        }
 
         /// <summary>
         /// Total pages in result set.

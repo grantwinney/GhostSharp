@@ -66,6 +66,6 @@ namespace GhostSharp.Entities
         public string Context { get; set; }
         public string ErrorType { get; set; }
 
-        public override string ToString() => $"{Message}: {Context}";
+        public override string ToString() => $"{Message}";
     }
 }

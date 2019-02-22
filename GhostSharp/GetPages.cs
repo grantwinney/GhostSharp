@@ -13,7 +13,7 @@ namespace GhostSharp
         /// </summary>
         /// <returns>The pages.</returns>
         /// <param name="queryParams">Parameters that affect the resultset.</param>
-        public PageResponse GetPages(PageQueryParams queryParams = null)
+        public PageResponse GetPages(PostQueryParams queryParams = null)
         {
             var request = new RestRequest("pages", Method.GET);
             ApplyPageQueryParams(request, queryParams);
@@ -26,7 +26,7 @@ namespace GhostSharp
         /// <returns>The page matching the given ID.</returns>
         /// <param name="id">The ID of the page to retrieve.</param>
         /// <param name="queryParams">Parameters that affect the resultset.</param>
-        public Page GetPageById(string id, PageQueryParams queryParams = null)
+        public Page GetPageById(string id, PostQueryParams queryParams = null)
         {
             var request = new RestRequest($"pages/{id}", Method.GET);
             ApplyPageQueryParams(request, queryParams);
@@ -39,7 +39,7 @@ namespace GhostSharp
         /// <returns>The page matching the given slug.</returns>
         /// <param name="slug">The slug of the page to retrieve.</param>
         /// <param name="queryParams">Parameters that affect the resultset.</param>
-        public Post GetPageBySlug(string slug, PageQueryParams queryParams = null)
+        public Post GetPageBySlug(string slug, PostQueryParams queryParams = null)
         {
             var request = new RestRequest($"pages/slug/{slug}", Method.GET);
             ApplyPageQueryParams(request, queryParams);
@@ -51,7 +51,7 @@ namespace GhostSharp
         /// </summary>
         /// <param name="request">A page REST request.</param>
         /// <param name="queryParams">Query parameters.</param>
-        void ApplyPageQueryParams(RestRequest request, PageQueryParams queryParams)
+        void ApplyPageQueryParams(RestRequest request, PostQueryParams queryParams)
         {
             ApplyPostQueryParams(request, queryParams);
         }

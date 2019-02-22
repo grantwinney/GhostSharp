@@ -12,7 +12,7 @@ namespace GhostSharp.Entities
     public class Post
     {
         public string Id { get; set; }
-        public bool Page { get; set; }
+        public bool? Page { get; set; }
         public string Uuid { get; set; }
         public string Title { get; set; }
         public string Slug { get; set; }
@@ -21,12 +21,12 @@ namespace GhostSharp.Entities
         public string PlainText { get; set; }
         public string CommentId { get; set; }
         public string FeatureImage { get; set; }
-        public bool Featured { get; set; }
+        public bool? Featured { get; set; }
         public string MetaTitle { get; set; }
         public string MetaDescription { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
-        public DateTime PublishedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public DateTime? PublishedAt { get; set; }
         public string CustomExcerpt { get; set; }
         public string CodeInjectionHead { get; set; }
         public string CodeInjectionFoot { get; set; }

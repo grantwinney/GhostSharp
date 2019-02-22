@@ -12,7 +12,7 @@ namespace GhostSharp
     {
         readonly string key;
 
-        private IRestClient Client { get; set; }
+        public IRestClient Client { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:GhostSharp.GhostAPI"/> class.
@@ -71,7 +71,9 @@ namespace GhostSharp
         }
 
         /// <summary>
-        /// If the response content has one or more error messages, throw an exception.
+        /// If response.Content has one or more error messages (returned from Ghost),
+        /// or response.Exception contains an exception (some other exception thrown during request),
+        /// create and throw a GhostSharpException with the details.
         /// </summary>
         /// <param name="response">The API response</param>
         void TestResponseForErrors(IRestResponse response, RestRequest request)

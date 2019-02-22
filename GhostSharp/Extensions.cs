@@ -17,16 +17,25 @@ namespace GhostSharp
 
         public static string GetOrderQueryString<T>(IEnumerable<Tuple<T, OrderDirection>> fields) where T : Enum
         {
-            var t = typeof(T);
-            return string.Join(",", fields.Select(x => $"{GetFieldName(x.Item1)}%20{x.Item2.ToString()}"));
+            return string.Join(",", from field in fields
+                                    let name = GetFieldName(field.Item1)
+                                    where name != null
+                                    select $"{name} {field.Item2.ToString()}");
         }
 
         public static string GetFieldName<T>(T enumValue) where T : Enum
         {
             var t = typeof(T);
-            return ((GhostFieldAttribute)t.GetMember(t.GetEnumName(enumValue))[0]
-                                          .GetCustomAttributes(typeof(GhostFieldAttribute), false)
-                                          .Single()).FieldName;
+            try
+            {
+                return ((GhostFieldAttribute)t.GetMember(t.GetEnumName(enumValue))[0]
+                                              .GetCustomAttributes(typeof(GhostFieldAttribute), false)
+                                              .SingleOrDefault())?.FieldName;
+            }
+            catch (ArgumentNullException)
+            {
+                return null;
+            }
         }
     }
 }

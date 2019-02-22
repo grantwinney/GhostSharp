@@ -9,8 +9,6 @@ namespace GhostSharp
         {
             var request = new RestRequest("settings", Method.GET);
 
-            request.AddQueryParameter("key", key);
-
             return Execute<SettingsResponse>(request)?.Settings;
         }
     }
