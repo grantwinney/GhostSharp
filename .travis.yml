@@ -3,6 +3,8 @@ language: csharp
 solution: GhostSharp.sln
 mono: none
 dotnet: 2.2.104
+before_install:
+  - sudo apt-get install -y nuget
 install:
   - nuget restore GhostSharp.sln
   - nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
