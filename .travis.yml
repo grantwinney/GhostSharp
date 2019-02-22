@@ -2,6 +2,10 @@ dist: xenial
 language: csharp
 solution: GhostSharp.sln
 mono: none
-dotnet: 2.2.104
+dotnet: 2.0
+install:
+  - nuget restore GhostSharp.sln
+  - nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
 script:
- - dotnet restore
+  - msbuild /p:Configuration=Release GhostSharp.sln
+  - mono ./testrunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe ./GhostSharp.Tests/bin/Release/GhostSharp.Tests.dll
