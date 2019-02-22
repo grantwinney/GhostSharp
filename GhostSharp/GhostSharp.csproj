@@ -3,6 +3,18 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>7.3</LangVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>GhostSharp</PackageId>
+    <Authors>grant</Authors>
+    <Company></Company>
+    <Description>This is a C# wrapper around the Ghost RESTful Content API, documented here: https://docs.ghost.org/api/content/</Description>
+    <PackageProjectUrl>https://github.com/grantwinney/GhostSharp</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/grantwinney/GhostSharp/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/grantwinney/GhostSharp</RepositoryUrl>
+    <RepositoryType></RepositoryType>
+    <PackageTags>ghost api rest api-wrapper netstandard wrapper-api wrapper</PackageTags>
+    <PackageReleaseNotes>First version of the wrapper for the new 2.0 version of the Ghost API, currently the Content API that requires a Content API Key. They're still completing the Admin API, at which point this wrapper may change significantly (and possibly even in a breaking manner, though hopefully not).</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
