@@ -13,8 +13,11 @@
     <RepositoryUrl>https://github.com/grantwinney/GhostSharp</RepositoryUrl>
     <RepositoryType></RepositoryType>
     <PackageTags>ghost api rest api-wrapper netstandard wrapper-api wrapper</PackageTags>
-    <PackageReleaseNotes>First version of the wrapper for the new 2.0 version of the Ghost API, currently the Content API that requires a Content API Key. They're still completing the Admin API, at which point this wrapper may change significantly (and possibly even in a breaking manner, though hopefully not).</PackageReleaseNotes>
+    <PackageReleaseNotes>First version of the wrapper for the new 2.0 version of the Ghost API, currently the Content API that requires a Content API Key. They're still completing the Admin API, at which point this wrapper may change significantly (and possibly even in a breaking manner, though hopefully not).
+
+Full release notes: https://github.com/grantwinney/GhostSharp/blob/master/README.md#release-notes</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
