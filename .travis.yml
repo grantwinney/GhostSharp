@@ -3,11 +3,7 @@ language: csharp
 solution: GhostSharp.sln
 mono: none
 dotnet: 2.2.104
-before_install:
-  - sudo apt-get update
-  - sudo apt-get install -y nuget
-  - sudo apt-get install nunit-console
-before_script:
-  - nuget restore GhostSharp.sln
-after_script:
-  - nunit-console GhostSharp.Tests/bin/Release/GhostSharp.Tests.dll
+script:
+  - cd GhostSharp.Tests
+  - dotnet restore
+  - dotnet build
