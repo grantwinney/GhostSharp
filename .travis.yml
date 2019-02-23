@@ -8,6 +8,7 @@ before_install:
   - sudo apt-get install -y nuget
   - sudo apt install -y mono-devel
   - sudo mozroots --import --machine --sync
+  - sudo mozroots --import --sync --machine --url "http://hg.mozilla.org/releases/mozilla-release/raw-file/default/security/nss/lib/ckfw/builtins/certdata.txt"
   - sudo certmgr -ssl -m https://go.microsoft.com
   - sudo certmgr -ssl -m https://nugetgallery.blob.core.windows.net
   - sudo certmgr -ssl -m https://nuget.org
