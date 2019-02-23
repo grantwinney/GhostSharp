@@ -4,17 +4,8 @@ solution: GhostSharp.sln
 mono: none
 dotnet: 2.2.104
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install -y nuget
-  - sudo apt install -y mono-devel
-  - sudo mozroots --import --sync
-  - sudo certmgr -ssl -m https://go.microsoft.com
-  - sudo certmgr -ssl -m https://nugetgallery.blob.core.windows.net
-  - sudo certmgr -ssl -m https://nuget.org
-  - sudo nuget update -self
-install:
+  - sudo apt-get install nunit-console
+before_script:
   - nuget restore GhostSharp.sln
-  - nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
-script:
-  - msbuild /p:Configuration=Release GhostSharp.sln
-  - mono ./testrunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe ./GhostSharp.Tests/bin/Release/GhostSharp.Tests.dll
+after_script:
+  - nunit-console GhostSharp.Tests/bin/Release/GhostSharp.Tests.dll
