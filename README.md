@@ -46,6 +46,6 @@ Feel free to [open a PR](https://github.com/grantwinney/GhostSharp/compare) if y
 [os]: https://www.codetriage.com/grantwinney/ghostsharp
 [twitter-intent]:https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fgrantwinney%2FGhostSharp&text=GhostSharp,%20a%20C%23%20Wrapper%20for%20the%20Ghost%20API&hashtags=tryghost,api
 [twitter-badge]:https://img.shields.io/twitter/url/http/shields.io.svg
-[nuget]:http://nothingyet.com
+[nuget]:https://www.nuget.org/packages/GhostSharp/1.0.0
 [nuget badge]:https://img.shields.io/nuget/v/GhostSharp.svg
 [lang badge]:https://img.shields.io/github/languages/top/grantwinney/GhostSharp.svg

@@ -4,4 +4,7 @@ solution: GhostSharp.sln
 mono: none
 dotnet: 2.2.104
 script:
- - dotnet restore
+  - cd GhostSharp.Tests
+  - dotnet restore
+  - dotnet build
+  - dotnet test
