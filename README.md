@@ -37,6 +37,11 @@ Feel free to [open a PR](https://github.com/grantwinney/GhostSharp/compare) if y
 
 [Open an issue](https://github.com/grantwinney/GhostSharp/issues/new). I can't promise when new features or suggestions will get implemented, but I'll check them out.
 
+## Release Notes
+
+* 1.0.1 - Added comments to aid in intellisense.
+* 1.0.0 - Covers the Content API endpoints.
+
 <!-- Badges -->
 [travis]: https://travis-ci.org/grantwinney/GhostSharp
 [travis badge]:https://img.shields.io/travis/grantwinney/GhostSharp.svg?branch=master
