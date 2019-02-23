@@ -7,3 +7,4 @@ script:
   - cd GhostSharp.Tests
   - dotnet restore
   - dotnet build
+  - dotnet test
