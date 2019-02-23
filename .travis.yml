@@ -6,6 +6,10 @@ dotnet: 2.2.104
 before_install:
   - sudo apt-get update
   - sudo apt-get install -y nuget
+  - sudo mozroots --import --machine --sync
+  - sudo certmgr -ssl -m https://go.microsoft.com
+  - sudo certmgr -ssl -m https://nugetgallery.blob.core.windows.net
+  - sudo certmgr -ssl -m https://nuget.org
   - sudo nuget update -self
 install:
   - nuget restore GhostSharp.sln
