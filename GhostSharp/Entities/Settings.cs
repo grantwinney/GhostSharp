@@ -2,9 +2,19 @@
 
 namespace GhostSharp.Entities
 {
+    /// <summary>
+    /// Response representing settings and any meta data
+    /// </summary>
     public class SettingsResponse
     {
+        /// <summary>
+        /// Represents your publication's settings.
+        /// </summary>
         public Settings Settings { get; set; }
+
+        /// <summary>
+        /// Meta data regarding the response.
+        /// </summary>
         public Meta Meta { get; set; }
     }
 
@@ -79,8 +89,14 @@ namespace GhostSharp.Entities
     /// </summary>
     public class Navigation
     {
+        /// <summary>
+        /// Menu label as visitors see it
+        /// </summary>
         public string Label { get; set; }
 
+        /// <summary>
+        /// Menu URL (relative URL, such as /about-me)
+        /// </summary>
         public string Url { get; set; }
     }
 }

@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 namespace GhostSharp.QueryParams
 {
+    /// <summary>
+    /// Query parameters that modify the payload that's returned, including
+    /// limiting to or filtering by certain fields, including extra data, etc.
+    /// </summary>
     public class AuthorQueryParams
     {
         /// <summary>
