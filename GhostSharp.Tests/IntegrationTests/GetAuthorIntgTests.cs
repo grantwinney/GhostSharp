@@ -47,15 +47,15 @@ namespace GhostSharp.Tests.IntegrationTests
         }
 
         [Test]
-        public void GetAuthorById_IgnoresFieldsParameter_WhenFieldsSpecified_ForIndividualRequest()
+        public void GetAuthorById_ReturnsLimitedFields_WhenFieldsSpecified_ForIndividualRequest()
         {
             var author = auth.GetAuthorById(ValidAuthor1Id, new AuthorQueryParams { Fields = AuthorFields.Id | AuthorFields.Slug });
 
             Assert.AreEqual(ValidAuthor1Id, author.Id);
             Assert.AreEqual(ValidAuthor1Slug, author.Slug);
-            Assert.AreEqual(ValidAuthor1Name, author.Name);
-            Assert.AreEqual(ValidAuthor1Url, author.Url);
-            Assert.IsNotNull(author.Bio);
+            Assert.IsNull(author.Name);
+            Assert.IsNull(author.Url);
+            Assert.IsNull(author.Bio);
             Assert.IsNull(author.Count);
         }
 
@@ -86,15 +86,15 @@ namespace GhostSharp.Tests.IntegrationTests
         }
 
         [Test]
-        public void GetAuthorBySlug_IgnoresFieldsParameter_WhenFieldsSpecified_ForIndividualRequest()
+        public void GetAuthorBySlug_ReturnsLimitedFields_WhenFieldsSpecified_ForIndividualRequest()
         {
             var author = auth.GetAuthorBySlug(ValidAuthor1Slug, new AuthorQueryParams { Fields = AuthorFields.Id | AuthorFields.Slug });
 
             Assert.AreEqual(ValidAuthor1Id, author.Id);
             Assert.AreEqual(ValidAuthor1Slug, author.Slug);
-            Assert.AreEqual(ValidAuthor1Name, author.Name);
-            Assert.AreEqual(ValidAuthor1Url, author.Url);
-            Assert.IsNotNull(author.Bio);
+            Assert.IsNull(author.Name);
+            Assert.IsNull(author.Url);
+            Assert.IsNull(author.Bio);
             Assert.IsNull(author.Count);
         }
 
@@ -135,9 +135,9 @@ namespace GhostSharp.Tests.IntegrationTests
             Assert.IsNull(author.Slug);
             Assert.IsNull(author.Twitter);
             Assert.IsNull(author.Website);
+            Assert.IsNull(author.Url);
 
             Assert.IsNotNull(author.Id);
-            Assert.IsNotNull(author.Url);  // for some reason, url is always included in the response
         }
 
         [Test]

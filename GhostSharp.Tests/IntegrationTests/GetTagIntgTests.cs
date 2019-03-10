@@ -55,7 +55,7 @@ namespace GhostSharp.Tests.IntegrationTests
         }
 
         [Test]
-        public void GetTagById_IgnoresFieldsParameter_WhenFieldsSpecified_ForIndividualRequest()
+        public void GetTagById_ReturnsLimitedFields_WhenFieldsSpecified_ForIndividualRequest()
         {
             var tag = auth.GetTagById(ValidTag1Id, new TagQueryParams { Fields = TagFields.Id | TagFields.Slug | TagFields.Url });
 
@@ -63,13 +63,12 @@ namespace GhostSharp.Tests.IntegrationTests
             Assert.AreEqual(ValidTag1Slug, tag.Slug);
             Assert.AreEqual(ValidTag1Url, tag.Url);
 
-            Assert.IsNotNull(tag.Name);
-            Assert.IsNotNull(tag.Description);
-            Assert.IsNotNull(tag.FeatureImage);
-            Assert.IsNotNull(tag.Visibility);
-            Assert.IsNotNull(tag.MetaTitle);
-            Assert.IsNotNull(tag.MetaDescription);
-
+            Assert.IsNull(tag.Name);
+            Assert.IsNull(tag.Description);
+            Assert.IsNull(tag.FeatureImage);
+            Assert.IsNull(tag.Visibility);
+            Assert.IsNull(tag.MetaTitle);
+            Assert.IsNull(tag.MetaDescription);
             Assert.IsNull(tag.Count);
         }
 
@@ -108,7 +107,7 @@ namespace GhostSharp.Tests.IntegrationTests
         }
 
         [Test]
-        public void GetTagBySlug_IgnoresFieldsParameter_WhenFieldsSpecified_ForIndividualRequest()
+        public void GetTagBySlug_ReturnsLimitedFields_WhenFieldsSpecified_ForIndividualRequest()
         {
             var tag = auth.GetTagBySlug(ValidTag1Slug, new TagQueryParams { Fields = TagFields.Id | TagFields.Slug | TagFields.Url });
 
@@ -116,13 +115,12 @@ namespace GhostSharp.Tests.IntegrationTests
             Assert.AreEqual(ValidTag1Slug, tag.Slug);
             Assert.AreEqual(ValidTag1Url, tag.Url);
 
-            Assert.IsNotNull(tag.Name);
-            Assert.IsNotNull(tag.Description);
-            Assert.IsNotNull(tag.FeatureImage);
-            Assert.IsNotNull(tag.Visibility);
-            Assert.IsNotNull(tag.MetaTitle);
-            Assert.IsNotNull(tag.MetaDescription);
-
+            Assert.IsNull(tag.Name);
+            Assert.IsNull(tag.Description);
+            Assert.IsNull(tag.FeatureImage);
+            Assert.IsNull(tag.Visibility);
+            Assert.IsNull(tag.MetaTitle);
+            Assert.IsNull(tag.MetaDescription);
             Assert.IsNull(tag.Count);
         }
 
@@ -155,9 +153,9 @@ namespace GhostSharp.Tests.IntegrationTests
             Assert.IsNull(tag.MetaDescription);
             Assert.IsNull(tag.Count);
             Assert.IsNull(tag.Slug);
+            Assert.IsNull(tag.Url);
 
             Assert.IsNotNull(tag.Id);
-            Assert.IsNotNull(tag.Url);  // for some reason, url is always included in the response
         }
 
         [Test]
