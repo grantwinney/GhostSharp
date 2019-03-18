@@ -14,9 +14,9 @@ namespace GhostSharp
         /// Initializes a new instance of the <see cref="T:GhostSharp.GhostContentAPI"/> class.
         /// </summary>
         /// <param name="host">The Host for which to access the Content API.</param>
-        /// <param name="key">Content API key.</param>
-        public GhostContentAPI(string host, string key, ExceptionLevel exceptionLevel = ExceptionLevel.All)
-            : base(host, key, exceptionLevel, "/ghost/api/v2/content/") { }
+        /// <param name="contentApiKey">Content API key.</param>
+        public GhostContentAPI(string host, string contentApiKey, ExceptionLevel exceptionLevel = ExceptionLevel.All)
+            : base(host, contentApiKey, exceptionLevel, "/ghost/api/v2/content/") { }
     }
 
     /// <summary>
@@ -28,9 +28,9 @@ namespace GhostSharp
         /// Initializes a new instance of the <see cref="T:GhostSharp.GhostAdminAPI"/> class.
         /// </summary>
         /// <param name="host">The Host for which to access the Admin API.</param>
-        /// <param name="key">Admin API key.</param>
-        public GhostAdminAPI(string host, string key, ExceptionLevel exceptionLevel = ExceptionLevel.All)
-            : base(host, key, exceptionLevel, "/ghost/api/v2/admin/") { }
+        /// <param name="adminApiKey">Admin API key.</param>
+        public GhostAdminAPI(string host, string adminApiKey, ExceptionLevel exceptionLevel = ExceptionLevel.All)
+            : base(host, adminApiKey, exceptionLevel, "/ghost/api/v2/admin/") { }
     }
 
     public partial class GhostAPI

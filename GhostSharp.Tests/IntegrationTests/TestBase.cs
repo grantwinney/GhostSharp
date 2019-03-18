@@ -10,7 +10,7 @@ namespace GhostSharp.Tests.IntegrationTests
         protected static string Host = "https://grantwinney.com";
         protected static string SiteTitle = "Grant Winney";
 
-        protected static string ValidContentApiKey = Environment.GetEnvironmentVariable("Content_API_Key") ?? "content_api_key";
+        protected static string ValidContentApiKey = Environment.GetEnvironmentVariable("Admin_API_Key") ?? "content_api_key";
         protected static string ValidAdminApiKey = Environment.GetEnvironmentVariable("Admin_API_Key") ?? "admin_api_key";
 
         protected static string ValidPost1Id = "5c60e815afe8720651f1834d";
