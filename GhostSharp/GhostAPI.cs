@@ -91,7 +91,7 @@ namespace GhostSharp
     public partial class GhostAPI
     {
         internal string key;
-        internal IRestClient Client { get; set; }
+        public IRestClient Client { internal get; set; }
 
         internal GhostAPI(string host, string key, ExceptionLevel exceptionLevel, string baseUrl)
         {
