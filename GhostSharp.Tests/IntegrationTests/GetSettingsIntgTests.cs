@@ -9,7 +9,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [Test]
         public void GetSettings_ReturnsSettings_WhenKeyIsValid()
         {
-            var auth = new GhostAPI(Host, ValidApiKey);
+            var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
             Assert.AreEqual(SiteTitle, auth.GetSettings().Title);
         }
@@ -18,7 +18,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [TestCase(ExceptionLevel.All)]
         public void GetSettings_ThrowsException_WhenKeyIsInvalid(ExceptionLevel exceptionLevel)
         {
-            var auth = new GhostAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
+            var auth = new GhostContentAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
 
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetSettings());
             Assert.IsNotEmpty(ex.Errors);
@@ -29,7 +29,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [TestCase(ExceptionLevel.NonGhost)]
         public void GetSettings_DoesNotThrow_ReturnsNull_WhenKeyIsInvalid(ExceptionLevel exceptionLevel)
         {
-            var auth = new GhostAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
+            var auth = new GhostContentAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
 
             Assert.IsNull(auth.GetSettings());
             Assert.IsNotNull(auth.LastException);

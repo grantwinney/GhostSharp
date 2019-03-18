@@ -6,24 +6,43 @@ using RestSharp;
 namespace GhostSharp
 {
     /// <summary>
-    /// Processing successful and error responses from the Ghost API.
+    /// Initialization for the Ghost Content API.
     /// </summary>
+    public class GhostContentAPI : GhostAPI
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:GhostSharp.GhostContentAPI"/> class.
+        /// </summary>
+        /// <param name="host">The Host for which to access the Content API.</param>
+        /// <param name="key">Content API key.</param>
+        public GhostContentAPI(string host, string key, ExceptionLevel exceptionLevel = ExceptionLevel.All)
+            : base(host, key, exceptionLevel, "/ghost/api/v2/content/") { }
+    }
+
+    /// <summary>
+    /// Initialization for the Ghost Admin API.
+    /// </summary>
+    public class GhostAdminAPI : GhostAPI
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:GhostSharp.GhostAdminAPI"/> class.
+        /// </summary>
+        /// <param name="host">The Host for which to access the Admin API.</param>
+        /// <param name="key">Admin API key.</param>
+        public GhostAdminAPI(string host, string key, ExceptionLevel exceptionLevel = ExceptionLevel.All)
+            : base(host, key, exceptionLevel, "/ghost/api/v2/admin/") { }
+    }
+
     public partial class GhostAPI
     {
-        readonly string key;
-
+        public readonly string key;
         public IRestClient Client { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:GhostSharp.GhostAPI"/> class.
-        /// </summary>
-        /// <param name="host">The Host for which to access the API.</param>
-        /// <param name="key">Content API key.</param>
-        public GhostAPI(string host, string key)
+        internal GhostAPI(string host, string key, ExceptionLevel exceptionLevel, string baseUrl)
         {
             this.key = key;
             Client = new RestClient { BaseUrl = new Uri(new Uri(host), "/ghost/api/v2/content/") };
-            ExceptionLevel = ExceptionLevel.All;
+            ExceptionLevel = exceptionLevel;
         }
 
         /// <summary>

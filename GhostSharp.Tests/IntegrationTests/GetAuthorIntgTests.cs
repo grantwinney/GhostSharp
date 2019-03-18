@@ -17,7 +17,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [SetUp]
         public void SetUp()
         {
-            auth = new GhostAPI(Host, ValidApiKey);
+            auth = new GhostContentAPI(Host, ValidContentApiKey);
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [Test]
         public void GetAuthors_ReturnsLimitedAuthors_WhenLimitSpecified()
         {
-            var auth = new GhostAPI(Host, ValidApiKey);
+            var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
             var authorResponse = auth.GetAuthors(new AuthorQueryParams { Limit = 1, Fields = AuthorFields.Id });
 
@@ -119,7 +119,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [Test]
         public void GetAuthors_ReturnsLimitedFields_WhenFieldsSpecified()
         {
-            var auth = new GhostAPI(Host, ValidApiKey);
+            var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
             var author = auth.GetAuthors(new AuthorQueryParams { Limit = 1, Fields = AuthorFields.Id }).Authors[0];
 
@@ -143,7 +143,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [Test]
         public void GetAuthors_ReturnsPostCount_WhenIncludingCountPosts()
         {
-            var auth = new GhostAPI(Host, ValidApiKey);
+            var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
             var author = auth.GetAuthors(new AuthorQueryParams { Limit = 1, IncludePostCount = true }).Authors[0];
 
@@ -153,7 +153,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [Test]
         public void GetAuthors_ReturnsAllAuthors_WhenNoLimitIsTrue()
         {
-            var auth = new GhostAPI(Host, ValidApiKey);
+            var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
             var authorResponse = auth.GetAuthors(new AuthorQueryParams { Limit = 1, NoLimit = true, Fields = AuthorFields.Id });
 
@@ -163,7 +163,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [Test]
         public void GetAuthors_ReturnsExpectedAuthor_WhenOrderingByField()
         {
-            var auth = new GhostAPI(Host, ValidApiKey);
+            var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
             var author = auth.GetAuthors(new AuthorQueryParams { Limit = 1, Order = new List<Tuple<AuthorFields, OrderDirection>> { Tuple.Create(AuthorFields.Slug, OrderDirection.desc) } }).Authors[0];
 
@@ -176,7 +176,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [Test]
         public void GetAuthors_ReturnsExpectedAuthor_WhenGettingSecondPage()
         {
-            var auth = new GhostAPI(Host, ValidApiKey);
+            var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
             var author = auth.GetAuthors(new AuthorQueryParams { Limit = 1, Page = 2, Order = new List<Tuple<AuthorFields, OrderDirection>> { Tuple.Create(AuthorFields.Slug, OrderDirection.asc) } }).Authors[0];
 
@@ -189,7 +189,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [Test]
         public void GetAuthors_ReturnsExpectedAuthors_WhenApplyingFilter()
         {
-            var auth = new GhostAPI(Host, ValidApiKey);
+            var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
             var authorResponse = auth.GetAuthors(new AuthorQueryParams { Filter = "slug:[grant2]" });
             Assert.AreEqual(1, authorResponse.Authors.Count);
@@ -206,7 +206,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [TestCase(ExceptionLevel.All)]
         public void GetAuthors_ThrowsException_WhenKeyIsInvalid(ExceptionLevel exceptionLevel)
         {
-            var auth = new GhostAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
+            var auth = new GhostContentAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
 
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetAuthors());
             Assert.IsNotEmpty(ex.Errors);
@@ -217,7 +217,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [TestCase(ExceptionLevel.NonGhost)]
         public void GetAuthors_ReturnsNull_WhenKeyIsInvalid_AndGhostExceptionsSuppressed(ExceptionLevel exceptionLevel)
         {
-            var auth = new GhostAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
+            var auth = new GhostContentAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
 
             Assert.IsNull(auth.GetAuthors());
             Assert.IsNotNull(auth.LastException);

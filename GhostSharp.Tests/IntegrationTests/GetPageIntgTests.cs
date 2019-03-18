@@ -18,7 +18,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [SetUp]
         public void SetUp()
         {
-            auth = new GhostAPI(Host, ValidApiKey);
+            auth = new GhostContentAPI(Host, ValidContentApiKey);
         }
 
         [Test]
@@ -208,7 +208,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [Test]
         public void GetPages_ReturnsLimitedPages_WhenLimitSpecified()
         {
-            var auth = new GhostAPI(Host, ValidApiKey);
+            var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
             var pageResponse = auth.GetPages(new PostQueryParams { Limit = 1, Fields = PostFields.Id });
 
@@ -218,7 +218,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [Test]
         public void GetPages_ReturnsLimitedFields_WhenFieldsSpecified()
         {
-            var auth = new GhostAPI(Host, ValidApiKey);
+            var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
             var page = auth.GetPages(new PostQueryParams { Limit = 1, Fields = PostFields.Id }).Pages[0];
 
@@ -260,7 +260,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [Test]
         public void GetAuthors_ReturnsAuthors_WhenIncludingAuthors()
         {
-            var auth = new GhostAPI(Host, ValidApiKey);
+            var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
             var page = auth.GetPages(new PostQueryParams { Limit = 1, IncludeAuthors = true }).Pages[0];
 
@@ -274,7 +274,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [Test]
         public void GetAuthors_ReturnsTags_WhenIncludingTags()
         {
-            var auth = new GhostAPI(Host, ValidApiKey);
+            var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
             var page = auth.GetPages(new PostQueryParams { Limit = 1, IncludeTags = true }).Pages[0];
 
@@ -287,7 +287,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [Test]
         public void GetAuthors_ReturnsAuthorsAndTags_WhenIncludingAuthorsAndTags()
         {
-            var auth = new GhostAPI(Host, ValidApiKey);
+            var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
             var page = auth.GetPages(new PostQueryParams { Limit = 1, IncludeTags = true, IncludeAuthors = true }).Pages[0];
 
@@ -300,7 +300,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [Test]
         public void GetPages_ReturnsAllPages_WhenNoLimitIsTrue()
         {
-            var auth = new GhostAPI(Host, ValidApiKey);
+            var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
             var pageResponse = auth.GetPages(new PostQueryParams { Limit = 1, NoLimit = true, Fields = PostFields.Id });
 
@@ -310,7 +310,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [Test]
         public void GetPages_ReturnsExpectedPage_WhenOrderingByField()
         {
-            var auth = new GhostAPI(Host, ValidApiKey);
+            var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
             var page = auth.GetPages(new PostQueryParams { Limit = 1, Order = new List<Tuple<PostFields, OrderDirection>> { Tuple.Create(PostFields.CreatedAt, OrderDirection.asc) } }).Pages[0];
 
@@ -320,7 +320,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [Test]
         public void GetPages_ReturnsExpectedPage_WhenGettingSecondPage()
         {
-            var auth = new GhostAPI(Host, ValidApiKey);
+            var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
             var page = auth.GetPages(new PostQueryParams { Page = 2, Limit = 2, Order = new List<Tuple<PostFields, OrderDirection>> { Tuple.Create(PostFields.CreatedAt, OrderDirection.asc) }, Fields = PostFields.Id }).Pages[0];
 
@@ -330,7 +330,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [Test]
         public void GetPages_ReturnsExpectedPages_WhenApplyingFilter()
         {
-            var auth = new GhostAPI(Host, ValidApiKey);
+            var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
             var pageResponse = auth.GetPages(new PostQueryParams { Filter = $"slug:[{ValidPage1Slug}]" });
             Assert.AreEqual(1, pageResponse.Pages.Count);
@@ -346,7 +346,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [TestCase(ExceptionLevel.All)]
         public void GetPages_ThrowsException_WhenKeyIsInvalid(ExceptionLevel exceptionLevel)
         {
-            var auth = new GhostAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
+            var auth = new GhostContentAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
 
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetPages());
             Assert.IsNotEmpty(ex.Errors);
@@ -357,7 +357,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [TestCase(ExceptionLevel.NonGhost)]
         public void GetPages_ReturnsNull_WhenKeyIsInvalid_AndGhostExceptionsSuppressed(ExceptionLevel exceptionLevel)
         {
-            var auth = new GhostAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
+            var auth = new GhostContentAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
 
             Assert.IsNull(auth.GetPages());
             Assert.IsNotNull(auth.LastException);

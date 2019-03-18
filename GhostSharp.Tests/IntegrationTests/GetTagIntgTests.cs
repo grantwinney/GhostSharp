@@ -17,7 +17,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [SetUp]
         public void SetUp()
         {
-            auth = new GhostAPI(Host, ValidApiKey);
+            auth = new GhostContentAPI(Host, ValidContentApiKey);
         }
 
         [Test]
@@ -231,7 +231,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [TestCase(ExceptionLevel.All)]
         public void GetTags_ThrowsException_WhenKeyIsInvalid(ExceptionLevel exceptionLevel)
         {
-            auth = new GhostAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
+            auth = new GhostContentAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
 
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetTags());
             Assert.IsNotEmpty(ex.Errors);
@@ -242,7 +242,7 @@ namespace GhostSharp.Tests.IntegrationTests
         [TestCase(ExceptionLevel.NonGhost)]
         public void GetTags_ReturnsNull_WhenKeyIsInvalid_AndGhostExceptionsSuppressed(ExceptionLevel exceptionLevel)
         {
-            auth = new GhostAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
+            auth = new GhostContentAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
 
             auth.ExceptionLevel = exceptionLevel;
 

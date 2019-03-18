@@ -26,7 +26,7 @@ namespace GhostSharp.Tests.UnitTests
         [SetUp]
         public void SetUp()
         {
-            auth = new GhostAPI("http://invalid_uri.com", "invalid_key");
+            auth = new GhostContentAPI("http://invalid_uri.com", "invalid_key");
             mockClient = new Mock<IRestClient>(MockBehavior.Strict);
             auth.Client = mockClient.Object;
         }
