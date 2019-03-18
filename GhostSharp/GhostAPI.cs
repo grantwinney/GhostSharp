@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using GhostSharp.Entities;
+using JWT.Algorithms;
+using JWT.Builder;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -16,7 +19,31 @@ namespace GhostSharp
         /// <param name="host">The Host for which to access the Content API.</param>
         /// <param name="contentApiKey">Content API key.</param>
         public GhostContentAPI(string host, string contentApiKey, ExceptionLevel exceptionLevel = ExceptionLevel.All)
-            : base(host, contentApiKey, exceptionLevel, "/ghost/api/v2/admin/") { }
+            : base(host, contentApiKey, exceptionLevel, "/ghost/api/v2/admin/")
+        {
+            var adminKeyParts = contentApiKey.Split(':');
+
+            if (adminKeyParts.Length != 2)
+            {
+                var exception = new ArgumentException("The Admin API Key should consist of an ID and Secret, separated by a colon.");
+                LastException = exception;
+
+                if (exceptionLevel == ExceptionLevel.All || exceptionLevel == ExceptionLevel.NonGhost)
+                    throw exception;
+            }
+
+            var token = new JwtBuilder().WithAlgorithm(new HMACSHA256Algorithm())
+                                        .WithSecret(adminKeyParts[1])
+                                        .AddHeader(HeaderName.Algorithm, "HS256")
+                                        .AddHeader(HeaderName.KeyId, adminKeyParts[0])
+                                        .AddHeader(HeaderName.Type, "JWT")
+                                        .AddClaim("exp", GetUnixEpochSeconds())
+                                        .AddClaim("iat", GetUnixEpochSeconds())
+                                        .AddClaim("aud", "/v2/admin/")
+                                        .Build();
+
+            key = token;
+        }
     }
 
     /// <summary>
@@ -30,13 +57,42 @@ namespace GhostSharp
         /// <param name="host">The Host for which to access the Admin API.</param>
         /// <param name="adminApiKey">Admin API key.</param>
         public GhostAdminAPI(string host, string adminApiKey, ExceptionLevel exceptionLevel = ExceptionLevel.All)
-            : base(host, adminApiKey, exceptionLevel, "/ghost/api/v2/admin/") { }
+            : base(host, adminApiKey, exceptionLevel, "/ghost/api/v2/admin/")
+        {
+            var adminKeyParts = adminApiKey.Split(':');
+
+            if (adminKeyParts.Length != 2)
+            {
+                var exception = new ArgumentException("The Admin API Key should consist of an ID and Secret, separated by a colon.");
+                LastException = exception;
+
+                if (exceptionLevel == ExceptionLevel.All || exceptionLevel == ExceptionLevel.NonGhost)
+                    throw exception;
+            }
+
+            var token = new JwtBuilder().WithAlgorithm(new HMACSHA256Algorithm())
+                                        .WithSecret(adminKeyParts[1])
+                                        .AddHeader(HeaderName.Algorithm, "HS256")
+                                        .AddHeader(HeaderName.KeyId, adminKeyParts[0])
+                                        .AddHeader(HeaderName.Type, "JWT")
+                                        .AddClaim("exp", GetUnixEpochSeconds())
+                                        .AddClaim("iat", GetUnixEpochSeconds())
+                                        .AddClaim("aud", "/v2/admin/")
+                                        .Build();
+
+            key = token;
+        }
+
+        private long GetUnixEpochSeconds()
+        {
+            return new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
+        }
     }
 
     public partial class GhostAPI
     {
-        public readonly string key;
-        public IRestClient Client { get; set; }
+        internal string key;
+        internal IRestClient Client { get; set; }
 
         internal GhostAPI(string host, string key, ExceptionLevel exceptionLevel, string baseUrl)
         {
@@ -54,7 +110,7 @@ namespace GhostSharp
         /// Gets the last exception that was thrown.
         /// </summary>
         /// <value>The last exception.</value>
-        public Exception LastException { get; private set; }
+        public Exception LastException { get; internal set; }
 
         /// <summary>
         /// Calls the Ghost API and returns the response data.
@@ -65,7 +121,9 @@ namespace GhostSharp
         /// <typeparam name="T">The type of object being requested</typeparam>
         T Execute<T>(RestRequest request) where T : new()
         {
-            request.AddQueryParameter("key", key);
+            //request.AddQueryParameter("key", key);
+
+            request.AddHeader("Authorization", key);
 
             try
             {
