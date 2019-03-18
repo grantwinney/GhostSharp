@@ -16,7 +16,7 @@ namespace GhostSharp
         /// <param name="host">The Host for which to access the Content API.</param>
         /// <param name="contentApiKey">Content API key.</param>
         public GhostContentAPI(string host, string contentApiKey, ExceptionLevel exceptionLevel = ExceptionLevel.All)
-            : base(host, contentApiKey, exceptionLevel, "/ghost/api/v2/content/") { }
+            : base(host, contentApiKey, exceptionLevel, "/ghost/api/v2/admin/") { }
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ namespace GhostSharp
         internal GhostAPI(string host, string key, ExceptionLevel exceptionLevel, string baseUrl)
         {
             this.key = key;
-            Client = new RestClient { BaseUrl = new Uri(new Uri(host), "/ghost/api/v2/content/") };
+            Client = new RestClient { BaseUrl = new Uri(new Uri(host), baseUrl) };
             ExceptionLevel = exceptionLevel;
         }
 
