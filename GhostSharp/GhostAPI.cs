@@ -32,13 +32,15 @@ namespace GhostSharp
                     throw exception;
             }
 
+            var unixEpochInSeconds = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
+
             var token = new JwtBuilder().WithAlgorithm(new HMACSHA256Algorithm())
                                         .WithSecret(adminKeyParts[1])
                                         .AddHeader(HeaderName.Algorithm, "HS256")
                                         .AddHeader(HeaderName.KeyId, adminKeyParts[0])
                                         .AddHeader(HeaderName.Type, "JWT")
-                                        .AddClaim("exp", GetUnixEpochSeconds())
-                                        .AddClaim("iat", GetUnixEpochSeconds())
+                                        .AddClaim("exp", unixEpochInSeconds)
+                                        .AddClaim("iat", unixEpochInSeconds)
                                         .AddClaim("aud", "/v2/admin/")
                                         .Build();
 
@@ -70,22 +72,19 @@ namespace GhostSharp
                     throw exception;
             }
 
+            var unixEpochInSeconds = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
+
             var token = new JwtBuilder().WithAlgorithm(new HMACSHA256Algorithm())
                                         .WithSecret(adminKeyParts[1])
                                         .AddHeader(HeaderName.Algorithm, "HS256")
                                         .AddHeader(HeaderName.KeyId, adminKeyParts[0])
                                         .AddHeader(HeaderName.Type, "JWT")
-                                        .AddClaim("exp", GetUnixEpochSeconds())
-                                        .AddClaim("iat", GetUnixEpochSeconds())
+                                        .AddClaim("exp", unixEpochInSeconds)
+                                        .AddClaim("iat", unixEpochInSeconds)
                                         .AddClaim("aud", "/v2/admin/")
                                         .Build();
 
             key = token;
-        }
-
-        private long GetUnixEpochSeconds()
-        {
-            return new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
         }
     }
 
