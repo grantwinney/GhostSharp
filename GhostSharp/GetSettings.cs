@@ -12,7 +12,7 @@ namespace GhostSharp
         /// <returns>The blog settings.</returns>
         public Settings GetSettings()
         {
-            var request = new RestRequest("settings", Method.GET);
+            var request = new RestRequest("settings/", Method.GET);
 
             return Execute<SettingsResponse>(request)?.Settings;
         }

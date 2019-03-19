@@ -16,7 +16,7 @@ namespace GhostSharp
         /// <param name="queryParams">Parameters that affect which tags are returned.</param>
         public TagResponse GetTags(TagQueryParams queryParams = null)
         {
-            var request = new RestRequest("tags", Method.GET);
+            var request = new RestRequest("tags/", Method.GET);
             ApplyTagQueryParams(request, queryParams);
             return Execute<TagResponse>(request);
         }
@@ -29,7 +29,7 @@ namespace GhostSharp
         /// <param name="include">count.posts (I have no idea what this is for; not documented)</param>
         public Tag GetTagById(string id, TagQueryParams queryParams = null)
         {
-            var request = new RestRequest($"tags/{id}", Method.GET);
+            var request = new RestRequest($"tags/{id}/", Method.GET);
             ApplyTagQueryParams(request, queryParams);
             return Execute<TagResponse>(request)?.Tags?.Single();
         }
@@ -42,7 +42,7 @@ namespace GhostSharp
         /// <param name="include">count.posts (I have no idea what this is for; not documented)</param>
         public Tag GetTagBySlug(string slug, TagQueryParams queryParams = null)
         {
-            var request = new RestRequest($"tags/slug/{slug}", Method.GET);
+            var request = new RestRequest($"tags/slug/{slug}/", Method.GET);
             ApplyTagQueryParams(request, queryParams);
             return Execute<TagResponse>(request)?.Tags?.Single();
         }

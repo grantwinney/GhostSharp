@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GhostSharp.Tests.ContentAPI.IntegrationTests
+namespace GhostSharp.Tests.AdminAPI.IntegrationTests
 {
     public class TestBase
     {
@@ -10,7 +10,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         protected static string Host = "https://grantwinney.com";
         protected static string SiteTitle = "Grant Winney";
 
-        protected static string ValidContentApiKey = Environment.GetEnvironmentVariable("Content_API_Key") ?? "content_api_key";
+        protected static string ValidAdminApiKey = Environment.GetEnvironmentVariable("Admin_API_Key") ?? "admin_api_key";
 
         protected static string ValidPost1Id = "5c60e815afe8720651f1834d";
         protected static string ValidPost1Slug = "using-the-ip-geolocation-api-to-find-info-about-an-ip-address";
@@ -64,7 +64,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         protected static string InvalidTagId = "aaaaaaaaaaaaaaaaaaaaaaaa";
         protected static string InvalidTagSlug = "invalid-slug-value";
 
-        private List<string> testValues = new List<string> { ValidContentApiKey, ValidPost1Id, ValidPost1Slug,
+        private List<string> testValues = new List<string> { ValidAdminApiKey, ValidPost1Id, ValidPost1Slug,
                                                              ValidAuthor1Id, ValidAuthor1Slug, ValidTag1Id, ValidTag1Slug};
 
         protected TestBase()

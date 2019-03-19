@@ -16,7 +16,7 @@ namespace GhostSharp
         /// <param name="queryParams">Parameters that affect the resultset.</param>
         public PostResponse GetPosts(PostQueryParams queryParams = null)
         {
-            var request = new RestRequest("posts", Method.GET);
+            var request = new RestRequest("posts/", Method.GET);
             ApplyPostQueryParams(request, queryParams);
             return Execute<PostResponse>(request);
         }
@@ -29,7 +29,7 @@ namespace GhostSharp
         /// <param name="queryParams">Parameters that affect the resultset.</param>
         public Post GetPostById(string id, PostQueryParams queryParams = null)
         {
-            var request = new RestRequest($"posts/{id}", Method.GET);
+            var request = new RestRequest($"posts/{id}/", Method.GET);
             ApplyPostQueryParams(request, queryParams);
             return Execute<PostResponse>(request)?.Posts?.Single();
         }
@@ -42,7 +42,7 @@ namespace GhostSharp
         /// <param name="queryParams">Parameters that affect the resultset.</param>
         public Post GetPostBySlug(string slug, PostQueryParams queryParams = null)
         {
-            var request = new RestRequest($"posts/slug/{slug}", Method.GET);
+            var request = new RestRequest($"posts/slug/{slug}/", Method.GET);
             ApplyPostQueryParams(request, queryParams);
             return Execute<PostResponse>(request)?.Posts?.Single();
         }

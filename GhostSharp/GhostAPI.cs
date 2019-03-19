@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
 using GhostSharp.Entities;
 using JWT;
 using JWT.Algorithms;
