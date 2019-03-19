@@ -1,7 +1,7 @@
 ﻿using GhostSharp.Entities;
 using NUnit.Framework;
 
-namespace GhostSharp.Tests.IntegrationTests
+namespace GhostSharp.Tests.ContentAPI.IntegrationTests
 {
     [TestFixture]
     public class GetSettingsIntgTests : TestBase

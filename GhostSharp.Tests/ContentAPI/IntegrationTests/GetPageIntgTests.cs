@@ -4,9 +4,8 @@ using GhostSharp.QueryParams;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace GhostSharp.Tests.IntegrationTests
+namespace GhostSharp.Tests.ContentAPI.IntegrationTests
 {
     [TestFixture]
     public class GetPageIntgTests : TestBase

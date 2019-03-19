@@ -5,7 +5,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace GhostSharp.Tests.IntegrationTests
+namespace GhostSharp.Tests.ContentAPI.IntegrationTests
 {
     [TestFixture]
     public class GetTagIntgTests : TestBase

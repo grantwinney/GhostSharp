@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using GhostSharp.Entities;
+using JWT;
 using JWT.Algorithms;
 using JWT.Builder;
 using Newtonsoft.Json;
@@ -19,32 +21,8 @@ namespace GhostSharp
         /// <param name="host">The Host for which to access the Content API.</param>
         /// <param name="contentApiKey">Content API key.</param>
         public GhostContentAPI(string host, string contentApiKey, ExceptionLevel exceptionLevel = ExceptionLevel.All)
-            : base(host, contentApiKey, exceptionLevel, "/ghost/api/v2/admin/")
+            : base(host, contentApiKey, exceptionLevel, "/ghost/api/v2/content/")
         {
-            var adminKeyParts = contentApiKey.Split(':');
-
-            if (adminKeyParts.Length != 2)
-            {
-                var exception = new ArgumentException("The Admin API Key should consist of an ID and Secret, separated by a colon.");
-                LastException = exception;
-
-                if (exceptionLevel == ExceptionLevel.All || exceptionLevel == ExceptionLevel.NonGhost)
-                    throw exception;
-            }
-
-            var unixEpochInSeconds = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
-
-            var token = new JwtBuilder().WithAlgorithm(new HMACSHA256Algorithm())
-                                        .WithSecret(adminKeyParts[1])
-                                        .AddHeader(HeaderName.Algorithm, "HS256")
-                                        .AddHeader(HeaderName.KeyId, adminKeyParts[0])
-                                        .AddHeader(HeaderName.Type, "JWT")
-                                        .AddClaim("exp", unixEpochInSeconds)
-                                        .AddClaim("iat", unixEpochInSeconds)
-                                        .AddClaim("aud", "/v2/admin/")
-                                        .Build();
-
-            key = token;
         }
     }
 
@@ -75,16 +53,44 @@ namespace GhostSharp
             var unixEpochInSeconds = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
 
             var token = new JwtBuilder().WithAlgorithm(new HMACSHA256Algorithm())
-                                        .WithSecret(adminKeyParts[1])
-                                        .AddHeader(HeaderName.Algorithm, "HS256")
+                                        .WithSecret(StringToByteArray(adminKeyParts[1]))
                                         .AddHeader(HeaderName.KeyId, adminKeyParts[0])
-                                        .AddHeader(HeaderName.Type, "JWT")
-                                        .AddClaim("exp", unixEpochInSeconds)
+                                        .AddClaim("exp", unixEpochInSeconds + 300)
                                         .AddClaim("iat", unixEpochInSeconds)
                                         .AddClaim("aud", "/v2/admin/")
                                         .Build();
 
+            try
+            {
+                var json = new JwtBuilder()
+                    .WithSecret(StringToByteArray(adminKeyParts[1]))
+                    .MustVerifySignature()
+                    .Decode(token);
+                Console.WriteLine(json);
+            }
+            catch (TokenExpiredException)
+            {
+                Console.WriteLine("Token has expired");
+            }
+            catch (SignatureVerificationException)
+            {
+                Console.WriteLine("Token has invalid signature");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
             key = token;
+        }
+
+        private static byte[] StringToByteArray(string hex)
+        {
+            int NumberChars = hex.Length;
+            byte[] bytes = new byte[NumberChars / 2];
+            for (int i = 0; i < NumberChars; i += 2)
+                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+            return bytes;
         }
     }
 
@@ -120,9 +126,9 @@ namespace GhostSharp
         /// <typeparam name="T">The type of object being requested</typeparam>
         T Execute<T>(RestRequest request) where T : new()
         {
-            //request.AddQueryParameter("key", key);
+            request.AddQueryParameter("key", key);
 
-            request.AddHeader("Authorization", key);
+            //request.AddHeader("Authorization", $"Ghost {key}");
 
             try
             {

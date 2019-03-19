@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GhostSharp.Tests.IntegrationTests
+namespace GhostSharp.Tests.ContentAPI.IntegrationTests
 {
     public class TestBase
     {

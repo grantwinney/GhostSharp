@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Linq;
 
-namespace GhostSharp.Tests.UnitTests
+namespace GhostSharp.Tests.ContentAPI.UnitTests
 {
     [TestFixture]
     public class ExtUnitTests

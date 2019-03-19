@@ -6,7 +6,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 
-namespace GhostSharp.Tests.UnitTests
+namespace GhostSharp.Tests.ContentAPI.UnitTests
 {
     [TestFixture]
     public class GetPostUnitTests
