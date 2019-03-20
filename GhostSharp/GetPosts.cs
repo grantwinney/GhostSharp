@@ -24,7 +24,11 @@ namespace GhostSharp
         /// <summary>
         /// Get a specific post based on its ID.
         /// </summary>
-        /// <returns>The post matching the given ID.</returns>
+        /// <returns>
+        /// The post matching the given ID.
+        /// By default, Content API returns HTML, Admin API returns MobileDoc.
+        /// Admin API also includes author and tag by default, where Content API does not.
+        /// </returns>
         /// <param name="id">The ID of the post to retrieve.</param>
         /// <param name="queryParams">Parameters that affect the resultset.</param>
         public Post GetPostById(string id, PostQueryParams queryParams = null)
@@ -37,7 +41,11 @@ namespace GhostSharp
         /// <summary>
         /// Get a specific post based on its slug.
         /// </summary>
-        /// <returns>The post matching the given slug.</returns>
+        /// <returns>
+        /// The post matching the given slug.
+        /// By default, Content API returns HTML, Admin API returns MobileDoc.
+        /// Admin API also includes author and tag by default, where Content API does not.
+        /// </returns>
         /// <param name="slug">The slug of the post to retrieve.</param>
         /// <param name="queryParams">Parameters that affect the resultset.</param>
         public Post GetPostBySlug(string slug, PostQueryParams queryParams = null)

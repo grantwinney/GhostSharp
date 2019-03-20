@@ -8,6 +8,12 @@ using RestSharp;
 
 namespace GhostSharp
 {
+    enum APIType
+    {
+        Admin,
+        Content
+    }
+
     /// <summary>
     /// Initialization for the Ghost Content API.
     /// </summary>
@@ -19,7 +25,7 @@ namespace GhostSharp
         /// <param name="host">The Host for which to access the Content API.</param>
         /// <param name="contentApiKey">Content API key.</param>
         public GhostContentAPI(string host, string contentApiKey, ExceptionLevel exceptionLevel = ExceptionLevel.All)
-            : base(host, contentApiKey, exceptionLevel, "/ghost/api/v2/content/")
+            : base(host, contentApiKey, exceptionLevel, "/ghost/api/v2/content/", APIType.Content)
         {
         }
     }
@@ -35,7 +41,7 @@ namespace GhostSharp
         /// <param name="host">The Host for which to access the Admin API.</param>
         /// <param name="adminApiKey">Admin API key.</param>
         public GhostAdminAPI(string host, string adminApiKey, ExceptionLevel exceptionLevel = ExceptionLevel.All)
-            : base(host, adminApiKey, exceptionLevel, "/ghost/api/v2/admin/")
+            : base(host, adminApiKey, exceptionLevel, "/ghost/api/v2/admin/", APIType.Admin)
         {
             var adminKeyParts = adminApiKey.Split(':');
 
@@ -43,9 +49,7 @@ namespace GhostSharp
             {
                 var exception = new ArgumentException("The Admin API Key should consist of an ID and Secret, separated by a colon.");
                 LastException = exception;
-
-                if (exceptionLevel == ExceptionLevel.All || exceptionLevel == ExceptionLevel.NonGhost)
-                    throw exception;
+                throw exception;
             }
 
             var unixEpochInSeconds = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
@@ -95,11 +99,13 @@ namespace GhostSharp
     public partial class GhostAPI
     {
         internal string key;
+        private APIType apiType;
         public IRestClient Client { internal get; set; }
 
-        internal GhostAPI(string host, string key, ExceptionLevel exceptionLevel, string baseUrl)
+        internal GhostAPI(string host, string key, ExceptionLevel exceptionLevel, string baseUrl, APIType apiType)
         {
             this.key = key;
+            this.apiType = apiType;
             Client = new RestClient { BaseUrl = new Uri(new Uri(host), baseUrl) };
             ExceptionLevel = exceptionLevel;
         }
@@ -124,9 +130,10 @@ namespace GhostSharp
         /// <typeparam name="T">The type of object being requested</typeparam>
         T Execute<T>(RestRequest request) where T : new()
         {
-            request.AddQueryParameter("key", key);
-
-            //request.AddHeader("Authorization", $"Ghost {key}");
+            if (apiType == APIType.Content)
+                request.AddQueryParameter("key", key);
+            else
+                request.AddHeader("Authorization", $"Ghost {key}");
 
             try
             {

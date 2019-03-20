@@ -54,7 +54,8 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
 
         protected static string ValidTagWithNoPublishedPostsSlug = "gs-test-4";
 
-        protected static string InvalidApiKey = "aaaaaaaaaaaaaaaaaaaaaaaaaa";
+        protected static string InvalidApiKey = "5b2938a839e92877c5910cd9:eb3209a64eddc72268ed4e898a9f181bca42c30cbe5752e64770fb16b9ca50a4";
+        protected static string InvalidFormattedApiKey = "aaaaaaaaaaaaaaaaaaaaaaaaaa";
         protected static string InvalidPostId = "aaaaaaaaaaaaaaaaaaaaaaaa";
         protected static string InvalidPostSlug = "invalid-slug-value";
         protected static string InvalidPageId = "aaaaaaaaaaaaaaaaaaaaaaaa";

@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GhostSharp.Tests.ContentAPI.IntegrationTests
+namespace GhostSharp.Tests.AdminAPI.IntegrationTests
 {
     [TestFixture]
     public class GetPostIntgTests : TestBase
@@ -18,7 +18,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         [SetUp]
         public void SetUp()
         {
-            auth = new GhostContentAPI(Host, ValidContentApiKey);
+            auth = new GhostAdminAPI(Host, ValidAdminApiKey);
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             Assert.AreEqual(ValidPost1Url, post.Url);
 
             Assert.IsNotNull(post.Uuid);
-            Assert.IsNotNull(post.Html);
+            Assert.IsNotNull(post.MobileDoc);
             Assert.IsNotNull(post.CommentId);
             Assert.IsNotNull(post.FeatureImage);
             Assert.IsNotNull(post.MetaDescription);
@@ -44,6 +44,12 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             Assert.IsNotNull(post.TwitterDescription);
             Assert.IsNotNull(post.Url);
             Assert.IsNotNull(post.Excerpt);
+            Assert.IsNotNull(post.PrimaryAuthor);
+            Assert.IsNotNull(post.PrimaryTag);
+            Assert.IsNotNull(post.Authors);
+            Assert.AreEqual(1, post.Authors.Count);
+            Assert.IsNotNull(post.Tags);
+            Assert.AreEqual(3, post.Tags.Count);
 
             Assert.IsNull(post.MetaTitle);
             Assert.IsNull(post.CodeInjectionHead);
@@ -53,11 +59,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             Assert.IsNull(post.TwitterImage);
             Assert.IsNull(post.TwitterTitle);
             Assert.IsNull(post.CustomTemplate);
-            Assert.IsNull(post.PrimaryAuthor);
-            Assert.IsNull(post.PrimaryTag);
-            Assert.IsNull(post.Authors);
-            Assert.IsNull(post.Tags);
-            Assert.IsNull(post.MobileDoc);
+            Assert.IsNull(post.Html);
             Assert.IsNull(post.PlainText);
         }
 
@@ -142,7 +144,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             Assert.AreEqual(ValidPost1Url, post.Url);
 
             Assert.IsNotNull(post.Uuid);
-            Assert.IsNotNull(post.Html);
+            Assert.IsNotNull(post.MobileDoc);
             Assert.IsNotNull(post.CommentId);
             Assert.IsNotNull(post.FeatureImage);
             Assert.IsNotNull(post.MetaDescription);
@@ -154,6 +156,12 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             Assert.IsNotNull(post.TwitterDescription);
             Assert.IsNotNull(post.Url);
             Assert.IsNotNull(post.Excerpt);
+            Assert.IsNotNull(post.PrimaryAuthor);
+            Assert.IsNotNull(post.PrimaryTag);
+            Assert.IsNotNull(post.Authors);
+            Assert.AreEqual(1, post.Authors.Count);
+            Assert.IsNotNull(post.Tags);
+            Assert.AreEqual(3, post.Tags.Count);
 
             Assert.IsNull(post.MetaTitle);
             Assert.IsNull(post.CodeInjectionHead);
@@ -163,10 +171,8 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             Assert.IsNull(post.TwitterImage);
             Assert.IsNull(post.TwitterTitle);
             Assert.IsNull(post.CustomTemplate);
-            Assert.IsNull(post.PrimaryAuthor);
-            Assert.IsNull(post.PrimaryTag);
-            Assert.IsNull(post.Authors);
-            Assert.IsNull(post.Tags);
+            Assert.IsNull(post.Html);
+            Assert.IsNull(post.PlainText);
         }
 
         [Test]
@@ -242,7 +248,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         [Test]
         public void GetPosts_ReturnsLimitedPosts_WhenLimitSpecified()
         {
-            var auth = new GhostContentAPI(Host, ValidContentApiKey);
+            var auth = new GhostAdminAPI(Host, ValidAdminApiKey);
 
             var postResponse = auth.GetPosts(new PostQueryParams { Limit = 1, Fields = PostFields.Id });
 
@@ -252,7 +258,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         [Test]
         public void GetPosts_ReturnsLimitedFields_WhenFieldsSpecified()
         {
-            var auth = new GhostContentAPI(Host, ValidContentApiKey);
+            var auth = new GhostAdminAPI(Host, ValidAdminApiKey);
 
             var post = auth.GetPosts(new PostQueryParams { Limit = 1, Fields = PostFields.Id }).Posts[0];
 
@@ -294,7 +300,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         [Test]
         public void GetPosts_ReturnsAuthors_WhenIncludingAuthors()
         {
-            var auth = new GhostContentAPI(Host, ValidContentApiKey);
+            var auth = new GhostAdminAPI(Host, ValidAdminApiKey);
 
             var post = auth.GetPosts(new PostQueryParams { Limit = 1, IncludeAuthors = true }).Posts[0];
 
@@ -308,12 +314,12 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         [Test]
         public void GetPosts_ReturnsTags_WhenIncludingTags()
         {
-            var auth = new GhostContentAPI(Host, ValidContentApiKey);
+            var auth = new GhostAdminAPI(Host, ValidAdminApiKey);
 
             var post = auth.GetPosts(new PostQueryParams { Limit = 1, IncludeTags = true }).Posts[0];
 
             Assert.IsNotNull(post.Tags);
-            Assert.IsNotNull(post.PrimaryTag);
+            Assert.IsNull(post.PrimaryTag);  // Bug: Admin API is still in beta
 
             Assert.IsNull(post.Authors);
             Assert.IsNull(post.PrimaryAuthor);
@@ -322,12 +328,12 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         [Test]
         public void GetPosts_ReturnsAuthorsAndTags_WhenIncludingAuthorsAndTags()
         {
-            var auth = new GhostContentAPI(Host, ValidContentApiKey);
+            var auth = new GhostAdminAPI(Host, ValidAdminApiKey);
 
             var post = auth.GetPosts(new PostQueryParams { Limit = 1, IncludeTags = true, IncludeAuthors = true }).Posts[0];
 
             Assert.IsNotNull(post.Tags);
-            Assert.IsNotNull(post.PrimaryTag);
+            Assert.IsNull(post.PrimaryTag);  // Bug: Admin API is still in beta
 
             Assert.IsNotNull(post.Authors);
             Assert.IsNotNull(post.PrimaryAuthor);
@@ -336,7 +342,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         [Test]
         public void GetPosts_ReturnsAllPosts_WhenNoLimitIsTrue()
         {
-            var auth = new GhostContentAPI(Host, ValidContentApiKey);
+            var auth = new GhostAdminAPI(Host, ValidAdminApiKey);
 
             var postResponse = auth.GetPosts(new PostQueryParams { Limit = 1, NoLimit = true, Fields = PostFields.Id });
 
@@ -346,7 +352,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         [Test]
         public void GetPosts_ReturnsExpectedPost_WhenOrderingByField()
         {
-            var auth = new GhostContentAPI(Host, ValidContentApiKey);
+            var auth = new GhostAdminAPI(Host, ValidAdminApiKey);
 
             var post = auth.GetPosts(new PostQueryParams { Limit = 1, Order = new List<Tuple<PostFields, OrderDirection>> { Tuple.Create(PostFields.CreatedAt, OrderDirection.asc) } }).Posts[0];
 
@@ -357,7 +363,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         [Test]
         public void GetPosts_ReturnsExpectedPost_WhenGettingSecondPage()
         {
-            var auth = new GhostContentAPI(Host, ValidContentApiKey);
+            var auth = new GhostAdminAPI(Host, ValidAdminApiKey);
 
             var post = auth.GetPosts(new PostQueryParams { Page = 2, Limit = 2, Order = new List<Tuple<PostFields, OrderDirection>> { Tuple.Create(PostFields.CreatedAt, OrderDirection.asc) }, Fields = PostFields.Id }).Posts[0];
 
@@ -368,7 +374,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         [Test]
         public void GetPosts_ReturnsExpectedPosts_WhenApplyingFilter()
         {
-            var auth = new GhostContentAPI(Host, ValidContentApiKey);
+            var auth = new GhostAdminAPI(Host, ValidAdminApiKey);
 
             var postResponse = auth.GetPosts(new PostQueryParams { Filter = $"slug:[{ValidPost1Slug}]" });
             Assert.AreEqual(1, postResponse.Posts.Count);
@@ -385,18 +391,18 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         [TestCase(ExceptionLevel.All)]
         public void GetPosts_ThrowsException_WhenKeyIsInvalid(ExceptionLevel exceptionLevel)
         {
-            var auth = new GhostContentAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
+            var auth = new GhostAdminAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
 
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetPosts());
             Assert.IsNotEmpty(ex.Errors);
-            Assert.AreEqual("Unknown Content API Key", ex.Errors[0].Message);
+            Assert.AreEqual("Unknown Admin API Key", ex.Errors[0].Message);
         }
 
         [TestCase(ExceptionLevel.None)]
         [TestCase(ExceptionLevel.NonGhost)]
         public void GetPosts_ReturnsNull_WhenKeyIsInvalid_AndGhostExceptionsSuppressed(ExceptionLevel exceptionLevel)
         {
-            var auth = new GhostContentAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
+            var auth = new GhostAdminAPI(Host, InvalidApiKey) { ExceptionLevel = exceptionLevel };
 
             Assert.IsNull(auth.GetPosts());
             Assert.IsNotNull(auth.LastException);
@@ -411,7 +417,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetPostById(InvalidPostId));
 
             Assert.IsNotEmpty(ex.Errors);
-            Assert.AreEqual("Post not found.", ex.Errors[0].Message);
+            Assert.AreEqual("Resource not found error, cannot read post.", ex.Errors[0].Message);
         }
 
         [TestCase(ExceptionLevel.None)]
@@ -432,7 +438,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetPostBySlug(InvalidPostSlug));
 
             Assert.IsNotEmpty(ex.Errors);
-            Assert.AreEqual("Post not found.", ex.Errors[0].Message);
+            Assert.AreEqual("Resource not found error, cannot read post.", ex.Errors[0].Message);
         }
 
         [TestCase(ExceptionLevel.None)]
