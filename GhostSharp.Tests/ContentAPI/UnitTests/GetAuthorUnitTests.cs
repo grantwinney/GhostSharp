@@ -19,7 +19,7 @@ namespace GhostSharp.Tests.ContentAPI.UnitTests
         private const string ghostErrorMessage = "A Ghost exception was thrown!";
         private const string ghostErrorType = "UnauthorizedError";
 
-        private GhostAPI auth;
+        private GhostContentAPI auth;
         private Mock<IRestClient> mockClient;
 
         [SetUp]

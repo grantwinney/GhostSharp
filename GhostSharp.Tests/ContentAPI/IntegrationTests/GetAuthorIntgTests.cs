@@ -12,7 +12,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
     {
         private const int MINIMUM_POST_COUNT_THRESHHOLD = 200;
 
-        private GhostAPI auth;
+        private GhostContentAPI auth;
 
         [SetUp]
         public void SetUp()
