@@ -8,12 +8,6 @@ namespace GhostSharp
 {
     public partial class GhostAPI
     {
-        /// <summary>
-        /// Get a collection of tags,
-        /// including meta data about pagination so you can retrieve data in chunks.
-        /// </summary>
-        /// <returns>The tags.</returns>
-        /// <param name="queryParams">Parameters that affect which tags are returned.</param>
         public TagResponse GetTags(TagQueryParams queryParams = null)
         {
             var request = new RestRequest("tags/", Method.GET);
@@ -21,12 +15,6 @@ namespace GhostSharp
             return Execute<TagResponse>(request);
         }
 
-        /// <summary>
-        /// Get a specific tag based on its ID.
-        /// </summary>
-        /// <returns>The tag matching the given ID.</returns>
-        /// <param name="id">The ID of the tag to retrieve.</param>
-        /// <param name="queryParams">Parameters that affect the resultset.</param>
         public Tag GetTagById(string id, TagQueryParams queryParams = null)
         {
             var request = new RestRequest($"tags/{id}/", Method.GET);
@@ -34,12 +22,6 @@ namespace GhostSharp
             return Execute<TagResponse>(request)?.Tags?.Single();
         }
 
-        /// <summary>
-        /// Get a specific tag based on its slug.
-        /// </summary>
-        /// <returns>The tag matching the given slug.</returns>
-        /// <param name="slug">The slug of the tag to retrieve.</param>
-        /// <param name="queryParams">Parameters that affect the resultset.</param>
         public Tag GetTagBySlug(string slug, TagQueryParams queryParams = null)
         {
             var request = new RestRequest($"tags/slug/{slug}/", Method.GET);

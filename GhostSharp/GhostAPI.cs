@@ -78,7 +78,7 @@ namespace GhostSharp
         /// create and throw a GhostSharpException with the details.
         /// </summary>
         /// <param name="response">The API response</param>
-        void TestResponseForErrors(IRestResponse response, RestRequest request)
+        private void TestResponseForErrors(IRestResponse response, RestRequest request)
         {
             var apiFailure = JsonConvert.DeserializeObject<GhostApiFailure>(response.Content);
             if (apiFailure != null && apiFailure.Errors != null)

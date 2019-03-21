@@ -9,6 +9,9 @@ namespace GhostSharp
     /// <summary>
     /// Initialization for the Ghost Admin API.
     /// </summary>
+    /// <remarks>
+    /// Documented online: https://docs.ghost.org/api/admin/
+    /// </remarks>
     public partial class GhostAdminAPI : GhostAPI
     {
         /// <summary>

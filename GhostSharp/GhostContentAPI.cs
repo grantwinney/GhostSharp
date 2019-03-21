@@ -5,6 +5,9 @@ namespace GhostSharp
     /// <summary>
     /// Initialization for the Ghost Content API.
     /// </summary>
+    /// <remarks>
+    /// Documented online: https://docs.ghost.org/api/content/
+    /// </remarks>
     public partial class GhostContentAPI : GhostAPI
     {
         /// <summary>
