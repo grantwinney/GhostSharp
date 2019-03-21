@@ -26,7 +26,7 @@ namespace GhostSharp
         /// </summary>
         /// <returns>The tag matching the given ID.</returns>
         /// <param name="id">The ID of the tag to retrieve.</param>
-        /// <param name="include">count.posts (I have no idea what this is for; not documented)</param>
+        /// <param name="queryParams">Parameters that affect the resultset.</param>
         public Tag GetTagById(string id, TagQueryParams queryParams = null)
         {
             var request = new RestRequest($"tags/{id}/", Method.GET);
@@ -39,7 +39,7 @@ namespace GhostSharp
         /// </summary>
         /// <returns>The tag matching the given slug.</returns>
         /// <param name="slug">The slug of the tag to retrieve.</param>
-        /// <param name="include">count.posts (I have no idea what this is for; not documented)</param>
+        /// <param name="queryParams">Parameters that affect the resultset.</param>
         public Tag GetTagBySlug(string slug, TagQueryParams queryParams = null)
         {
             var request = new RestRequest($"tags/slug/{slug}/", Method.GET);

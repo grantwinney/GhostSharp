@@ -1,8 +1,5 @@
 ﻿using System;
 using GhostSharp.Entities;
-using JWT;
-using JWT.Algorithms;
-using JWT.Builder;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -13,89 +10,7 @@ namespace GhostSharp
         Admin,
         Content
     }
-
-    /// <summary>
-    /// Initialization for the Ghost Content API.
-    /// </summary>
-    public class GhostContentAPI : GhostAPI
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:GhostSharp.GhostContentAPI"/> class.
-        /// </summary>
-        /// <param name="host">The Host for which to access the Content API.</param>
-        /// <param name="contentApiKey">Content API key.</param>
-        public GhostContentAPI(string host, string contentApiKey, ExceptionLevel exceptionLevel = ExceptionLevel.All)
-            : base(host, contentApiKey, exceptionLevel, "/ghost/api/v2/content/", APIType.Content)
-        {
-        }
-    }
-
-    /// <summary>
-    /// Initialization for the Ghost Admin API.
-    /// </summary>
-    public class GhostAdminAPI : GhostAPI
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:GhostSharp.GhostAdminAPI"/> class.
-        /// </summary>
-        /// <param name="host">The Host for which to access the Admin API.</param>
-        /// <param name="adminApiKey">Admin API key.</param>
-        public GhostAdminAPI(string host, string adminApiKey, ExceptionLevel exceptionLevel = ExceptionLevel.All)
-            : base(host, adminApiKey, exceptionLevel, "/ghost/api/v2/admin/", APIType.Admin)
-        {
-            var adminKeyParts = adminApiKey.Split(':');
-
-            if (adminKeyParts.Length != 2)
-            {
-                var exception = new ArgumentException("The Admin API Key should consist of an ID and Secret, separated by a colon.");
-                LastException = exception;
-                throw exception;
-            }
-
-            var unixEpochInSeconds = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
-
-            var token = new JwtBuilder().WithAlgorithm(new HMACSHA256Algorithm())
-                                        .WithSecret(StringToByteArray(adminKeyParts[1]))
-                                        .AddHeader(HeaderName.KeyId, adminKeyParts[0])
-                                        .AddClaim("exp", unixEpochInSeconds + 300)
-                                        .AddClaim("iat", unixEpochInSeconds)
-                                        .AddClaim("aud", "/v2/admin/")
-                                        .Build();
-
-            try
-            {
-                var json = new JwtBuilder()
-                    .WithSecret(StringToByteArray(adminKeyParts[1]))
-                    .MustVerifySignature()
-                    .Decode(token);
-                Console.WriteLine(json);
-            }
-            catch (TokenExpiredException)
-            {
-                Console.WriteLine("Token has expired");
-            }
-            catch (SignatureVerificationException)
-            {
-                Console.WriteLine("Token has invalid signature");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-
-            key = token;
-        }
-
-        private static byte[] StringToByteArray(string hex)
-        {
-            int NumberChars = hex.Length;
-            byte[] bytes = new byte[NumberChars / 2];
-            for (int i = 0; i < NumberChars; i += 2)
-                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
-            return bytes;
-        }
-    }
-
+  
     public partial class GhostAPI
     {
         internal string key;
@@ -128,7 +43,7 @@ namespace GhostSharp
         /// <returns>The API response.</returns>
         /// <param name="request">A RestRequest representing the resource being requested.</param>
         /// <typeparam name="T">The type of object being requested</typeparam>
-        T Execute<T>(RestRequest request) where T : new()
+        internal T Execute<T>(RestRequest request) where T : new()
         {
             if (apiType == APIType.Content)
                 request.AddQueryParameter("key", key);

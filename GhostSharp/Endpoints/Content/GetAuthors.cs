@@ -6,7 +6,7 @@ using RestSharp;
 
 namespace GhostSharp
 {
-    public partial class GhostAPI
+    public partial class GhostContentAPI
     {
         /// <summary>
         /// Get a collection of active authors,

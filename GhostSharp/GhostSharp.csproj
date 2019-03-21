@@ -26,4 +26,8 @@ Full release notes: https://github.com/grantwinney/GhostSharp/blob/master/README
     <PackageReference Include="RestSharp" Version="106.6.9" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AdminAPI\" />
+  </ItemGroup>
+
 </Project>

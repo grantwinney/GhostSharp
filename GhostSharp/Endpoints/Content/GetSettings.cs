@@ -3,7 +3,7 @@ using RestSharp;
 
 namespace GhostSharp
 {
-    public partial class GhostAPI
+    public partial class GhostContentAPI
     {
         /// <summary>
         /// Get the settings for the blog, including title, description,
