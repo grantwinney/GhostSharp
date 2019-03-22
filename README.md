@@ -39,6 +39,7 @@ Feel free to [open a PR](https://github.com/grantwinney/GhostSharp/compare) if y
 
 ## Release Notes
 
+* 1.0.2 - Beginning work to support Admin API.<br>***Breaking change:** GhostAPI is now split into GhostContentAPI and GhostAdminAPI*
 * 1.0.1 - Added comments to aid in intellisense.
 * 1.0.0 - Covers the Content API endpoints.
 
