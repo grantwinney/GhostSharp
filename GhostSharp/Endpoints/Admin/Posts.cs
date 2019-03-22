@@ -1,5 +1,6 @@
 ﻿using GhostSharp.Entities;
 using GhostSharp.QueryParams;
+using RestSharp;
 
 namespace GhostSharp
 {
@@ -37,6 +38,27 @@ namespace GhostSharp
         {
             return base.GetPostBySlug(slug, queryParams);
         }
+
+        public Post CreatePost(Post post)
+        {
+            var request = new RestRequest($"posts/", Method.POST);
+            request.AddJsonBody(post);
+            return Execute<Post>(request);
+        }
+
+        //public Post UpdatePost(Post post)
+        //{
+        //    var request = new RestRequest($"posts/{post.Id}/", Method.PUT);
+        //    ApplyPostQueryParams(request, queryParams);
+        //    return Execute<PostResponse>(request)?.Posts?.Single();
+
+        //}
+
+        //public void DeletePost(string id)
+        //{
+        //    var request = new RestRequest($"posts/{id}/", Method.DELETE);
+        //    return Execute<PostResponse>(request)?.Posts?.Single();
+        //}
     }
 }
 

@@ -17,7 +17,7 @@
 
 Full release notes: https://github.com/grantwinney/GhostSharp/blob/master/README.md#release-notes</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
