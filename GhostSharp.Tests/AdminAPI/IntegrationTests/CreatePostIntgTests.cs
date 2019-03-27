@@ -8,9 +8,8 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
     [TestFixture]
     public class CreatePostIntgTests : TestBase
     {
-        private const int MINIMUM_POST_COUNT_THRESHHOLD = 200;
-
         private GhostAdminAPI auth;
+        private string newPostId = null;
 
         [SetUp]
         public void SetUp()
@@ -18,12 +17,11 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             auth = new GhostAdminAPI(Host, ValidAdminApiKey);
         }
 
-        string newPostId = null;
-
         [TearDown]
         public void TearDown()
         {
-            auth.DeletePost(newPostId);
+            if (newPostId != null)
+                auth.DeletePost(newPostId);
 
             newPostId = null;
         }
@@ -33,7 +31,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         {
             var expectedPost = new Post
             {
-                Title = "This is a test post 1",
+                Title = "This is a test post",
                 MobileDoc = "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[],\"sections\":[[1,\"p\",[[0,[],0,\"My post content. Work in progress...\"]]]]}",
                 Status = "draft"
             };
@@ -47,7 +45,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.AreEqual(expectedPost.Title, actualPost.Title);
             Assert.AreEqual(expectedPost.MobileDoc, actualPost.MobileDoc);
             Assert.AreEqual(expectedPost.Status, actualPost.Status);
-            Assert.IsNotNull(actualPost.Title.Replace(' ', '-').ToLower(), actualPost.Slug);
+            Assert.AreEqual(actualPost.Title.Replace(' ', '-').ToLower(), actualPost.Slug);
 
             Assert.IsNotNull(actualPost.Uuid);
             Assert.IsTrue(Guid.TryParse(actualPost.Uuid, out Guid ignoreResult));
@@ -85,8 +83,54 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.IsFalse(actualPost.Featured);
         }
 
-        // make sure default author is assigned
+        [Test]
+        public void CreatePost_SetsMissingStatusToDraft()
+        {
+            var expectedPost = new Post
+            {
+                Title = "This is a test post with missing status"
+            };
 
-        // make sure missing status defaults to draft
+            var posts = auth.CreatePost(new PostRequest { Posts = new List<Post> { expectedPost } });
+
+            var actualPost = posts.Posts[0];
+
+            newPostId = actualPost.Id;
+
+            Assert.AreEqual(expectedPost.Title, actualPost.Title);
+            Assert.AreEqual("draft", actualPost.Status);
+        }
+
+
+        [Test]
+        public void CreatePost_SetsMissingAuthorToAdmin()
+        {
+            var expectedPost = new Post
+            {
+                Title = "This is a test post with missing author",
+                Status = "draft"
+            };
+
+            var posts = auth.CreatePost(new PostRequest { Posts = new List<Post> { expectedPost } });
+
+            var actualPost = posts.Posts[0];
+
+            newPostId = actualPost.Id;
+
+            Assert.AreEqual(expectedPost.Title, actualPost.Title);
+
+            Assert.IsNotNull(actualPost.PrimaryAuthor);
+            Assert.AreEqual(ValidAuthor1Id, actualPost.PrimaryAuthor.Id);
+            Assert.AreEqual(ValidAuthor1Slug, actualPost.PrimaryAuthor.Slug);
+            Assert.AreEqual(ValidAuthor1Name, actualPost.PrimaryAuthor.Name);
+            Assert.AreEqual(ValidAuthor1Url, actualPost.PrimaryAuthor.Url);
+
+            Assert.IsNotNull(actualPost.Authors);
+            Assert.AreEqual(1, actualPost.Authors.Count);
+            Assert.AreEqual(ValidAuthor1Id, actualPost.Authors[0].Id);
+            Assert.AreEqual(ValidAuthor1Slug, actualPost.Authors[0].Slug);
+            Assert.AreEqual(ValidAuthor1Name, actualPost.Authors[0].Name);
+            Assert.AreEqual(ValidAuthor1Url, actualPost.Authors[0].Url);
+        }
     }
 }
