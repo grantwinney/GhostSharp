@@ -61,6 +61,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.IsNull(post.CustomTemplate);
             Assert.IsNull(post.Html);
             Assert.IsNull(post.PlainText);
+            Assert.IsNull(post.CanonicalUrl);
         }
 
         [Test]

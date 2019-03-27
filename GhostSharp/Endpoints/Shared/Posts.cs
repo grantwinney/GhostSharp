@@ -12,21 +12,38 @@ namespace GhostSharp
         {
             var request = new RestRequest("posts/", Method.GET);
             ApplyPostQueryParams(request, queryParams);
-            return Execute<PostResponse>(request);
+            return SetDefaultValues(Execute<PostResponse>(request));
         }
 
         public Post GetPostById(string id, PostQueryParams queryParams = null)
         {
             var request = new RestRequest($"posts/{id}/", Method.GET);
             ApplyPostQueryParams(request, queryParams);
-            return Execute<PostResponse>(request)?.Posts?.Single();
+            return SetDefaultValues(Execute<PostResponse>(request)?.Posts?.Single());
         }
 
         public Post GetPostBySlug(string slug, PostQueryParams queryParams = null)
         {
             var request = new RestRequest($"posts/slug/{slug}/", Method.GET);
             ApplyPostQueryParams(request, queryParams);
-            return Execute<PostResponse>(request)?.Posts?.Single();
+            return SetDefaultValues(Execute<PostResponse>(request)?.Posts?.Single());
+        }
+
+        private PostResponse SetDefaultValues(PostResponse response)
+        {
+            if (response != null)
+                foreach (var post in response.Posts)
+                    SetDefaultValues(post);
+
+            return response;
+        }
+
+        private Post SetDefaultValues(Post post)
+        {
+            if (post != null)
+                post.Status = "published";
+
+            return post;
         }
 
         /// <summary>
@@ -34,7 +51,7 @@ namespace GhostSharp
         /// </summary>
         /// <param name="request">A post REST request.</param>
         /// <param name="queryParams">Query parameters.</param>
-        void ApplyPostQueryParams(RestRequest request, PostQueryParams queryParams)
+        private void ApplyPostQueryParams(RestRequest request, PostQueryParams queryParams)
         {
             if (queryParams != null)
             {

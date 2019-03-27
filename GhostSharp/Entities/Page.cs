@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace GhostSharp.Entities
 {
@@ -10,11 +11,13 @@ namespace GhostSharp.Entities
         /// <summary>
         /// Collection of pages.
         /// </summary>
+        [JsonProperty("pages")]
         public List<Page> Pages { get; set; }
 
         /// <summary>
         /// Meta data regarding the response.
         /// </summary>
+        [JsonProperty("meta")]
         public Meta Meta { get; set; }
     }
 

@@ -1,10 +1,13 @@
-﻿namespace GhostSharp.Entities
+﻿using Newtonsoft.Json;
+
+namespace GhostSharp.Entities
 {
     /// <summary>
     /// Holds meta information about the request, such as the 'page' of data that was requested.
     /// </summary>
     public class Meta   
     {
+        [JsonProperty("pagination")]
         public Pagination Pagination { get; set; }
     }
 
@@ -32,11 +35,13 @@
         /// <summary>
         /// Current page of result set.
         /// </summary>
+        [JsonProperty("page")]
         public int Page { get; set; }
 
         /// <summary>
         /// Items per page. Default is 15.
         /// </summary>
+        [JsonProperty("limit")]
         public string Limit { get; set; }
 
         /// <summary>
@@ -58,21 +63,25 @@
         /// <summary>
         /// Total pages in result set.
         /// </summary>
+        [JsonProperty("pages")]
         public int Pages { get; set; }
 
         /// <summary>
         /// Total items in result set.
         /// </summary>
+        [JsonProperty("total")]
         public int Total { get; set; }
 
         /// <summary>
         /// Next page number in result set.
         /// </summary>
+        [JsonProperty("next")]
         public int? Next { get; set; }
 
         /// <summary>
         /// Previous page number in result set.
         /// </summary>
+        [JsonProperty("prev")]
         public int? Prev { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using GhostSharp.Entities;
 using GhostSharp.QueryParams;
+using Newtonsoft.Json;
 using RestSharp;
+using System.Collections.Generic;
 
 namespace GhostSharp
 {
@@ -39,11 +41,12 @@ namespace GhostSharp
             return base.GetPostBySlug(slug, queryParams);
         }
 
-        public Post CreatePost(Post post)
+        public PostRequest CreatePost(PostRequest post)
         {
-            var request = new RestRequest($"posts/", Method.POST);
+            var request = new RestRequest($"posts/", Method.POST, DataFormat.Json);
+            request.JsonSerializer = NewtonsoftJsonSerializer.Default;
             request.AddJsonBody(post);
-            return Execute<Post>(request);
+            return Execute<PostRequest>(request);
         }
 
         //public Post UpdatePost(Post post)
