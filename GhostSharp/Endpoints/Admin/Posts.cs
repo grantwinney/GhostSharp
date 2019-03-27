@@ -1,8 +1,7 @@
-﻿using GhostSharp.Entities;
+﻿using GcmSharp.Serialization;
+using GhostSharp.Entities;
 using GhostSharp.QueryParams;
-using Newtonsoft.Json;
 using RestSharp;
-using System.Collections.Generic;
 
 namespace GhostSharp
 {

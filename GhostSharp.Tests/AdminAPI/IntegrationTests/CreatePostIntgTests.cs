@@ -1,10 +1,6 @@
 using GhostSharp.Entities;
-using GhostSharp.Enums;
-using GhostSharp.QueryParams;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GhostSharp.Tests.AdminAPI.IntegrationTests
 {
