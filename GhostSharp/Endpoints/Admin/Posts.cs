@@ -56,11 +56,11 @@ namespace GhostSharp
 
         //}
 
-        //public void DeletePost(string id)
-        //{
-        //    var request = new RestRequest($"posts/{id}/", Method.DELETE);
-        //    return Execute<PostResponse>(request)?.Posts?.Single();
-        //}
+        public void DeletePost(string id)
+        {
+            var request = new RestRequest($"posts/{id}/", Method.DELETE);
+            Execute<PostResponse>(request);
+        }
     }
 }
 
