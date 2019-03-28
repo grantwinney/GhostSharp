@@ -42,32 +42,16 @@ namespace GhostSharp
             return base.GetPostBySlug(slug, queryParams);
         }
 
-        public PostRequest CreatePost(PostRequest posts)
-        {
-            var mobileDocPosts = new PostRequest { Posts = posts.Posts.Where(p => string.IsNullOrEmpty(p.Html)).ToList() };
-            var htmlPosts = new PostRequest { Posts = posts.Posts.Where(p => string.IsNullOrEmpty(p.MobileDoc) && !string.IsNullOrEmpty(p.Html)).ToList() };
-
-            var postResponse = new PostRequest { Posts = new List<Post>() };
-
-            foreach (var post in mobileDocPosts.Posts)
-                postResponse.Posts.Add(CreatePost(post, false).Posts[0]);
-
-            foreach (var post in htmlPosts.Posts)
-                postResponse.Posts.Add(CreatePost(post, true).Posts[0]);
-
-            return postResponse;
-        }
-
-        private PostRequest CreatePost(Post post, bool useHtmlAsSource)
+        public Post CreatePost(Post post)
         {
             var request = new RestRequest($"posts/", Method.POST, DataFormat.Json);
             request.JsonSerializer = NewtonsoftJsonSerializer.Default;
             request.AddJsonBody(new PostResponse { Posts = new List<Post> { post } });
 
-            if (useHtmlAsSource)
+            if (string.IsNullOrEmpty(post.MobileDoc) && !string.IsNullOrEmpty(post.Html))
                 request.AddQueryParameter("source", "html");
 
-            return Execute<PostRequest>(request);
+            return Execute<PostRequest>(request).Posts[0];
         }
 
         //public Post UpdatePost(Post post)

@@ -2,7 +2,6 @@ using GhostSharp.Entities;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GhostSharp.Tests.AdminAPI.IntegrationTests
 {
@@ -38,9 +37,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                 Status = "draft"
             };
 
-            var posts = auth.CreatePost(new PostRequest { Posts = new List<Post> { expectedPost } });
-
-            var actualPost = posts.Posts[0];
+            var actualPost = auth.CreatePost(expectedPost);
 
             newPostId = actualPost.Id;
 
@@ -93,16 +90,13 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                 Title = "This is a test post with missing status"
             };
 
-            var posts = auth.CreatePost(new PostRequest { Posts = new List<Post> { expectedPost } });
-
-            var actualPost = posts.Posts[0];
+            var actualPost = auth.CreatePost(expectedPost);
 
             newPostId = actualPost.Id;
 
             Assert.AreEqual(expectedPost.Title, actualPost.Title);
             Assert.AreEqual("draft", actualPost.Status);
         }
-
 
         [Test]
         public void CreatePost_SetsMissingAuthorToOwner()
@@ -113,9 +107,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                 Status = "draft"
             };
 
-            var posts = auth.CreatePost(new PostRequest { Posts = new List<Post> { expectedPost } });
-
-            var actualPost = posts.Posts[0];
+            var actualPost = auth.CreatePost(expectedPost);
 
             newPostId = actualPost.Id;
 
@@ -145,9 +137,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                 Status = "draft"
             };
 
-            var posts = auth.CreatePost(new PostRequest { Posts = new List<Post> { expectedPost } });
-
-            var actualPost = posts.Posts[0];
+            var actualPost = auth.CreatePost(expectedPost);
 
             newPostId = actualPost.Id;
 
@@ -172,9 +162,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                 Title = "This is a test post with nothing but title"
             };
 
-            var posts = auth.CreatePost(new PostRequest { Posts = new List<Post> { expectedPost } });
-
-            var actualPost = posts.Posts[0];
+            var actualPost = auth.CreatePost(expectedPost);
 
             newPostId = actualPost.Id;
 
@@ -190,44 +178,30 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         [Test]
         public void CreatePost_RequiresAtLeastATitle()
         {
-            var exception = Assert.Throws<GhostSharpException>(() => auth.CreatePost(new PostRequest { Posts = new List<Post> { new Post { } } }));
+            var exception = Assert.Throws<GhostSharpException>(() => auth.CreatePost(new Post { Title = null }));
 
             Assert.AreEqual("Validation error, cannot save post.", exception.Message);
         }
 
         [Test]
-        public void CreatePost_CanCreateMultiplePosts_WithDifferentBodyFormats()
+        public void CreatePost_CanCreatePost_WithHtmlBody()
         {
-            var expectedPostHtml = new Post
+            var expectedPost = new Post
             {
                 Title = "This is a test post with an html body",
                 Html = "<b>This is an html body!!</b>",
                 Status = "draft"
             };
 
-            var expectedPostMobileDoc = new Post
-            {
-                Title = "This is a test post with a mobiledoc body",
-                MobileDoc = "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[[\"b\"]],\"sections\":[[1,\"p\",[[0,[0],1,\"This is an html body!!\"]]]]}",
-                Status = "draft"
-            };
+            var actualPost = auth.CreatePost(expectedPost);
 
-            var posts = auth.CreatePost(new PostRequest { Posts = new List<Post> { expectedPostHtml, expectedPostMobileDoc } });
+            newPostId = actualPost.Id;
 
-            var actualPostHtml = posts.Posts.Single(p => p.Title == expectedPostHtml.Title);
-            var actualPostMobileDoc = posts.Posts.Single(p => p.Title == expectedPostMobileDoc.Title);
-
-            newPostId = $"{actualPostHtml.Id},{actualPostMobileDoc.Id}";
-
-            Assert.AreEqual(expectedPostHtml.Title, actualPostHtml.Title);
+            Assert.AreEqual(expectedPost.Title, actualPost.Title);
             Assert.AreEqual(
                 "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[[\"b\"]],\"sections\":[[1,\"p\",[[0,[0],1,\"This is an html body!!\"]]]]}",
-                actualPostHtml.MobileDoc);
-            Assert.IsNull(actualPostHtml.Html);
-
-            Assert.AreEqual(expectedPostMobileDoc.Title, actualPostMobileDoc.Title);
-            Assert.AreEqual(expectedPostMobileDoc.MobileDoc, actualPostMobileDoc.MobileDoc);
-            Assert.IsNull(actualPostMobileDoc.Html);
+                actualPost.MobileDoc);
+            Assert.IsNull(actualPost.Html);
         }
 
         [Test]
@@ -244,9 +218,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                 }
             };
 
-            var posts = auth.CreatePost(new PostRequest { Posts = new List<Post> { expectedPost } });
-
-            var actualPost = posts.Posts[0];
+            var actualPost = auth.CreatePost(expectedPost);
 
             newPostId = actualPost.Id;
 
@@ -279,9 +251,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                 }
             };
 
-            var posts = auth.CreatePost(new PostRequest { Posts = new List<Post> { expectedPost } });
-
-            var actualPost = posts.Posts[0];
+            var actualPost = auth.CreatePost(expectedPost);
 
             newPostId = actualPost.Id;
 
@@ -303,43 +273,30 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         [Test]
         public void CreatePost_CanNotAttachTagUsingLongForm_WhenUsingPrimaryTag()
         {
-            var expectedPost1 = new Post
-            {
-                Title = "This is a test post with long form tag by id",
-                PrimaryTag = new Tag { Id = ValidTag1Id },
-                Status = "draft"
-            };
+            var actualPost = auth.CreatePost(
+                new Post
+                {
+                    Title = "This is a test post with long form tag by id",
+                    PrimaryTag = new Tag { Id = ValidTag1Id },
+                    Status = "draft"
+                });
 
-            var expectedPost2 = new Post
-            {
-                Title = "This is a test post with long form tag by name",
-                PrimaryTag = new Tag { Name = ValidTag2Name },
-                Status = "draft"
-            };
+            newPostId = actualPost.Id;
 
-            var posts = auth.CreatePost(new PostRequest { Posts = new List<Post> { expectedPost1, expectedPost2 } });
-
-            newPostId = $"{posts.Posts[0].Id},{posts.Posts[1].Id}";
-
-            Assert.IsEmpty(posts.Posts[0].Tags);
-            Assert.IsNull(posts.Posts[0].PrimaryTag);
-            Assert.IsEmpty(posts.Posts[1].Tags);
-            Assert.IsNull(posts.Posts[1].PrimaryTag);
+            Assert.IsEmpty(actualPost.Tags);
+            Assert.IsNull(actualPost.PrimaryTag);
         }
 
         [Test]
         public void CreatePost_CanNotAttachAuthorUsingLongForm_WhenUsingPrimaryAuthor()
         {
-            var expectedPost = new Post
-            {
-                Title = "This is a test post with long form author using id",
-                PrimaryAuthor = new Author { Id = ValidAuthor2Id },
-                Status = "draft"
-            };
-
-            var posts = auth.CreatePost(new PostRequest { Posts = new List<Post> { expectedPost } });
-
-            var actualPost = posts.Posts.Single(p => p.Title == expectedPost.Title);
+            var actualPost = auth.CreatePost(
+                new Post
+                {
+                    Title = "This is a test post with long form author using id",
+                    PrimaryAuthor = new Author { Id = ValidAuthor2Id },
+                    Status = "draft"
+                });
 
             newPostId = actualPost.Id;
 
@@ -362,9 +319,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                 PrimaryAuthor = new Author { Id = InvalidAuthorId }
             };
 
-            var posts = auth.CreatePost(new PostRequest { Posts = new List<Post> { expectedPost } });
-
-            var actualPost = posts.Posts[0];
+            var actualPost = auth.CreatePost(expectedPost);
 
             newPostId = actualPost.Id;
 
