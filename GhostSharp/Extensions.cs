@@ -1,5 +1,6 @@
 ﻿using GhostSharp.Attributes;
 using GhostSharp.Enums;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,9 +49,9 @@ namespace GhostSharp
             var t = typeof(T);
             try
             {
-                return ((GhostFieldAttribute)t.GetMember(t.GetEnumName(enumValue))[0]
-                                              .GetCustomAttributes(typeof(GhostFieldAttribute), false)
-                                              .SingleOrDefault())?.FieldName;
+                return ((JsonPropertyAttribute)t.GetMember(t.GetEnumName(enumValue))[0]
+                                              .GetCustomAttributes(typeof(JsonPropertyAttribute), false)
+                                              .SingleOrDefault())?.PropertyName;
             }
             catch (ArgumentNullException)
             {

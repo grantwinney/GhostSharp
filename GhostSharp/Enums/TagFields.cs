@@ -1,4 +1,4 @@
-﻿using GhostSharp.Attributes;
+﻿using Newtonsoft.Json;
 using System;
 
 namespace GhostSharp.Enums
@@ -12,55 +12,55 @@ namespace GhostSharp.Enums
         /// <summary>
         /// ID
         /// </summary>
-        [GhostField("id")]
+        [JsonProperty("id")]
         Id = 1,
 
         /// <summary>
         /// Name
         /// </summary>
-        [GhostField("name")]
+        [JsonProperty("name")]
         Name = 2,
 
         /// <summary>
         /// Slug
         /// </summary>
-        [GhostField("slug")]
+        [JsonProperty("slug")]
         Slug = 4,
 
         /// <summary>
         /// Description
         /// </summary>
-        [GhostField("description")]
+        [JsonProperty("description")]
         Description = 8,
 
         /// <summary>
         /// Feature Image
         /// </summary>
-        [GhostField("feature_image")]
+        [JsonProperty("feature_image")]
         FeatureImage = 16,
 
         /// <summary>
         /// Visibility
         /// </summary>
-        [GhostField("visibility")]
+        [JsonProperty("visibility")]
         Visibility = 32,
 
         /// <summary>
         /// Meta Title
         /// </summary>
-        [GhostField("meta_title")]
+        [JsonProperty("meta_title")]
         MetaTitle = 64,
 
         /// <summary>
         /// Meta Description
         /// </summary>
-        [GhostField("meta_description")]
+        [JsonProperty("meta_description")]
         MetaDescription = 128,
 
         /// <summary>
         /// URL
         /// </summary>
-        [GhostField("url")]
+        [JsonProperty("url")]
         Url = 256
     }
 }

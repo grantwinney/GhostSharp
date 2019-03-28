@@ -42,11 +42,16 @@ namespace GhostSharp
             return base.GetPostBySlug(slug, queryParams);
         }
 
+        /// <summary>
+        /// Create a post
+        /// </summary>
+        /// <param name="post">Post to create</param>
+        /// <returns>Returns the same post, along with whatever other data Ghost appended to it (like default values)</returns>
         public Post CreatePost(Post post)
         {
             var request = new RestRequest($"posts/", Method.POST, DataFormat.Json);
             request.JsonSerializer = NewtonsoftJsonSerializer.Default;
-            request.AddJsonBody(new PostResponse { Posts = new List<Post> { post } });
+            request.AddJsonBody(new PostRequest { Posts = new List<Post> { post } });
 
             if (string.IsNullOrEmpty(post.MobileDoc) && !string.IsNullOrEmpty(post.Html))
                 request.AddQueryParameter("source", "html");
@@ -54,18 +59,23 @@ namespace GhostSharp
             return Execute<PostRequest>(request).Posts[0];
         }
 
-        //public Post UpdatePost(Post post)
-        //{
-        //    var request = new RestRequest($"posts/{post.Id}/", Method.PUT);
-        //    ApplyPostQueryParams(request, queryParams);
-        //    return Execute<PostResponse>(request)?.Posts?.Single();
+        public Post UpdatePost(Post post)
+        {
+            var request = new RestRequest($"posts/{post.Id}/", Method.PUT, DataFormat.Json);
+            request.JsonSerializer = NewtonsoftJsonSerializer.Default;
+            request.AddJsonBody(new PostRequest { Posts = new List<Post> { post } });
 
-        //}
+            //if (string.IsNullOrEmpty(post.MobileDoc) && !string.IsNullOrEmpty(post.Html))
+            //    request.AddQueryParameter("source", "html");
 
-        public void DeletePost(string id)
+            return Execute<PostRequest>(request).Posts[0];
+        }
+
+        public bool DeletePost(string id)
         {
             var request = new RestRequest($"posts/{id}/", Method.DELETE);
-            Execute<PostResponse>(request);
+
+            return Execute(request);
         }
     }
 }

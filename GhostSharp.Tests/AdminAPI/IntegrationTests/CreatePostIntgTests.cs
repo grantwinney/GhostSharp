@@ -21,8 +21,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         public void TearDown()
         {
             if (newPostId != null)
-                foreach (var id in newPostId.Split(','))
-                    auth.DeletePost(id);
+                auth.DeletePost(newPostId);
 
             newPostId = null;
         }
@@ -336,8 +335,5 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
 
             Assert.AreEqual(1, actualPost.Authors.Count);
         }
-
-
-        // for deleting, test deleting an id that doesn't exist - is returned response/result different?
     }
 }

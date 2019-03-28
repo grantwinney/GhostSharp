@@ -1,4 +1,4 @@
-﻿using GhostSharp.Attributes;
+﻿using Newtonsoft.Json;
 using System;
 
 namespace GhostSharp.Enums
@@ -12,169 +12,169 @@ namespace GhostSharp.Enums
         /// <summary>
         /// ID
         /// </summary>
-        [GhostField("id")]
+        [JsonProperty("id")]
         Id = 1,
 
         /// <summary>
         /// Page (true if Page, false if Post)
         /// </summary>
-        [GhostField("page")]
+        [JsonProperty("page")]
         Page = 2,
 
         /// <summary>
         /// UUID
         /// </summary>
-        [GhostField("uuid")]
+        [JsonProperty("uuid")]
         Uuid = 4,
 
         /// <summary>
         /// Title
         /// </summary>
-        [GhostField("title")]
+        [JsonProperty("title")]
         Title = 8,
 
         /// <summary>
         /// Slug
         /// </summary>
-        [GhostField("slug")]
+        [JsonProperty("slug")]
         Slug = 16,
 
         /// <summary>
         /// Post, formatted in HTML
         /// </summary>
-        [GhostField("html")]
+        [JsonProperty("html")]
         Html = 32,
 
         /// <summary>
         /// Comment ID
         /// </summary>
-        [GhostField("comment_id")]
+        [JsonProperty("comment_id")]
         CommentId = 64,
 
         /// <summary>
         /// Feature Image
         /// </summary>
-        [GhostField("feature_image")]
+        [JsonProperty("feature_image")]
         FeatureImage = 128,
 
         /// <summary>
         /// Featured (true if featured)
         /// </summary>
-        [GhostField("featured")]
+        [JsonProperty("featured")]
         Featured = 256,
 
         /// <summary>
         /// Meta Title
         /// </summary>
-        [GhostField("meta_title")]
+        [JsonProperty("meta_title")]
         MetaTitle = 512,
 
         /// <summary>
         /// Meta Description
         /// </summary>
-        [GhostField("meta_description")]
+        [JsonProperty("meta_description")]
         MetaDescription = 1024,
 
         /// <summary>
         /// Created At
         /// </summary>
-        [GhostField("created_at")]
+        [JsonProperty("created_at")]
         CreatedAt = 2048,
 
         /// <summary>
         /// Updated At
         /// </summary>
-        [GhostField("updated_at")]
+        [JsonProperty("updated_at")]
         UpdatedAt = 4096,
 
         /// <summary>
         /// Published At
         /// </summary>
-        [GhostField("published_at")]
+        [JsonProperty("published_at")]
         PublishedAt = 8192,
 
         /// <summary>
         /// Custom Excerpt
         /// </summary>
-        [GhostField("custom_excerpt")]
+        [JsonProperty("custom_excerpt")]
         CustomExcerpt = 16384,
 
         /// <summary>
         /// Code Injected into Header
         /// </summary>
-        [GhostField("codeinjection_head")]
+        [JsonProperty("codeinjection_head")]
         CodeInjectionHead = 32768,
 
         /// <summary>
         /// Code Injected into Footer
         /// </summary>
-        [GhostField("codeinjection_foot")]
+        [JsonProperty("codeinjection_foot")]
         CodeInjectionFoot = 65536,
 
         /// <summary>
         /// Facebook Card Image
         /// </summary>
-        [GhostField("og_image")]
+        [JsonProperty("og_image")]
         OgImage = 131072,
 
         /// <summary>
         /// Facebook Card Title
         /// </summary>
-        [GhostField("og_title")]
+        [JsonProperty("og_title")]
         OgTitle = 262144,
 
         /// <summary>
         /// Facebook Card Description
         /// </summary>
-        [GhostField("og_description")]
+        [JsonProperty("og_description")]
         OgDescription = 524288,
 
         /// <summary>
         /// Twitter Card Image
         /// </summary>
-        [GhostField("twitter_image")]
+        [JsonProperty("twitter_image")]
         TwitterImage = 1048576,
 
         /// <summary>
         /// Twitter Card Title
         /// </summary>
-        [GhostField("twitter_title")]
+        [JsonProperty("twitter_title")]
         TwitterTitle = 2097152,
 
         /// <summary>
         /// Twitter Card Description
         /// </summary>
-        [GhostField("twitter_description")]
+        [JsonProperty("twitter_description")]
         TwitterDescription = 4194304,
 
         /// <summary>
         /// Custom Template
         /// </summary>
-        [GhostField("custom_template")]
+        [JsonProperty("custom_template")]
         CustomTemplate = 8388608,
 
         /// <summary>
         /// Primary Author
         /// </summary>
-        [GhostField("primary_author")]
+        [JsonProperty("primary_author")]
         PrimaryAuthor = 16777216,
 
         /// <summary>
         /// Primary Tag
         /// </summary>
-        [GhostField("primary_tag")]
+        [JsonProperty("primary_tag")]
         PrimaryTag = 33554432,
 
         /// <summary>
         /// URL
         /// </summary>
-        [GhostField("url")]
+        [JsonProperty("url")]
         Url = 67108864,
 
         /// <summary>
         /// Excerpt
         /// </summary>
-        [GhostField("excerpt")]
+        [JsonProperty("excerpt")]
         Excerpt = 134217728
     }
 }

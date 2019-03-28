@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using GhostSharp.Attributes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -61,6 +62,7 @@ namespace GhostSharp.Entities
         /// Title
         /// </summary>
         [JsonProperty("title")]
+        [UpdatableField]
         public string Title { get; set; }
 
         /// <summary>
@@ -127,6 +129,7 @@ namespace GhostSharp.Entities
         /// Updated At
         /// </summary>
         [JsonProperty("updated_at")]
+        [UpdatableField]
         public DateTime? UpdatedAt { get; set; }
    
         /// <summary>

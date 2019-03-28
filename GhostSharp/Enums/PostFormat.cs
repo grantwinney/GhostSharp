@@ -1,4 +1,4 @@
-﻿using GhostSharp.Attributes;
+﻿using Newtonsoft.Json;
 using System;
 
 namespace GhostSharp.Enums
@@ -12,19 +12,19 @@ namespace GhostSharp.Enums
         /// <summary>
         /// HTML
         /// </summary>
-        [GhostField("html")]
+        [JsonProperty("html")]
         Html = 1,
 
         /// <summary>
         /// Plain Text
         /// </summary>
-        [GhostField("plaintext")]
+        [JsonProperty("plaintext")]
         PlainText = 2,
 
         /// <summary>
         /// Mobile Doc
         /// </summary>
-        [GhostField("mobiledoc")]
+        [JsonProperty("mobiledoc")]
         MobileDoc = 4
     }
 }

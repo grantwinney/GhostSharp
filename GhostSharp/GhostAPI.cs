@@ -45,21 +45,45 @@ namespace GhostSharp
         /// <typeparam name="T">The type of object being requested</typeparam>
         internal T Execute<T>(RestRequest request) where T : new()
         {
-            switch (apiType)
-            {
-                case APIType.Content:
-                    request.AddQueryParameter("key", key);
-                    break;
-                case APIType.Admin:
-                    request.AddHeader("Authorization", $"Ghost {key}");
-                    break;
-            }
+            AuthorizeRequest(request);
 
             try
             {
                 var response = Client.Execute<T>(request);
                 TestResponseForErrors(response, request);
                 return response.Data;
+            }
+            catch (GhostSharpException)
+            {
+                if (ExceptionLevel == ExceptionLevel.Ghost || ExceptionLevel == ExceptionLevel.All)
+                    throw;
+
+                return default;
+            }
+            catch
+            {
+                if (ExceptionLevel == ExceptionLevel.NonGhost || ExceptionLevel == ExceptionLevel.All)
+                    throw;
+
+                return default;
+            }
+        }
+
+        /// <summary>
+        /// Calls the Ghost API and returns the response data.
+        /// If exceptions are suppressed, returns null on failure.
+        /// </summary>
+        /// <returns>The API response.</returns>
+        /// <param name="request">A RestRequest representing the resource being requested.</param>
+        internal bool Execute(RestRequest request)
+        {
+            AuthorizeRequest(request);
+
+            try
+            {
+                var response = Client.Execute(request);
+                TestResponseForErrors(response, request);
+                return response.StatusCode == System.Net.HttpStatusCode.NoContent;  // vs NotFound
             }
             catch (GhostSharpException)
             {
@@ -98,6 +122,23 @@ namespace GhostSharp
                 var ex = new GhostSharpException($"Unable to {request.Method} /{request.Resource}: {response.ResponseStatus}", response.ErrorException);
                 LastException = ex;
                 throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Add the key as a query parameter or authorization token as a header, depending on the API being used.
+        /// </summary>
+        /// <param name="request">The request being made</param>
+        private void AuthorizeRequest(RestRequest request)
+        {
+            switch (apiType)
+            {
+                case APIType.Content:
+                    request.AddQueryParameter("key", key);
+                    break;
+                case APIType.Admin:
+                    request.AddHeader("Authorization", $"Ghost {key}");
+                    break;
             }
         }
     }
