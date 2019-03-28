@@ -10,7 +10,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         protected static string Host = "https://grantwinney.com";
         protected static string SiteTitle = "Grant Winney";
 
-        protected static string ValidAdminApiKey = Environment.GetEnvironmentVariable("Admin_API_Key") ?? "admin_api_key";
+        protected static string ValidAdminApiKey = Environment.GetEnvironmentVariable("ADMIN_API_KEY");
 
         protected static string ValidPost1Id = "5c60e815afe8720651f1834d";
         protected static string ValidPost1Slug = "using-the-ip-geolocation-api-to-find-info-about-an-ip-address";
@@ -28,11 +28,13 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         protected static string ValidAuthor1Slug = "grant";
         protected static string ValidAuthor1Name = "Grant Winney";
         protected static string ValidAuthor1Url = "https://grantwinney.com/author/grant/";
+        protected static string ValidAuthor1Email = Environment.GetEnvironmentVariable("VALID_AUTHOR_1_EMAIL_ADDRESS") ?? "test_email_1";
 
         protected static string ValidAuthor2Id = "5c66545fafe8720651f186bb";
         protected static string ValidAuthor2Slug = "grant2";
         protected static string ValidAuthor2Name = "Grant Winney";
         protected static string ValidAuthor2Url = "https://grantwinney.com/author/grant2/";
+        protected static string ValidAuthor2Email = Environment.GetEnvironmentVariable("VALID_AUTHOR_2_EMAIL_ADDRESS") ?? "test_email_2";
 
         protected static string ValidAuthorWithNoPublishedPostsSlug = "john";
 
