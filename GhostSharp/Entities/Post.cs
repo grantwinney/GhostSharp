@@ -132,6 +132,11 @@ namespace GhostSharp.Entities
         [UpdatableField]
         public DateTime? UpdatedAt { get; set; }
    
+        public bool ShouldSerializeUpdatedAt()
+        {
+            return true;
+        }
+
         /// <summary>
         /// Published At
         /// </summary>

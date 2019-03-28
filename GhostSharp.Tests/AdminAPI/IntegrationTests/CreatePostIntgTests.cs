@@ -51,7 +51,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.IsNotNull(actualPost.CreatedAt);
             Assert.IsNotNull(actualPost.UpdatedAt);
             Assert.IsNotNull(actualPost.Url);
-            Assert.IsTrue(actualPost.Url.StartsWith($"{Host}/p/"));
+            Assert.IsTrue(actualPost.Url.StartsWith($"{Host}p/"));
             Assert.IsNotNull(actualPost.Excerpt);
             Assert.AreEqual("My post content. Work in progress...", actualPost.Excerpt);
             Assert.IsNotNull(actualPost.PrimaryAuthor);
