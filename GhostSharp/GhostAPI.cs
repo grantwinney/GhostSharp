@@ -18,8 +18,13 @@ namespace GhostSharp
         public IRestClient Client { internal get; set; }
 
         internal GhostAPI(string host, string key, ExceptionLevel exceptionLevel, string baseUrl, APIType apiType)
+            : this(host, exceptionLevel, baseUrl, apiType)
         {
             this.key = key;
+        }
+
+        internal GhostAPI(string host, ExceptionLevel exceptionLevel, string baseUrl, APIType apiType)
+        {
             this.apiType = apiType;
             Client = new RestClient { BaseUrl = new Uri(new Uri(host), baseUrl) };
             ExceptionLevel = exceptionLevel;
@@ -45,7 +50,8 @@ namespace GhostSharp
         /// <typeparam name="T">The type of object being requested</typeparam>
         internal T Execute<T>(RestRequest request) where T : new()
         {
-            AuthorizeRequest(request);
+            if (key != null)
+                AuthorizeRequest(request);
 
             try
             {

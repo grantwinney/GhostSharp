@@ -1,5 +1,4 @@
-﻿using GcmSharp.Serialization;
-using GhostSharp.Entities;
+﻿using GhostSharp.Entities;
 using RestSharp;
 
 namespace GhostSharp

@@ -64,5 +64,15 @@ namespace GhostSharp
 
             key = token;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:GhostSharp.GhostAdminAPI"/> class without auth.
+        /// This is only useful if auth is not required, which is only the /site endpoint.
+        /// </summary>
+        /// <param name="host">The Host for which to access the Admin API.</param>
+        public GhostAdminAPI(string host, ExceptionLevel exceptionLevel = ExceptionLevel.All)
+            : base(host, exceptionLevel, "/ghost/api/v2/admin/", APIType.Admin)
+        {
+        }
     }
 }
