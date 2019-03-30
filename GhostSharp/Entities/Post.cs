@@ -111,18 +111,21 @@ namespace GhostSharp.Entities
         /// Featured (true if featured)
         /// </summary>
         [JsonProperty("featured")]
+        [UpdatableField]
         public bool? Featured { get; set; }
 
         /// <summary>
         /// Meta Title
         /// </summary>
         [JsonProperty("meta_title")]
+        [UpdatableField]
         public string MetaTitle { get; set; }
 
         /// <summary>
         /// Meta Description
         /// </summary>
         [JsonProperty("meta_description")]
+        [UpdatableField]
         public string MetaDescription { get; set; }
 
         /// <summary>
@@ -142,66 +145,77 @@ namespace GhostSharp.Entities
         /// Published At
         /// </summary>
         [JsonProperty("published_at")]
+        [UpdatableField]
         public DateTime? PublishedAt { get; set; }
 
         /// <summary>
         /// Custom Excerpt
         /// </summary>
         [JsonProperty("custom_excerpt")]
+        [UpdatableField]
         public string CustomExcerpt { get; set; }
 
         /// <summary>
         /// Code Injected into Header
         /// </summary>
         [JsonProperty("codeinjection_head")]
+        [UpdatableField]
         public string CodeInjectionHead { get; set; }
 
         /// <summary>
         /// Code Injected into Footer
         /// </summary>
         [JsonProperty("codeinjection_foot")]
+        [UpdatableField]
         public string CodeInjectionFoot { get; set; }
 
         /// <summary>
         /// Facebook Card Image
         /// </summary>
         [JsonProperty("og_image")]
+        [UpdatableField]
         public string OgImage { get; set; }
 
         /// <summary>
         /// Facebook Card Title
         /// </summary>
         [JsonProperty("og_title")]
+        [UpdatableField]
         public string OgTitle { get; set; }
 
         /// <summary>
         /// Facebook Card Description
         /// </summary>
         [JsonProperty("og_description")]
+        [UpdatableField]
         public string OgDescription { get; set; }
 
         /// <summary>
         /// Twitter Card Image
         /// </summary>
         [JsonProperty("twitter_image")]
+        [UpdatableField]
         public string TwitterImage { get; set; }
 
         /// <summary>
         /// Twitter Card Title
         /// </summary>
         [JsonProperty("twitter_title")]
+        [UpdatableField]
         public string TwitterTitle { get; set; }
 
         /// <summary>
         /// Twitter Card Description
         /// </summary>
         [JsonProperty("twitter_description")]
+        [UpdatableField]
         public string TwitterDescription { get; set; }
 
         /// <summary>
         /// Custom Template
         /// </summary>
         [JsonProperty("custom_template")]
+        [UpdatableField]
         public string CustomTemplate { get; set; }
 
         /// <summary>
@@ -232,24 +246,28 @@ namespace GhostSharp.Entities
         /// URL
         /// </summary>
         [JsonProperty("url")]
+        [UpdatableField]
         public string Url { get; set; }
 
         /// <summary>
         /// Canonical URL
         /// </summary>
         [JsonProperty("canonical_url")]
+        [UpdatableField]
         public string CanonicalUrl { get; set; }
 
         /// <summary>
         /// Excerpt
         /// </summary>
         [JsonProperty("excerpt")]
+        [UpdatableField]
         public string Excerpt { get; set; }
 
         /// <summary>
         /// Status (published, draft)
         /// </summary>
         [JsonProperty("status")]
+        [UpdatableField]
         public string Status { get; set; }
     }
 }
