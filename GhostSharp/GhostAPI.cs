@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Cache;
 using GhostSharp.Entities;
 using Newtonsoft.Json;
 using RestSharp;

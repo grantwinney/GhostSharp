@@ -1,5 +1,4 @@
-﻿using GhostSharp.Attributes;
-using GhostSharp.Enums;
+﻿using GhostSharp.Enums;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -50,8 +49,8 @@ namespace GhostSharp
             try
             {
                 return ((JsonPropertyAttribute)t.GetMember(t.GetEnumName(enumValue))[0]
-                                              .GetCustomAttributes(typeof(JsonPropertyAttribute), false)
-                                              .SingleOrDefault())?.PropertyName;
+                                                .GetCustomAttributes(typeof(JsonPropertyAttribute), false)
+                                                .SingleOrDefault())?.PropertyName;
             }
             catch (ArgumentNullException)
             {

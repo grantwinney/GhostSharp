@@ -1,5 +1,6 @@
 ﻿using GhostSharp.Attributes;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 
@@ -32,6 +33,7 @@ namespace GhostSharp.Entities
         /// Collection of posts.
         /// </summary>
         [JsonProperty("posts")]
+        [UpdatableField]
         public List<Post> Posts { get; set; }
     }
 
@@ -75,18 +77,21 @@ namespace GhostSharp.Entities
         /// Post, formatted in Mobile Doc
         /// </summary>
         [JsonProperty("mobiledoc")]
+        [UpdatableField]
         public string MobileDoc { get; set; }
 
         /// <summary>
         /// Post, formatted in HTML
         /// </summary>
         [JsonProperty("html")]
+        [UpdatableField]
         public string Html { get; set; }
 
         /// <summary>
         /// Post, formatted in Plain Text
         /// </summary>
         [JsonProperty("plaintext")]
+        [UpdatableField]
         public string PlainText { get; set; }
 
         /// <summary>
@@ -99,6 +104,7 @@ namespace GhostSharp.Entities
         /// Feature Image
         /// </summary>
         [JsonProperty("feature_image")]
+        [UpdatableField]
         public string FeatureImage { get; set; }
 
         /// <summary>
@@ -131,11 +137,6 @@ namespace GhostSharp.Entities
         [JsonProperty("updated_at")]
         [UpdatableField]
         public DateTime? UpdatedAt { get; set; }
-   
-        public bool ShouldSerializeUpdatedAt()
-        {
-            return true;
-        }
 
         /// <summary>
         /// Published At
@@ -220,7 +221,7 @@ namespace GhostSharp.Entities
         /// </summary>
         [JsonProperty("tags")]
         public List<Tag> Tags { get; set; }
-    
+
         /// <summary>
         /// Primary Tag
         /// </summary>
