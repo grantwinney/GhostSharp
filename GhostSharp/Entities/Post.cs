@@ -3,6 +3,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace GhostSharp.Entities
 {
@@ -43,7 +45,7 @@ namespace GhostSharp.Entities
     public class Post
     {
         /// <summary>
-        /// ID
+        /// ID (Update)
         /// </summary>
         [JsonProperty("id")]
         public string Id { get; set; }
@@ -269,5 +271,8 @@ namespace GhostSharp.Entities
         [JsonProperty("status")]
         [UpdatableField]
         public string Status { get; set; }
+
+        public static IEnumerable<PropertyInfo> UpdatableProperties =>
+            typeof(Post).GetProperties().Where(x => x.GetCustomAttribute<UpdatableFieldAttribute>() != null);
     }
 }

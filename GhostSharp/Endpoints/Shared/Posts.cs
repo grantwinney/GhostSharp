@@ -41,7 +41,10 @@ namespace GhostSharp
         private Post SetDefaultValues(Post post)
         {
             if (post != null)
-                post.Status = "published";
+            {
+                //post.Status = "published";
+                post.Page = false;
+            }
 
             return post;
         }

@@ -264,6 +264,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             var post = auth.GetPosts(new PostQueryParams { Limit = 1, Fields = PostFields.Id }).Posts[0];
 
             Assert.IsNotNull(post.Id);
+            Assert.IsFalse(post.Page);
 
             Assert.IsNull(post.Authors);
             Assert.IsNull(post.CodeInjectionFoot);
@@ -282,7 +283,6 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.IsNull(post.OgDescription);
             Assert.IsNull(post.OgImage);
             Assert.IsNull(post.OgTitle);
-            Assert.IsNull(post.Page);
             Assert.IsNull(post.PlainText);
             Assert.IsNull(post.PrimaryAuthor);
             Assert.IsNull(post.PrimaryTag);

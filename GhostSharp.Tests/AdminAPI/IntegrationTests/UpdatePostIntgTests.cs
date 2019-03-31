@@ -29,23 +29,10 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             origPost = null;
         }
 
-        [Test]
-        public void UpdatePost_Fails_WhenUpdatedAtMissing()
-        {
-            var updatedPost = new Post
-            {
-                Id = origPost.Id
-            };
-
-            var ex = Assert.Throws<GhostSharpException>(() => auth.UpdatePost(updatedPost));
-
-            Assert.AreEqual("Validation error, cannot edit post.", ex.Message);
-        }
-
         [TestCase(2)]
         [TestCase(-2)]
         [Test]
-        public void UpdatePost_Fails_WhenUpdatedAtIsDifferent_AndAnUpdatableFieldChanges(int minutes)
+        public void UpdatePost_Succeeds_WhenUpdatedAtIsDifferent_BecauseItsForcedToBeSameAsOriginalPost(int minutes)
         {
             var updatedPost = new Post
             {
@@ -54,25 +41,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                 UpdatedAt = origPost.UpdatedAt.Value.AddMinutes(minutes)
             };
 
-            var ex = Assert.Throws<GhostSharpException>(() => auth.UpdatePost(updatedPost));
-
-            Assert.AreEqual("Saving failed! Someone else is editing this post.", ex.Message);
-        }
-
-        [Test]
-        public void UpdatePost_Succeeds_WhenUpdatedAtIsDifferent_ButNoUpdatableFieldsChange()
-        {
-            var updatedPost = auth.UpdatePost(
-                new Post
-                {
-                    Id = origPost.Id,
-                    Title = origPost.Title,
-                    UpdatedAt = origPost.UpdatedAt.Value.AddMinutes(2)
-                });
-
-            Assert.AreEqual(origPost.Id, updatedPost.Id);
-            Assert.AreEqual(origPost.Title, updatedPost.Title);
-            Assert.AreEqual(origPost.UpdatedAt.Value.AddMinutes(2), updatedPost.UpdatedAt);
+            Assert.DoesNotThrow(() => auth.UpdatePost(updatedPost));
         }
 
         [Test]
@@ -114,7 +83,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                     Title = origPost.Title
                 }));
 
-            Assert.AreEqual("Resource not found error, cannot edit post.", ex.Message);
+            Assert.AreEqual("Resource not found error, cannot read post.", ex.Message);
         }
 
         [Test]
@@ -206,18 +175,20 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         }
     }
 
+    // finish asserts in above test
+
     // is title ALWAYS required (I think it can't be left blank)?? are all writable fields required even if not changing?? :/
 
     // do a GET and save it right back in?
 
     // Tag and author relations will be replaced, not merged - test this
 
-    // then copy all of this for pages
-
     // which takes precedence if html AND mobiledoc are both updated?
     //   need to attach query parameter to specify html, like when creating post?
 
     // should i create a CreatableAttribute too to ignore fields that shouldn't be sent,
     //   like id or uuid?
+
+    // then copy all of this for pages
 
 }

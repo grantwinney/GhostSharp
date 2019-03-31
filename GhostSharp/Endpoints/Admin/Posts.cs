@@ -1,10 +1,13 @@
 ﻿using GcmSharp.Serialization;
+using GhostSharp.Attributes;
 using GhostSharp.ContractResolvers;
 using GhostSharp.Entities;
 using GhostSharp.QueryParams;
 using Newtonsoft.Json;
 using RestSharp;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace GhostSharp
 {
@@ -60,14 +63,24 @@ namespace GhostSharp
             return Execute<PostRequest>(request).Posts[0];
         }
 
-        public Post UpdatePost(Post post)
+        public Post UpdatePost(Post updatedPost)
         {
+            var originalPost = GetPostById(updatedPost.Id);
+
+            foreach (var property in Post.UpdatableProperties)
+            {
+                if (property.GetValue(updatedPost) == null)
+                    property.SetValue(updatedPost, property.GetValue(originalPost));
+            }
+
+            updatedPost.UpdatedAt = originalPost.UpdatedAt;
+
             var serializedPost = JsonConvert.SerializeObject(
-                    new PostRequest { Posts = new List<Post> { post } },
+                    new PostRequest { Posts = new List<Post> { updatedPost } },
                     new JsonSerializerSettings { ContractResolver = UpdateContractResolver.Instance }
                 );
 
-            var request = new RestRequest($"posts/{post.Id}/", Method.PUT, DataFormat.Json);
+            var request = new RestRequest($"posts/{updatedPost.Id}/", Method.PUT, DataFormat.Json);
             request.AddBody(serializedPost);
 
             //if (string.IsNullOrEmpty(post.MobileDoc) && !string.IsNullOrEmpty(post.Html))
