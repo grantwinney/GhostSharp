@@ -58,4 +58,3 @@ Feel free to [open a PR](https://github.com/grantwinney/GhostSharp/compare) if y
 [nuget]:https://www.nuget.org/packages/GhostSharp
 [nuget badge]:https://img.shields.io/nuget/v/GhostSharp.svg
 [lang badge]:https://img.shields.io/github/languages/top/grantwinney/GhostSharp.svg
-
