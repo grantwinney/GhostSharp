@@ -1,9 +1,10 @@
 [![Travis][travis badge]][travis]
 [![License: MIT][license badge]][license]
 [![NuGet][nuget badge]][nuget]
+[![CodeFactor][codefactor badge]][codefactor]
 [![Open Source Helpers][os badge]][os]
-[![Twitter][twitter-badge]][twitter-intent]
 ![Language][lang badge]
+[![Twitter][twitter-badge]][twitter-intent]
 
 # GhostSharp
 
@@ -46,6 +47,8 @@ Feel free to [open a PR](https://github.com/grantwinney/GhostSharp/compare) if y
 <!-- Badges -->
 [travis]: https://travis-ci.org/grantwinney/GhostSharp
 [travis badge]:https://img.shields.io/travis/grantwinney/GhostSharp.svg?branch=master
+[codefactor]: https://www.codefactor.io/repository/github/grantwinney/ghostsharp
+[codefactor badge]:https://www.codefactor.io/repository/github/grantwinney/ghostsharp/badge
 [license]: https://opensource.org/licenses/MIT
 [license badge]: https://img.shields.io/badge/License-MIT-green.svg
 [os badge]: https://www.codetriage.com/grantwinney/ghostsharp/badges/users.svg
