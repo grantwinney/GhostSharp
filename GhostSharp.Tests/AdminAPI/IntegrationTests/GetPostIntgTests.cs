@@ -320,7 +320,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             var post = auth.GetPosts(new PostQueryParams { Limit = 1, IncludeTags = true }).Posts[0];
 
             Assert.IsNotNull(post.Tags);
-            Assert.IsNull(post.PrimaryTag);  // Bug: Admin API is still in beta
+            Assert.IsNotNull(post.PrimaryTag);
 
             Assert.IsNull(post.Authors);
             Assert.IsNull(post.PrimaryAuthor);
