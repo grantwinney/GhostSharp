@@ -3,6 +3,7 @@ using GhostSharp.Enums;
 using NUnit.Framework;
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace GhostSharp.Tests.AdminAPI.IntegrationTests
 {
@@ -15,33 +16,27 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         public void SetUp()
         {
             auth = new GhostAdminAPI(Host, ValidAdminApiKey);
+            //auth.ExceptionLevel = ExceptionLevel.None;
         }
 
-        //[Test]
-        //public void CreatePost_CreatesBasicPost2()
-        //{
-        //    FileInfo fileInfo = new FileInfo(@"C:\Users\gwinney\Downloads\photo-1516828956617-80b9eec69bbb.jpg");
+        [Test]
+        public void CreateImage_Succeeds()
+        {
+            var imageFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "AdminAPI", "sample_image.jpeg");
+            var randomImageName = Guid.NewGuid().ToString();
 
-        //    // The byte[] to save the data in
-        //    byte[] data = new byte[fileInfo.Length];
+            var expectedPost = new ImageRequest(File.ReadAllBytes(imageFile), $"{randomImageName}.jpeg", ImageType.JPEG)
+            {
+                Purpose = ImagePurpose.Image,
+                Reference = "sample"
+            };
 
-        //    // Load a filestream and put its content into the byte[]
-        //    using (FileStream fs = fileInfo.OpenRead())
-        //    {
-        //        fs.Read(data, 0, data.Length);
-        //    }
+            var actualImage = auth.UploadImage(expectedPost);
 
-        //    // Delete the temporary file
-        //    fileInfo.Delete();
+            Assert.AreEqual($"{Host}content/images/{DateTime.Now.ToString("yyyy/MM")}/{randomImageName}.jpeg", actualImage.Url);
+            Assert.IsNull(actualImage.Reference);  // why isn't this working?
+        }
 
-        //    var expectedPost = new ImageRequest
-        //    {
-        //        Purpose = ImagePurpose.Image,
-        //        Reference = "sample",
-        //        File = data
-        //    };
-
-        //    var actualPost = auth.UploadImage(expectedPost);
-        //}
+        // what happens when the purpose is invalid?
     }
 }

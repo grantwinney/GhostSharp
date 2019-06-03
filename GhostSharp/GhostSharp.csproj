@@ -21,8 +21,8 @@ Full release notes: https://github.com/grantwinney/GhostSharp/blob/master/README
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JWT" Version="5.0.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="JWT" Version="5.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="RestSharp" Version="106.6.9" />
   </ItemGroup>
 

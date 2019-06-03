@@ -1,4 +1,5 @@
 ﻿using GhostSharp.Entities;
+using GhostSharp.Enums;
 using RestSharp;
 
 namespace GhostSharp
@@ -12,18 +13,29 @@ namespace GhostSharp
         public Image UploadImage(ImageRequest image)
         {
             var request = new RestRequest("images/upload/", Method.POST);
-            request.AddHeader("Content-Type", "multipart/form-data;");
-            request.AddFileBytes("file", image.File, "upload.jpg");
-            request.AddParameter("purpose", image.Purpose.ToString());
+
+            var mimeType = image.ImageType == ImageType.GIF
+                ? "image/gif"
+                : image.ImageType == ImageType.ICO
+                    ? "image/x-icon"
+                    : image.ImageType == ImageType.JPEG
+                        ? "image/jpeg"
+                        : image.ImageType == ImageType.PNG
+                            ? "image/png"
+                            : image.ImageType == ImageType.SVG
+                                ? "image/svg+xml"
+                                : "application/octet-stream";  // Unknown file type
+
+            if (image.FilePath != null)
+                request.AddFile("file", image.FilePath, mimeType);
+            else
+                request.AddFile("file", image.File, image.FileName, mimeType);
+
+            request.AddParameter("purpose", image.Purpose.ToString().ToLower());
             request.AddParameter("ref", image.Reference);
 
             return Execute<ImageResponse>(request).Images[0];
         }
-
-
-        // what happens when the purpose is invalid?
-
-        // can i upload file using filename? prob not - file is just another blob?
     }
 }
 

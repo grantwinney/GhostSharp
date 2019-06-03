@@ -1,13 +1,10 @@
 ﻿using GcmSharp.Serialization;
-using GhostSharp.Attributes;
 using GhostSharp.ContractResolvers;
 using GhostSharp.Entities;
 using GhostSharp.QueryParams;
 using Newtonsoft.Json;
 using RestSharp;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace GhostSharp
 {

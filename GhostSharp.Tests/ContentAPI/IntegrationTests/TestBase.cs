@@ -10,7 +10,8 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         protected static string Host = "https://grantwinney.com/";
         protected static string SiteTitle = "Grant Winney";
 
-        protected static string ValidContentApiKey = Environment.GetEnvironmentVariable("CONTENT_API_KEY");
+        protected static string ValidContentApiKey = "018e11d4dfc9170fd4fb82b38d";
+        //protected static string ValidContentApiKey = Environment.GetEnvironmentVariable("CONTENT_API_KEY");
 
         protected static string ValidPost1Id = "5c60e815afe8720651f1834d";
         protected static string ValidPost1Slug = "using-the-ip-geolocation-api-to-find-info-about-an-ip-address";

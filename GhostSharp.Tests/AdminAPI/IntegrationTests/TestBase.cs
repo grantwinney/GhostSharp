@@ -10,7 +10,8 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         protected static string Host = "https://grantwinney.com/";
         protected static string SiteTitle = "Grant Winney";
 
-        protected static string ValidAdminApiKey = Environment.GetEnvironmentVariable("ADMIN_API_KEY");
+        protected static string ValidAdminApiKey = "5c9f5f4b14afbe0805d2bb95:215a23115f0f5cb27dcafb78ffcb7566965d1ed813d60fab2ded60ee63a5c065";
+        //protected static string ValidAdminApiKey = Environment.GetEnvironmentVariable("ADMIN_API_KEY");
 
         protected static string ValidPost1Id = "5c60e815afe8720651f1834d";
         protected static string ValidPost1Slug = "using-the-ip-geolocation-api-to-find-info-about-an-ip-address";

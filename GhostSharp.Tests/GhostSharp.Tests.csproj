@@ -17,4 +17,10 @@
     <ProjectReference Include="..\GhostSharp\GhostSharp.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="AdminAPI\sample_image.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
