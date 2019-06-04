@@ -1,4 +1,5 @@
 using GhostSharp.Entities;
+using GhostSharp.Enums;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;

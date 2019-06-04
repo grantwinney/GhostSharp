@@ -1,4 +1,5 @@
 ﻿using GhostSharp.Entities;
+using GhostSharp.Enums;
 using NUnit.Framework;
 
 namespace GhostSharp.Tests.ContentAPI.IntegrationTests

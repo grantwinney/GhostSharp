@@ -1,4 +1,4 @@
-﻿using GhostSharp.Entities;
+﻿using GhostSharp.Enums;
 using NUnit.Framework;
 using System;
 
