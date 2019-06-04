@@ -1,4 +1,4 @@
-﻿using GhostSharp.Entities;
+﻿using GhostSharp.Enums;
 
 namespace GhostSharp
 {

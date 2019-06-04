@@ -1,5 +1,6 @@
 ﻿using System;
 using GhostSharp.Entities;
+using GhostSharp.Enums;
 using Newtonsoft.Json;
 using RestSharp;
 

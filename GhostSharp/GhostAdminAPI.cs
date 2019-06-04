@@ -1,5 +1,5 @@
 ﻿using System;
-using GhostSharp.Entities;
+using GhostSharp.Enums;
 using JWT;
 using JWT.Algorithms;
 using JWT.Builder;

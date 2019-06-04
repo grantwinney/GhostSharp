@@ -1,4 +1,4 @@
-﻿namespace GhostSharp.Entities
+﻿namespace GhostSharp.Enums
 {
     /// <summary>
     /// Choose which exceptions, if any, to suppress.
