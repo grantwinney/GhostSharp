@@ -4,24 +4,6 @@ using System.Collections.Generic;
 namespace GhostSharp.Entities
 {
     /// <summary>
-    /// Response representing settings and any meta data
-    /// </summary>
-    public class SettingsResponse
-    {
-        /// <summary>
-        /// Represents your publication's settings.
-        /// </summary>
-        [JsonProperty("settings")]
-        public Settings Settings { get; set; }
-
-        /// <summary>
-        /// Meta data regarding the response.
-        /// </summary>
-        [JsonProperty("meta")]
-        public Meta Meta { get; set; }
-    }
-
-    /// <summary>
     /// Represents your publication's settings.
     /// </summary>
     public class Settings
@@ -97,23 +79,5 @@ namespace GhostSharp.Entities
         /// </summary>
         [JsonProperty("codeinjection_foot")]
         public string CodeInjectionFoot { get; set; }
-    }
-
-    /// <summary>
-    /// Represents a single menu item on your publication.
-    /// </summary>
-    public class Navigation
-    {
-        /// <summary>
-        /// Menu label as visitors see it
-        /// </summary>
-        [JsonProperty("label")]
-        public string Label { get; set; }
-
-        /// <summary>
-        /// Menu URL (relative URL, such as /about-me)
-        /// </summary>
-        [JsonProperty("url")]
-        public string Url { get; set; }
     }
 }

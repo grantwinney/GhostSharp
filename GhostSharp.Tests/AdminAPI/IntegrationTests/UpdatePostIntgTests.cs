@@ -174,21 +174,4 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             }
         }
     }
-
-    // finish asserts in above test
-
-    // is title ALWAYS required (I think it can't be left blank)?? are all writable fields required even if not changing?? :/
-
-    // do a GET and save it right back in?
-
-    // Tag and author relations will be replaced, not merged - test this
-
-    // which takes precedence if html AND mobiledoc are both updated?
-    //   need to attach query parameter to specify html, like when creating post?
-
-    // should i create a CreatableAttribute too to ignore fields that shouldn't be sent,
-    //   like id or uuid?
-
-    // then copy all of this for pages
-
 }

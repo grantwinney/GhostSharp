@@ -9,37 +9,6 @@ using System.Reflection;
 namespace GhostSharp.Entities
 {
     /// <summary>
-    /// Response from Ghost, representing posts and any meta data
-    /// </summary>
-    public class PostResponse
-    {
-        /// <summary>
-        /// Collection of posts.
-        /// </summary>
-        [JsonProperty("posts")]
-        public List<Post> Posts { get; set; }
-
-        /// <summary>
-        /// Meta data regarding the response.
-        /// </summary>
-        [JsonProperty("meta")]
-        public Meta Meta { get; set; }
-    }
-
-    /// <summary>
-    /// Request sent to Ghost
-    /// </summary>
-    public class PostRequest
-    {
-        /// <summary>
-        /// Collection of posts.
-        /// </summary>
-        [JsonProperty("posts")]
-        [UpdatableField]
-        public List<Post> Posts { get; set; }
-    }
-
-    /// <summary>
     /// Represents a Post.
     /// </summary>
     public class Post
