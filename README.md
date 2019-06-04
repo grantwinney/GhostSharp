@@ -1,10 +1,10 @@
-[![Travis][travis badge]][travis]
-[![License: MIT][license badge]][license]
-[![NuGet][nuget badge]][nuget]
-[![CodeFactor][codefactor badge]][codefactor]
-[![Open Source Helpers][os badge]][os]
-![Language][lang badge]
-[![Twitter][twitter-badge]][twitter-intent]
+[![Travis](https://img.shields.io/travis/grantwinney/GhostSharp.svg?branch=master)](https://travis-ci.org/grantwinney/GhostSharp)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![NuGet](https://img.shields.io/nuget/v/GhostSharp.svg)](https://www.nuget.org/packages/GhostSharp)
+[![CodeFactor](https://www.codefactor.io/repository/github/grantwinney/ghostsharp/badge)](https://www.codefactor.io/repository/github/grantwinney/ghostsharp)
+[![Open Source Helpers](https://www.codetriage.com/grantwinney/ghostsharp/badges/users.svg)](https://www.codetriage.com/grantwinney/ghostsharp)
+![Language](https://img.shields.io/github/languages/top/grantwinney/GhostSharp.svg)
+[![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg)](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fgrantwinney%2FGhostSharp&text=GhostSharp,%20a%20C%23%20Wrapper%20for%20the%20Ghost%20API&hashtags=tryghost,api)
 
 # GhostSharp
 
@@ -44,18 +44,3 @@ Feel free to [open a PR](https://github.com/grantwinney/GhostSharp/compare) if y
 * 1.0.2 - Beginning work to support Admin API.<br>***Breaking change:** GhostAPI is now split into GhostContentAPI and GhostAdminAPI*
 * 1.0.1 - Added comments to aid in intellisense.
 * 1.0.0 - Covers the Content API endpoints.
-
-<!-- Badges -->
-[travis]: https://travis-ci.org/grantwinney/GhostSharp
-[travis badge]:https://img.shields.io/travis/grantwinney/GhostSharp.svg?branch=master
-[codefactor]: https://www.codefactor.io/repository/github/grantwinney/ghostsharp
-[codefactor badge]:https://www.codefactor.io/repository/github/grantwinney/ghostsharp/badge
-[license]: https://opensource.org/licenses/MIT
-[license badge]: https://img.shields.io/badge/License-MIT-green.svg
-[os badge]: https://www.codetriage.com/grantwinney/ghostsharp/badges/users.svg
-[os]: https://www.codetriage.com/grantwinney/ghostsharp
-[twitter-intent]:https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fgrantwinney%2FGhostSharp&text=GhostSharp,%20a%20C%23%20Wrapper%20for%20the%20Ghost%20API&hashtags=tryghost,api
-[twitter-badge]:https://img.shields.io/twitter/url/http/shields.io.svg
-[nuget]:https://www.nuget.org/packages/GhostSharp
-[nuget badge]:https://img.shields.io/nuget/v/GhostSharp.svg
-[lang badge]:https://img.shields.io/github/languages/top/grantwinney/GhostSharp.svg
