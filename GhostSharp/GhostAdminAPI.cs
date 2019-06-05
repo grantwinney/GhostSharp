@@ -47,7 +47,6 @@ namespace GhostSharp
                     .WithSecret(Ext.StringToByteArray(adminKeyParts[1]))
                     .MustVerifySignature()
                     .Decode(token);
-                Console.WriteLine(json);
             }
             catch (TokenExpiredException)
             {
