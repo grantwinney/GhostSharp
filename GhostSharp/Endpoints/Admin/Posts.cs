@@ -78,8 +78,9 @@ namespace GhostSharp
                 );
 
             var request = new RestRequest($"posts/{updatedPost.Id}/", Method.PUT, DataFormat.Json);
-            request.AddBody(serializedPost);
+            request.AddJsonBody(serializedPost);
 
+            // TODO
             //if (string.IsNullOrEmpty(post.MobileDoc) && !string.IsNullOrEmpty(post.Html))
             //    request.AddQueryParameter("source", "html");
 
