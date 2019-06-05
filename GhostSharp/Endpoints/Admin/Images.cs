@@ -14,27 +14,35 @@ namespace GhostSharp
         {
             var request = new RestRequest("images/upload/", Method.POST);
 
-            var mimeType = image.ImageType == ImageType.GIF
-                ? "image/gif"
-                : image.ImageType == ImageType.ICO
-                    ? "image/x-icon"
-                    : image.ImageType == ImageType.JPEG
-                        ? "image/jpeg"
-                        : image.ImageType == ImageType.PNG
-                            ? "image/png"
-                            : image.ImageType == ImageType.SVG
-                                ? "image/svg+xml"
-                                : "application/octet-stream";  // Unknown file type
-
             if (image.FilePath != null)
-                request.AddFile("file", image.FilePath, mimeType);
+                request.AddFile("file", image.FilePath, GetMimeType(image.ImageType));
             else
-                request.AddFile("file", image.File, image.FileName, mimeType);
+                request.AddFile("file", image.File, image.FileName, GetMimeType(image.ImageType));
 
             request.AddParameter("purpose", image.Purpose.ToString().ToLower());
             request.AddParameter("ref", image.Reference);
 
             return Execute<ImageResponse>(request).Images[0];
+        }
+
+        private string GetMimeType(ImageType imageType)
+        {
+            switch (imageType)
+            {
+                case ImageType.GIF:
+                    return "image/gif";
+                case ImageType.ICO:
+                    return "image/x-icon";
+                case ImageType.JPEG:
+                    return "image/jpeg";
+                case ImageType.PNG:
+                    return "image/png";
+                case ImageType.SVG:
+                    return "image/svg+xml";
+                case ImageType.Unknown:
+                default:
+                    return "application/octet-stream";
+            }
         }
     }
 }
