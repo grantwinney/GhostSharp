@@ -16,9 +16,42 @@ This is a [wrapper](https://grantwinney.com/what-is-an-api-wrapper-and-how-do-i-
 
 If you need to access the Content API, all you need is the URL of your site and a Content API Key, [available on the "Integrations" page](https://docs.ghost.org/api/content/#key). Once you have those pieces of information, you can access any "public" content.
 
+```csharp
+var ghost = new GhostSharp.GhostContentAPI("https://grantwinney.com", "a6d33f1b95ff17adf0f787a70a");
+var settings = ghost.GetSettings();
+
+Console.WriteLine($"Welcome to {settings.Title}: {settings.Description}\r\n");
+Console.WriteLine($"Navigation: {string.Join(", ", settings.Navigation.Select(x => x.Label))}");
+```
+
+Output:
+
+```
+Welcome to Grant Winney: We learn by doing. We've all got something to contribute.
+
+Navigation: Home, APIs, Lambda, Rasp PI, About Me, CV
+```
+
 ### Accessing the Admin API
 
-To access the Admin API, you'll also need an Admin API Key in addition to the two pieces of above data, which is also available on the same "Integrations" page. With that, you can access and modify "private" content.
+If you need to access the Admin API, all you need is the URL of your site and an Admin API Key, also [available on the "Integrations" page](https://docs.ghost.org/api/content/#key). Once you have those pieces of information, you can access any "private" content.
+
+```csharp
+var ghost = new GhostSharp.GhostAdminAPI("https://grantwinney.com", 
+    "5cf706fd7d4a33066550627a:9e5ed2b90e40f68573b0ccaf4aef666b047fc9867ad285b2e219eed5503bae53");
+var site = ghost.GetSite();
+
+Console.WriteLine($"Welcome to <a href='{site.Url}'>{site.Title}</a>\r\n");
+Console.WriteLine($"Running Ghost v{site.Version}");
+```
+
+Output:
+
+```
+Welcome to <a href='https://grantwinney.com/'>Grant Winney</a>
+
+Running Ghost v2.23
+```
 
 ## Versioning
 
