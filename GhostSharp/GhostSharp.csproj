@@ -9,21 +9,29 @@
     <Company></Company>
     <Description>This is a C# wrapper around the Ghost RESTful Content API, documented here: https://docs.ghost.org/api/content/</Description>
     <PackageProjectUrl>https://github.com/grantwinney/GhostSharp</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/grantwinney/GhostSharp/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryUrl>https://github.com/grantwinney/GhostSharp</RepositoryUrl>
     <RepositoryType></RepositoryType>
     <PackageTags>ghost api rest api-wrapper netstandard wrapper-api wrapper</PackageTags>
     <PackageReleaseNotes>Wrapper for the new 2.0 version of the Ghost API, including the Content API as well as the stable endpoints of the Admin API (currently posts, pages, images, and site).
 
 Full release notes: https://github.com/grantwinney/GhostSharp/blob/master/README.md#release-notes</PackageReleaseNotes>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.0.3</Version>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Version>1.0.4</Version>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="JWT" Version="5.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="RestSharp" Version="106.6.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
