@@ -8,7 +8,7 @@
     <Authors>grant</Authors>
     <Company></Company>
     <Description>This is a C# wrapper around the Ghost RESTful Content API, documented here: https://docs.ghost.org/api/content/</Description>
-    <PackageProjectUrl>https://github.com/grantwinney/GhostSharp</PackageProjectUrl>
+    <PackageProjectUrl>https://grantwinney.com/ghostsharp</PackageProjectUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryUrl>https://github.com/grantwinney/GhostSharp</RepositoryUrl>
     <RepositoryType></RepositoryType>
