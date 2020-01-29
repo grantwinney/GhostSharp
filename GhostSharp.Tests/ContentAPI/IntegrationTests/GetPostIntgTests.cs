@@ -351,7 +351,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             var post = auth.GetPosts(new PostQueryParams { Limit = 1, Order = new List<Tuple<PostFields, OrderDirection>> { Tuple.Create(PostFields.CreatedAt, OrderDirection.asc) } }).Posts[0];
 
             // potentially fragile
-            Assert.AreEqual("5967634699d09e0ee05c3b76", post.Id);
+            Assert.AreEqual("5d707c0b0d116604e3965dd7", post.Id);
         }
 
         [Test]
@@ -362,7 +362,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             var post = auth.GetPosts(new PostQueryParams { Page = 2, Limit = 2, Order = new List<Tuple<PostFields, OrderDirection>> { Tuple.Create(PostFields.CreatedAt, OrderDirection.asc) }, Fields = PostFields.Id }).Posts[0];
 
             // potentially fragile
-            Assert.AreEqual("5967634699d09e0ee05c3b78", post.Id);
+            Assert.AreEqual("5d707c0b0d116604e3965dd7", post.Id);
         }
 
         [Test]
