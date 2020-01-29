@@ -12,14 +12,14 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
 
         protected static string ValidContentApiKey = Environment.GetEnvironmentVariable("CONTENT_API_KEY");
 
-        protected static string ValidPost1Id = "5c60e815afe8720651f1834d";
+        protected static string ValidPost1Id = "5d707c0b0d116604e3965eb1";
         protected static string ValidPost1Slug = "using-the-ip-geolocation-api-to-find-info-about-an-ip-address";
         protected static string ValidPost1Title = "Using the IP Geolocation API to find info about an IP address";
         protected static string ValidPost1Url = "https://grantwinney.com/using-the-ip-geolocation-api-to-find-info-about-an-ip-address/";
         protected static string ValidPost1Author = "1";
-        protected static string ValidPost1PrimaryTag = "5967634199d09e0ee05c3a9e";
+        protected static string ValidPost1PrimaryTag = "5d707c090d116604e3965c87";
 
-        protected static string ValidPage1Id = "5967634499d09e0ee05c3b74";
+        protected static string ValidPage1Id = "5d707c0b0d116604e3965dd4";
         protected static string ValidPage1Slug = "about";
         protected static string ValidPage1Url = "https://grantwinney.com/about/";
         protected static string ValidPage1Author = "1";
@@ -29,14 +29,14 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         protected static string ValidAuthor1Name = "Grant Winney";
         protected static string ValidAuthor1Url = "https://grantwinney.com/author/grant/";
 
-        protected static string ValidAuthor2Id = "5c66545fafe8720651f186bb";
+        protected static string ValidAuthor2Id = "5d707c090d116604e3965c77";
         protected static string ValidAuthor2Slug = "grant2";
         protected static string ValidAuthor2Name = "Grant Winney";
         protected static string ValidAuthor2Url = "https://grantwinney.com/author/grant2/";
 
         protected static string ValidAuthorWithNoPublishedPostsSlug = "john";
 
-        protected static string ValidTag1Id = "5c6d6ac0afe8720651f186d8";
+        protected static string ValidTag1Id = "5d707c090d116604e3965d99";
         protected static string ValidTag1Slug = "gs-test";
         protected static string ValidTag1Name = "gs-test";
         protected static string ValidTag1Description = "~~~~ Zet another throwaway tag used for testing purposes.";
@@ -47,7 +47,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         protected static int ValidTag1PostCount = 6;
         protected static string ValidTag1Url = "https://grantwinney.com/tag/gs-test/";
 
-        protected static string ValidTag2Id = "5c6d760dafe8720651f186e5";
+        protected static string ValidTag2Id = "5d707c090d116604e3965d9a";
         protected static string ValidTag2Slug = "gs-test-2";
         protected static string ValidTag2Name = "gs-test-2";
         protected static string ValidTag2Description = "~~~~ Yet another throwaway tag used for testing purposes.";
