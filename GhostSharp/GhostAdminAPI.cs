@@ -38,7 +38,7 @@ namespace GhostSharp
                                         .AddHeader(HeaderName.KeyId, adminKeyParts[0])
                                         .AddClaim("exp", unixEpochInSeconds + 300)
                                         .AddClaim("iat", unixEpochInSeconds)
-                                        .AddClaim("aud", "/v2/admin/")
+                                        .AddClaim("aud", "/v3/admin/")
                                         .Build();
 
             try
@@ -70,7 +70,7 @@ namespace GhostSharp
         /// </summary>
         /// <param name="host">The Host for which to access the Admin API.</param>
         public GhostAdminAPI(string host, ExceptionLevel exceptionLevel = ExceptionLevel.All)
-            : base(host, exceptionLevel, "/ghost/api/v2/admin/", APIType.Admin)
+            : base(host, exceptionLevel, "/ghost/api/v3/admin/", APIType.Admin)
         {
         }
     }
