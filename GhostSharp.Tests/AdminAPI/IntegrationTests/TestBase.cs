@@ -17,7 +17,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         protected static string ValidPost1Title = "Using the IP Geolocation API to find info about an IP address";
         protected static string ValidPost1Url = "https://grantwinney.com/using-the-ip-geolocation-api-to-find-info-about-an-ip-address/";
         protected static string ValidPost1Author = "1";
-        protected static string ValidPost1PrimaryTag = "5d707c090d116604e3965c87";
+        protected static string ValidPost1PrimaryTag = "5e90d3e71318020e539719f1";
 
         protected static string ValidPage1Id = "5e90d3eb1318020e53971b5b";
         protected static string ValidPage1Slug = "about";
