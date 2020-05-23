@@ -314,7 +314,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             var page = auth.GetPages(new PostQueryParams { Limit = 1, Order = new List<Tuple<PostFields, OrderDirection>> { Tuple.Create(PostFields.CreatedAt, OrderDirection.asc) } }).Pages[0];
 
             // potentially fragile
-            Assert.AreEqual("5d707c0b0d116604e3965dd4", page.Id);
+            Assert.AreEqual("5e90d3eb1318020e53971b5b", page.Id);
         }
 
         [Test]
