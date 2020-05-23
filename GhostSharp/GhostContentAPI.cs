@@ -16,7 +16,7 @@ namespace GhostSharp
         /// <param name="host">The Host for which to access the Content API.</param>
         /// <param name="contentApiKey">Content API key.</param>
         public GhostContentAPI(string host, string contentApiKey, ExceptionLevel exceptionLevel = ExceptionLevel.All)
-            : base(host, contentApiKey, exceptionLevel, "/ghost/api/v2/content/", APIType.Content)
+            : base(host, contentApiKey, exceptionLevel, "/ghost/api/v3/content/", APIType.Content)
         {
         }
     }

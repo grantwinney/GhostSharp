@@ -20,7 +20,7 @@ namespace GhostSharp
         /// <param name="host">The Host for which to access the Admin API.</param>
         /// <param name="adminApiKey">Admin API key.</param>
         public GhostAdminAPI(string host, string adminApiKey, ExceptionLevel exceptionLevel = ExceptionLevel.All)
-            : base(host, adminApiKey, exceptionLevel, "/ghost/api/v2/admin/", APIType.Admin)
+            : base(host, adminApiKey, exceptionLevel, "/ghost/api/v3/admin/", APIType.Admin)
         {
             var adminKeyParts = adminApiKey.Split(':');
 
