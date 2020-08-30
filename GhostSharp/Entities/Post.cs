@@ -141,6 +141,13 @@ namespace GhostSharp.Entities
         public string CodeInjectionFoot { get; set; }
 
         /// <summary>
+        /// Reading time in minutes
+        /// </summary>
+        [JsonProperty("reading_time")]
+        [UpdatableField]
+        public int? ReadingTime { get; set; }
+
+        /// <summary>
         /// Facebook Card Image
         /// </summary>
         [JsonProperty("og_image")]

@@ -175,6 +175,12 @@ namespace GhostSharp.Enums
         /// Excerpt
         /// </summary>
         [JsonProperty("excerpt")]
-        Excerpt = 134217728
-    }
+        Excerpt = 134217728,
+
+        /// <summary>
+        /// Reading Time in minutes
+        /// </summary>
+        [JsonProperty("reading_time")]
+        ReadingTime = 268435456
+   }
 }
