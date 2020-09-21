@@ -30,7 +30,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         }
 
         [TestCase(2)]
-        //[TestCase(-2)]
+        [TestCase(-2)]
         [Test]
         public void UpdatePost_Succeeds_WhenUpdatedAtIsDifferent_BecauseItsForcedToBeSameAsOriginalPost(int minutes)
         {
@@ -44,7 +44,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.DoesNotThrow(() => auth.UpdatePost(updatedPost));
         }
 
-        //[Test]
+        [Test]
         public void UpdatePost_Succeeds_WhenUpdatedAtIsSame_AndUpdatableFieldsChange()
         {
             var updatedPost = auth.UpdatePost(
@@ -86,7 +86,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.AreEqual("Resource not found error, cannot read post.", ex.Message);
         }
 
-        //[Test]
+        [Test]
         public void UpdatePost_Succeeds_WhenAllFieldsChange_AsLongAsOnlyUpdatableFieldsAreSent()
         {
             Post origPost = null;
@@ -120,7 +120,6 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                         CanonicalUrl = "original_canonical_url",
                         Excerpt = "Original Excerpt",
                         Status = "draft",
-                        ReadingTime = 10,
                     });
 
                 var updatedPost = auth.UpdatePost(
@@ -153,7 +152,6 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                         CanonicalUrl = "updated_canonical_url",
                         Excerpt = "Updated Excerpt",
                         Status = "draft",
-                        ReadingTime = 20,
 
                         // cannot be changed
                         Slug = "updated-improbable-sluggy-slug-name-sluggish-1234235",

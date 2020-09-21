@@ -144,7 +144,6 @@ namespace GhostSharp.Entities
         /// Reading time in minutes
         /// </summary>
         [JsonProperty("reading_time")]
-        [UpdatableField]
         public int? ReadingTime { get; set; }
 
         /// <summary>
