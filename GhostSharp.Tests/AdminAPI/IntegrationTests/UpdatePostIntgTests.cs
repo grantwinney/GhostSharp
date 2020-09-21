@@ -120,6 +120,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                         CanonicalUrl = "original_canonical_url",
                         Excerpt = "Original Excerpt",
                         Status = "draft",
+                        ReadingTime = 10,
                     });
 
                 var updatedPost = auth.UpdatePost(
@@ -152,6 +153,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                         CanonicalUrl = "updated_canonical_url",
                         Excerpt = "Updated Excerpt",
                         Status = "draft",
+                        ReadingTime = 20,
 
                         // cannot be changed
                         Slug = "updated-improbable-sluggy-slug-name-sluggish-1234235",
