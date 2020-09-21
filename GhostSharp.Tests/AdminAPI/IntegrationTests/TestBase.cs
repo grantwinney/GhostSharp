@@ -10,7 +10,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         protected static string Host = "https://grantwinney.com/";
         protected static string SiteTitle = "Grant Winney";
 
-        protected static string ValidAdminApiKey = "5ec8a4025ec3ce04ba9338a0:c2cfe23033c09e5688ce6923ca97c8acaec5cf3f112c80ff8ef61cf3aa1ffdf7"; // Environment.GetEnvironmentVariable("ADMIN_API_KEY");
+        protected static string ValidAdminApiKey = Environment.GetEnvironmentVariable("ADMIN_API_KEY");
 
         protected static string ValidPost1Id = "5e90d3eb1318020e53971c38";
         protected static string ValidPost1Slug = "using-the-ip-geolocation-api-to-find-info-about-an-ip-address";
@@ -67,8 +67,8 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         protected static string InvalidTagId = "aaaaaaaaaaaaaaaaaaaaaaaa";
         protected static string InvalidTagSlug = "invalid-slug-value";
 
-        private List<string> testValues = new List<string> { ValidAdminApiKey, ValidPost1Id, ValidPost1Slug,
-                                                             ValidAuthor1Id, ValidAuthor1Slug, ValidTag1Id, ValidTag1Slug};
+        private readonly List<string> testValues = new List<string> { ValidAdminApiKey, ValidPost1Id, ValidPost1Slug,
+                                                                      ValidAuthor1Id, ValidAuthor1Slug, ValidTag1Id, ValidTag1Slug};
 
         protected TestBase()
         {

@@ -50,8 +50,10 @@ namespace GhostSharp
         /// <returns>Returns the same post, along with whatever other data Ghost appended to it (like default values)</returns>
         public Post CreatePost(Post post)
         {
-            var request = new RestRequest($"posts/", Method.POST, DataFormat.Json);
-            request.JsonSerializer = NewtonsoftJsonSerializer.Default;
+            var request = new RestRequest($"posts/", Method.POST, DataFormat.Json)
+            {
+                JsonSerializer = NewtonsoftJsonSerializer.Default
+            };
             request.AddJsonBody(new PostRequest { Posts = new List<Post> { post } });
 
             if (string.IsNullOrEmpty(post.MobileDoc) && !string.IsNullOrEmpty(post.Html))

@@ -15,7 +15,7 @@ namespace GhostSharp
     public partial class GhostAPI
     {
         internal string key;
-        private APIType apiType;
+        private readonly APIType apiType;
         public IRestClient Client { internal get; set; }
 
         internal GhostAPI(string host, string key, ExceptionLevel exceptionLevel, string baseUrl, APIType apiType)

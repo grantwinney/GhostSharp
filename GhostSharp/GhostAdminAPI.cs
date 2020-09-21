@@ -3,6 +3,7 @@ using GhostSharp.Enums;
 using JWT;
 using JWT.Algorithms;
 using JWT.Builder;
+using JWT.Exceptions;
 
 namespace GhostSharp
 {
@@ -31,20 +32,25 @@ namespace GhostSharp
                 throw exception;
             }
 
+            var id = adminKeyParts[0];
+            var secret = adminKeyParts[1];
+
             var unixEpochInSeconds = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
 
             var token = new JwtBuilder().WithAlgorithm(new HMACSHA256Algorithm())
-                                        .WithSecret(Ext.StringToByteArray(adminKeyParts[1]))
-                                        .AddHeader(HeaderName.KeyId, adminKeyParts[0])
+                                        .WithSecret(Ext.StringToByteArray(secret))
+                                        .AddHeader(HeaderName.KeyId, id)
+                                        .AddHeader(HeaderName.Type, "JWT")
                                         .AddClaim("exp", unixEpochInSeconds + 300)
                                         .AddClaim("iat", unixEpochInSeconds)
                                         .AddClaim("aud", "/v3/admin/")
-                                        .Build();
+                                        .Encode();
 
             try
             {
                 var json = new JwtBuilder()
-                    .WithSecret(Ext.StringToByteArray(adminKeyParts[1]))
+                    .WithAlgorithm(new HMACSHA256Algorithm())
+                    .WithSecret(Ext.StringToByteArray(secret))
                     .MustVerifySignature()
                     .Decode(token);
             }

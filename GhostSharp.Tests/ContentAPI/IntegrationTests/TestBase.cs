@@ -64,8 +64,8 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         protected static string InvalidTagId = "aaaaaaaaaaaaaaaaaaaaaaaa";
         protected static string InvalidTagSlug = "invalid-slug-value";
 
-        private List<string> testValues = new List<string> { ValidContentApiKey, ValidPost1Id, ValidPost1Slug,
-                                                             ValidAuthor1Id, ValidAuthor1Slug, ValidTag1Id, ValidTag1Slug};
+        private readonly List<string> testValues = new List<string> { ValidContentApiKey, ValidPost1Id, ValidPost1Slug,
+                                                                      ValidAuthor1Id, ValidAuthor1Slug, ValidTag1Id, ValidTag1Slug};
 
         protected TestBase()
         {

@@ -46,7 +46,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.AreEqual(actualPost.Title.Replace(' ', '-').ToLower(), actualPost.Slug);
 
             Assert.IsNotNull(actualPost.Uuid);
-            Assert.IsTrue(Guid.TryParse(actualPost.Uuid, out Guid ignoreResult));
+            Assert.IsTrue(Guid.TryParse(actualPost.Uuid, out _));
             Assert.IsNotNull(actualPost.CommentId);
             Assert.IsNotNull(actualPost.CreatedAt);
             Assert.IsNotNull(actualPost.UpdatedAt);
