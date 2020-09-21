@@ -141,12 +141,6 @@ namespace GhostSharp.Entities
         public string CodeInjectionFoot { get; set; }
 
         /// <summary>
-        /// Reading time in minutes
-        /// </summary>
-        [JsonProperty("reading_time")]
-        public int? ReadingTime { get; set; }
-
-        /// <summary>
         /// Facebook Card Image
         /// </summary>
         [JsonProperty("og_image")]
@@ -227,13 +221,6 @@ namespace GhostSharp.Entities
         public string Url { get; set; }
 
         /// <summary>
-        /// Canonical URL
-        /// </summary>
-        [JsonProperty("canonical_url")]
-        [UpdatableField]
-        public string CanonicalUrl { get; set; }
-
-        /// <summary>
         /// Excerpt
         /// </summary>
         [JsonProperty("excerpt")]
@@ -241,7 +228,20 @@ namespace GhostSharp.Entities
         public string Excerpt { get; set; }
 
         /// <summary>
-        /// Status (published, draft)
+        /// Reading time in minutes
+        /// </summary>
+        [JsonProperty("reading_time")]
+        public int? ReadingTime { get; set; }
+
+        /// <summary>
+        /// Canonical URL
+        /// </summary>
+        [JsonProperty("canonical_url")]
+        [UpdatableField]
+        public string CanonicalUrl { get; set; }
+
+        /// <summary>
+        /// Status (published, draft, scheduled) - If 'scheduled', a PublishedAt date is required
         /// </summary>
         [JsonProperty("status")]
         [UpdatableField]
@@ -256,7 +256,7 @@ namespace GhostSharp.Entities
         public string Visibility { get; set; }
 
         /// <summary>
-        /// Send Email When Published (set by query parameter when publishing/scheduling)
+        /// Send Email When Published
         /// </summary>
         [JsonProperty("send_email_when_published")]
         public bool SendEmailWhenPublished { get; set; }
@@ -271,7 +271,7 @@ namespace GhostSharp.Entities
         /// Access (true if members is disabled; otherwise, set to currently logged in members' access)
         /// </summary>
         /// <remarks>
-        /// This value seems to always be null on creation, and setting to a value on update has no effect.
+        /// This value seems to always be null on POST, and setting to a value on PUT has no effect.
         /// </remarks>
         /// <see cref="https://github.com/TryGhost/Ghost/commit/289c1b3e8a5c03b868dde1a76f62661197e302d4"/>
         [JsonProperty("access")]

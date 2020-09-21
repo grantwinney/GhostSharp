@@ -16,9 +16,10 @@ namespace GhostSharp.QueryParams
         public bool IncludePostCount { get; set; }
 
         /// <summary>
-        /// Choose which resource fields you want to retrieve values for.
+        /// Limit fields returned in response.
+        /// Useful for optimizing queries, but does not play well with the Include options.
         /// </summary>
-        /// <value>The resource fields to retrieve values for.</value>
+        /// <value>The fields to return in the response.</value>
         public AuthorFields Fields { get; set; }
 
         /// <summary>

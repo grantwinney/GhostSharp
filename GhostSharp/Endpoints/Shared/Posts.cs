@@ -65,8 +65,13 @@ namespace GhostSharp
                 else if (queryParams.IncludeTags)
                     request.AddQueryParameter("include", "tags");
 
+                var a = Ext.GetQueryStringFromFlagsEnum<PostFields>(queryParams.Fields);
+
                 if (queryParams.Fields != 0)
                     request.AddQueryParameter("fields", Ext.GetQueryStringFromFlagsEnum<PostFields>(queryParams.Fields));
+
+                if (queryParams.Fields2 != 0)
+                    request.AddQueryParameter("fields", Ext.GetQueryStringFromFlagsEnum<PostFields2>(queryParams.Fields));
 
                 if (!string.IsNullOrWhiteSpace(queryParams.Filter))
                     request.AddQueryParameter("filter", queryParams.Filter);

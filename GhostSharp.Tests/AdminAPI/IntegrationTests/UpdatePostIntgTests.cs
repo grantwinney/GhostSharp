@@ -173,5 +173,22 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                     auth.DeletePost(origPost.Id);
             }
         }
+
+        [Test]
+        public void SendEmailWhenPublished_IsSentAsQueryParameter_ButStillDoesntSeemToWork()
+        {
+            var updatedPost = auth.UpdatePost(
+                new Post
+                {
+                    Id = origPost.Id,
+                    Status = "scheduled",
+                    PublishedAt = DateTime.Now.AddYears(300),
+                    SendEmailWhenPublished = true,
+                });
+
+            Assert.AreEqual(origPost.Id, updatedPost.Id);
+            Assert.False(origPost.SendEmailWhenPublished);
+            Assert.False(updatedPost.SendEmailWhenPublished);  // SHOULD BE TRUE
+        }
     }
 }

@@ -23,10 +23,21 @@ namespace GhostSharp.QueryParams
         public bool IncludeTags { get; set; }
 
         /// <summary>
-        /// Choose which resource fields you want to retrieve values for.
+        /// Limit fields returned in response.
+        /// Useful for optimizing queries, but does not play well with the Include options.
         /// </summary>
-        /// <value>The resource fields to retrieve values for.</value>
+        /// <value>The fields to return in the response.</value>
         public PostFields Fields { get; set; }
+
+        /// <summary>
+        /// Limit fields returned in response.
+        /// Useful for optimizing queries, but does not play well with the Include options.
+        /// </summary>
+        /// <remarks>
+        /// There are too many fields in a Post/Page object to fit in a single flags enum. Might want to rethink this...
+        /// </remarks>
+        /// <value>The fields to return in the response.</value>
+        public PostFields2 Fields2 { get; set; }
 
         /// <summary>
         /// The format(s) in which to return the body of the page or post.

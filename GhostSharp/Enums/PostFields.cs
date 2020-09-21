@@ -181,6 +181,18 @@ namespace GhostSharp.Enums
         /// Reading Time in minutes
         /// </summary>
         [JsonProperty("reading_time")]
-        ReadingTime = 268435456
-   }
+        ReadingTime = 268435456,
+
+        /// <summary>
+        /// Canonical URL
+        /// </summary>
+        [JsonProperty("canonical_url")]
+        CanonicalUrl = 536870912,
+
+        /// <summary>
+        /// Status (published, draft, scheduled) - If 'scheduled', a PublishedAt date is required
+        /// </summary>
+        [JsonProperty("status")]
+        Status = 1073741824,
+    }
 }
