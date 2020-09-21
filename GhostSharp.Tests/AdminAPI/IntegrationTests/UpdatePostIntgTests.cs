@@ -190,5 +190,37 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.False(origPost.SendEmailWhenPublished);
             Assert.False(updatedPost.SendEmailWhenPublished);  // SHOULD BE TRUE
         }
+
+        [Test]
+        public void UpdatePost_DoesNotChangeSlugOrURL_WhenTitleIsModified()
+        {
+            var updatedPost = auth.UpdatePost(
+                new Post
+                {
+                    Id = origPost.Id,
+                    Title = "a different title...",
+                });
+
+            Assert.AreEqual(origPost.Id, updatedPost.Id);
+            Assert.AreEqual(origPost.Slug, updatedPost.Slug);
+            Assert.AreEqual(origPost.Url, updatedPost.Url);
+            Assert.AreNotEqual(origPost.Title, updatedPost.Title);
+        }
+
+        [Test]
+        public void UpdatePost_DoesNotChangeTitleOrURL_WhenSlugIsModified()
+        {
+            var updatedPost = auth.UpdatePost(
+                new Post
+                {
+                    Id = origPost.Id,
+                    Slug = "a-different-title",
+                });
+
+            Assert.AreEqual(origPost.Id, updatedPost.Id);
+            Assert.AreEqual(origPost.Url, updatedPost.Url);
+            Assert.AreEqual(origPost.Title, updatedPost.Title);
+            Assert.AreNotEqual(origPost.Slug, updatedPost.Slug);
+        }
     }
 }

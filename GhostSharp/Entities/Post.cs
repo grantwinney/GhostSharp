@@ -42,6 +42,7 @@ namespace GhostSharp.Entities
         /// Slug
         /// </summary>
         [JsonProperty("slug")]
+        [UpdatableField]
         public string Slug { get; set; }
 
         /// <summary>
@@ -217,7 +218,6 @@ namespace GhostSharp.Entities
         /// URL
         /// </summary>
         [JsonProperty("url")]
-        [UpdatableField]
         public string Url { get; set; }
 
         /// <summary>
