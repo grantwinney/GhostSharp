@@ -17,7 +17,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         {
             auth = new GhostAdminAPI(Host, ValidAdminApiKey);
 
-            origPost = auth.CreatePost(new Post { Title = "Sample post used for update post tests", MetaTitle = "sample meta title", Page = true });
+            origPost = auth.CreatePost(new Post { Title = "Sample post used for update post tests", MetaTitle = "sample meta title"/*, Page = true*/ });
         }
 
         [TearDown]
@@ -44,7 +44,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.DoesNotThrow(() => auth.UpdatePost(updatedPost));
         }
 
-        //[Test]
+        [Test]
         public void UpdatePost_Succeeds_WhenUpdatedAtIsSame_AndUpdatableFieldsChange()
         {
             var updatedPost = auth.UpdatePost(
