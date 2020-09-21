@@ -247,6 +247,36 @@ namespace GhostSharp.Entities
         [UpdatableField]
         public string Status { get; set; }
 
+        /// <summary>
+        /// Visibility (public, members, paid)
+        /// </summary>
+        /// <see cref="https://ghost.org/docs/members/content-visibility/#visibility"/>
+        [JsonProperty("visibility")]
+        [UpdatableField]
+        public string Visibility { get; set; }
+
+        /// <summary>
+        /// Send Email When Published (set by query parameter when publishing/scheduling)
+        /// </summary>
+        [JsonProperty("send_email_when_published")]
+        public bool SendEmailWhenPublished { get; set; }
+
+        /// <summary>
+        /// Email Subject
+        /// </summary>
+        [JsonProperty("email_subject")]
+        public string EmailSubject { get; set; }
+
+        /// <summary>
+        /// Access (true if members is disabled; otherwise, set to currently logged in members' access)
+        /// </summary>
+        /// <remarks>
+        /// This value seems to always be null on creation, and setting to a value on update has no effect.
+        /// </remarks>
+        /// <see cref="https://github.com/TryGhost/Ghost/commit/289c1b3e8a5c03b868dde1a76f62661197e302d4"/>
+        [JsonProperty("access")]
+        public bool? Access { get; set; }
+
         public static IEnumerable<PropertyInfo> UpdatableProperties =>
             typeof(Post).GetProperties().Where(x => x.GetCustomAttribute<UpdatableFieldAttribute>() != null);
     }

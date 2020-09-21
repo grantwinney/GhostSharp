@@ -8,7 +8,7 @@
 
 # GhostSharp
 
-This is a [wrapper](https://grantwinney.com/what-is-an-api-wrapper-and-how-do-i-write-one/) around the [Ghost API v2.0](https://docs.ghost.org/api/content/), a RESTful JSON API built into the core of the [Ghost blogging platform](https://ghost.org/). Check out the [official Ghost API docs](https://docs.ghost.org/api/content) and read about [my own experience using them](https://grantwinney.com/what-is-the-ghost-api/).
+This is a [wrapper](https://grantwinney.com/what-is-an-api-wrapper-and-how-do-i-write-one/) around the [Ghost API v3.0](https://ghost.org/docs/api/v3/), a RESTful JSON API built into the core of the [Ghost blogging platform](https://ghost.org/). Check out the [official Ghost API docs](https://ghost.org/docs/api/) and read about [my own experience using them](https://grantwinney.com/what-is-the-ghost-api/).
 
 ## Usage
 
@@ -55,7 +55,7 @@ Running Ghost v2.23
 
 ## Versioning
 
-This wrapper is written around v2.0 of the Content and Admin APIs, currently the latest version. If they update the APIs in the future, I'll probably create a tag for the current release, before updating to the newest one.
+This wrapper is written around v3.0 of the Content and Admin APIs, currently the latest version. As they update the API, I'll create a tag for the current release, before updating to the newest one.
 
 ## Running the Tests
 
@@ -73,6 +73,7 @@ Feel free to [open a PR](https://github.com/grantwinney/GhostSharp/compare) if y
 
 ## Release Notes
 
+* 1.0.5 - Implement v3 of the API.
 * 1.0.4 - General code cleanup. Added license to NuGet package.
 * 1.0.3 - Covers stable Admin API endpoints, currently posts, pages, images, site.
 * 1.0.2 - Beginning work to support Admin API.<br>***Breaking change:** GhostAPI is now split into GhostContentAPI and GhostAdminAPI*

@@ -66,5 +66,16 @@ namespace GhostSharp.Entities
         /// </summary>
         [JsonProperty("url")]
         public string Url { get; set; }
+
+        //"og_image": null,
+        //"og_title": null,
+        //"og_description": null,
+        //"twitter_image": null,
+        //"twitter_title": null,
+        //"twitter_description": null,
+        //"codeinjection_head": null,
+        //"codeinjection_foot": null,
+        //"canonical_url": null,
+        //"accent_color": null,
     }
 }

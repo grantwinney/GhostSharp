@@ -7,9 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostSharp", "GhostSharp\Gh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GhostSharp.Tests", "GhostSharp.Tests\GhostSharp.Tests.csproj", "{048BCB3A-44F8-4A5A-ACE8-D59B1CACCEDB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI Build", "CI Build", "{D58CD36D-74F2-4001-84CC-EC3CAE234CDC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D58CD36D-74F2-4001-84CC-EC3CAE234CDC}"
 	ProjectSection(SolutionItems) = preProject
 		.travis.yml = .travis.yml
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global

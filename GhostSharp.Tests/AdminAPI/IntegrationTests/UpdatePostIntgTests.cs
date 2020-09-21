@@ -17,7 +17,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         {
             auth = new GhostAdminAPI(Host, ValidAdminApiKey);
 
-            origPost = auth.CreatePost(new Post { Title = "Sample post used for update post tests", MetaTitle = "sample meta title"/*, Page = true*/ });
+            origPost = auth.CreatePost(new Post { Title = "Sample post used for update post tests", MetaTitle = "sample meta title", Page = true });
         }
 
         [TearDown]
@@ -52,7 +52,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                 {
                     Id = origPost.Id,
                     Title = "a different title...",
-                    UpdatedAt = origPost.UpdatedAt
+                    UpdatedAt = origPost.UpdatedAt,
                 });
 
             Assert.AreEqual(origPost.Id, updatedPost.Id);
