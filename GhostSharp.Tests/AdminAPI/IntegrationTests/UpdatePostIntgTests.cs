@@ -29,9 +29,9 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             origPost = null;
         }
 
-        //[TestCase(2)]
+        [TestCase(2)]
         //[TestCase(-2)]
-        //[Test]
+        [Test]
         public void UpdatePost_Succeeds_WhenUpdatedAtIsDifferent_BecauseItsForcedToBeSameAsOriginalPost(int minutes)
         {
             var updatedPost = new Post
@@ -44,7 +44,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.DoesNotThrow(() => auth.UpdatePost(updatedPost));
         }
 
-        [Test]
+        //[Test]
         public void UpdatePost_Succeeds_WhenUpdatedAtIsSame_AndUpdatableFieldsChange()
         {
             var updatedPost = auth.UpdatePost(
