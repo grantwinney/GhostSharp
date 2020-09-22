@@ -392,5 +392,23 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.IsNotNull(post.MobileDoc);
             Assert.That(!post.MobileDoc.Contains("plain stuff"));
         }
+
+        [Test]
+        public void CreatePost_IgnoresSendEmailWhenPublished_EvenWhenStatusIsScheduled()
+        {
+            var post = auth.CreatePost(
+                new Post
+                {
+                    Title = "This is a test post",
+                    Status = "scheduled",
+                    PublishedAt = DateTime.Now.AddYears(300),
+                    SendEmailWhenPublished = true,
+                });
+
+            newPostId = post.Id;
+
+            Assert.AreEqual("scheduled", post.Status);
+            Assert.IsFalse(post.SendEmailWhenPublished);
+        }
     }
 }

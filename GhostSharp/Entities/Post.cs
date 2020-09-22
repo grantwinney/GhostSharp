@@ -11,6 +11,10 @@ namespace GhostSharp.Entities
     /// <summary>
     /// Represents a Post.
     /// </summary>
+    /// <remarks>
+    /// There are some constraints that exist on these fields, defined here:
+    /// https://github.com/TryGhost/Ghost/blob/master/core/server/data/schema/schema.js
+    /// </remarks>
     public class Post
     {
         /// <summary>
@@ -257,7 +261,11 @@ namespace GhostSharp.Entities
         /// <summary>
         /// Send Email When Published
         /// </summary>
+        /// <remarks>
+        /// This field seems to be ignored, even if the status is changed to scheduled.
+        /// </remarks>
         [JsonProperty("send_email_when_published")]
+        [UpdatableField]
         public bool SendEmailWhenPublished { get; set; }
 
         /// <summary>

@@ -61,9 +61,6 @@ namespace GhostSharp
             if (!string.IsNullOrEmpty(post.Html))
                 request.AddQueryParameter("source", "html");
 
-            if (post.SendEmailWhenPublished)
-                request.AddParameter("send_email_when_published", true);
-
             return Execute<PostRequest>(request).Posts[0];
         }
 
@@ -95,9 +92,6 @@ namespace GhostSharp
             // Ref: https://ghost.org/docs/api/v3/admin/#source-html
             if (!string.IsNullOrEmpty(updatedPost.Html))
                 request.AddQueryParameter("source", "html");
-
-            if (updatedPost.SendEmailWhenPublished)
-                request.AddParameter("send_email_when_published", true);
 
             return Execute<PostRequest>(request).Posts[0];
         }
