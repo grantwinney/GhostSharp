@@ -30,7 +30,15 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             Assert.AreEqual(ValidAuthor1Name, author.Name);
             Assert.AreEqual(ValidAuthor1Url, author.Url);
             Assert.IsNotNull(author.Bio);
+            Assert.IsNotNull(author.Url);
+
+            // Not sure why some of these aren't returning values.. or what they even mean. Tour?
             Assert.IsNull(author.Count);
+            Assert.IsNull(author.Email);
+            Assert.IsNull(author.Accessibility);
+            Assert.IsNull(author.Status);
+            Assert.IsNull(author.Tour);
+            Assert.IsNull(author.LastSeen);
         }
 
         [Test]

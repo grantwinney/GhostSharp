@@ -33,8 +33,19 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             Assert.AreEqual(ValidTag1Visibility, tag.Visibility);
             Assert.AreEqual(ValidTag1MetaTitle, tag.MetaTitle);
             Assert.AreEqual(ValidTag1MetaDescription, tag.MetaDescription);
-            Assert.AreEqual(null, tag.Count);
             Assert.AreEqual(ValidTag1Url, tag.Url);
+
+            Assert.IsNull(tag.Count);
+            Assert.IsNull(tag.CodeInjectionHead);
+            Assert.IsNull(tag.CodeInjectionFoot);
+            Assert.IsNull(tag.OgImage);
+            Assert.IsNull(tag.OgTitle);
+            Assert.IsNull(tag.OgDescription);
+            Assert.IsNull(tag.TwitterImage);
+            Assert.IsNull(tag.TwitterTitle);
+            Assert.IsNull(tag.TwitterDescription);
+            Assert.IsNull(tag.CanonicalUrl);
+            Assert.IsNull(tag.AccentColor);
         }
 
         [Test]
