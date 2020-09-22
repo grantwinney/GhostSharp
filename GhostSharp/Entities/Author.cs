@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 
 namespace GhostSharp.Entities
 {
@@ -90,5 +92,53 @@ namespace GhostSharp.Entities
         /// </summary>
         [JsonProperty("url")]
         public string Url { get; set; }
+
+        /// <summary>
+        /// Email
+        /// </summary>
+        [JsonProperty("email")]
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Accessibility
+        /// </summary>
+        [JsonProperty("accessibility")]
+        public string Accessibility { get; set; }
+
+        /// <summary>
+        /// Status
+        /// </summary>
+        [JsonProperty("status")]
+        public string Status { get; set; }
+
+        /// <summary>
+        /// Tour
+        /// </summary>
+        [JsonProperty("tour")]
+        public string Tour { get; set; }
+
+        /// <summary>
+        /// Last Seen
+        /// </summary>
+        [JsonProperty("last_seen")]
+        public DateTime? LastSeen { get; set; }
+
+        /// <summary>
+        /// Created At
+        /// </summary>
+        [JsonProperty("created_at")]
+        public DateTime CreatedAt { get; set; }
+
+        /// <summary>
+        /// Updated At
+        /// </summary>
+        [JsonProperty("updated_at")]
+        public DateTime UpdatedAt { get; set; }
+
+        /// <summary>
+        /// Roles
+        /// </summary>
+        [JsonProperty("roles")]
+        public IEnumerable<Role> Roles { get; set; }
     }
 }

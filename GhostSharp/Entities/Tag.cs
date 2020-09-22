@@ -67,15 +67,64 @@ namespace GhostSharp.Entities
         [JsonProperty("url")]
         public string Url { get; set; }
 
-        //"og_image": null,
-        //"og_title": null,
-        //"og_description": null,
-        //"twitter_image": null,
-        //"twitter_title": null,
-        //"twitter_description": null,
-        //"codeinjection_head": null,
-        //"codeinjection_foot": null,
-        //"canonical_url": null,
-        //"accent_color": null,
+        /// <summary>
+        /// Code Injected into Header
+        /// </summary>
+        [JsonProperty("codeinjection_head")]
+        public string CodeInjectionHead { get; set; }
+
+        /// <summary>
+        /// Code Injected into Footer
+        /// </summary>
+        [JsonProperty("codeinjection_foot")]
+        public string CodeInjectionFoot { get; set; }
+
+        /// <summary>
+        /// Facebook Card Image
+        /// </summary>
+        [JsonProperty("og_image")]
+        public string OgImage { get; set; }
+
+        /// <summary>
+        /// Facebook Card Title
+        /// </summary>
+        [JsonProperty("og_title")]
+        public string OgTitle { get; set; }
+
+        /// <summary>
+        /// Facebook Card Description
+        /// </summary>
+        [JsonProperty("og_description")]
+        public string OgDescription { get; set; }
+
+        /// <summary>
+        /// Twitter Card Image
+        /// </summary>
+        [JsonProperty("twitter_image")]
+        public string TwitterImage { get; set; }
+
+        /// <summary>
+        /// Twitter Card Title
+        /// </summary>
+        [JsonProperty("twitter_title")]
+        public string TwitterTitle { get; set; }
+
+        /// <summary>
+        /// Twitter Card Description
+        /// </summary>
+        [JsonProperty("twitter_description")]
+        public string TwitterDescription { get; set; }
+
+        /// <summary>
+        /// Canonical URL
+        /// </summary>
+        [JsonProperty("canonical_url")]
+        public string CanonicalUrl { get; set; }
+
+        /// <summary>
+        /// Accent Color
+        /// </summary>
+        [JsonProperty("accent_color")]
+        public string AccentColor { get; set; }
     }
 }

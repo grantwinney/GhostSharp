@@ -85,6 +85,54 @@ namespace GhostSharp.Enums
         /// Profile URL
         /// </summary>
         [JsonProperty("url")]
-        Url = 4096
+        Url = 4096,
+
+        /// <summary>
+        /// Email
+        /// </summary>
+        [JsonProperty("email")]
+        Email = 8192,
+
+        /// <summary>
+        /// Accessibility
+        /// </summary>
+        [JsonProperty("accessibility")]
+        Accessibility = 16384,
+
+        /// <summary>
+        /// Status
+        /// </summary>
+        [JsonProperty("status")]
+        Status = 32768,
+
+        /// <summary>
+        /// Tour
+        /// </summary>
+        [JsonProperty("tour")]
+        Tour = 65536,
+
+        /// <summary>
+        /// Last Seen
+        /// </summary>
+        [JsonProperty("last_seen")]
+        LastSeen = 131072,
+
+        /// <summary>
+        /// Created At
+        /// </summary>
+        [JsonProperty("created_at")]
+        CreatedAt = 262144,
+
+        /// <summary>
+        /// Updated At
+        /// </summary>
+        [JsonProperty("updated_at")]
+        UpdatedAt = 524288,
+
+        /// <summary>
+        /// Roles
+        /// </summary>
+        [JsonProperty("roles")]
+        Roles = 1048576
     }
 }

@@ -13,6 +13,8 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             var site = auth.GetSite();
 
             Assert.AreEqual(SiteTitle, site.Title);
+            Assert.AreEqual(SiteDescription, site.Description);
+            Assert.IsNull(site.Logo);
             Assert.AreEqual(Host, site.Url);
             Assert.IsNotNull(site.Version);
         }
@@ -25,6 +27,8 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             var site = auth.GetSite();
 
             Assert.AreEqual(SiteTitle, site.Title);
+            Assert.AreEqual(SiteDescription, site.Description);
+            Assert.IsNull(site.Logo);
             Assert.AreEqual(Host, site.Url);
             Assert.IsNotNull(site.Version);
         }

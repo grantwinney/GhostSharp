@@ -12,13 +12,31 @@ namespace GhostSharp.Entities
     public class Site
     {
         /// <summary>
-        /// Title of the site
+        /// Title
         /// </summary>
         /// <remarks>
         /// Same as the title returned from the Content API settings endpoint.
         /// </remarks>
         [JsonProperty("title")]
         public string Title { get; set; }
+
+        /// <summary>
+        /// Description
+        /// </summary>
+        /// <remarks>
+        /// Same as the description returned from the Content API settings endpoint.
+        /// </remarks>
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Logo
+        /// </summary>
+        /// <remarks>
+        /// Same as the logo returned from the Content API settings endpoint.
+        /// </remarks>
+        [JsonProperty("logo")]
+        public string Logo { get; set; }
 
         /// <summary>
         /// The frontend URL for the site, which can be different to the Admin / API URL.
