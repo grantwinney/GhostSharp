@@ -222,5 +222,61 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.AreEqual(origPost.Title, updatedPost.Title);
             Assert.AreNotEqual(origPost.Slug, updatedPost.Slug);
         }
+
+        [Test]
+        public void UpdatePost_UsesMobileDocAsSource_WhenNoHtmlProvided()
+        {
+            var updatedPost = auth.UpdatePost(
+                new Post
+                {
+                    Id = origPost.Id,
+                    MobileDoc = "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[],\"sections\":[[1,\"p\",[[0,[],0,\"Random mobile doc content\"]]]]}",
+                });
+
+            Assert.AreEqual(origPost.Id, updatedPost.Id);
+            Assert.IsNull(origPost.Html);
+            Assert.IsNull(updatedPost.Html);
+            Assert.IsNotNull(origPost.MobileDoc);
+            Assert.IsNotNull(updatedPost.MobileDoc);
+            Assert.That(updatedPost.MobileDoc.Contains("Random mobile doc content"));
+        }
+
+        [Test]
+        public void UpdatePost_UsesHtmlAsSource_WhenHtmlProvided()
+        {
+            var updatedPost = auth.UpdatePost(
+                new Post
+                {
+                    Id = origPost.Id,
+                    MobileDoc = "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[],\"sections\":[[1,\"p\",[[0,[],0,\"Random mobile doc content\"]]]]}",
+                    Html = "<p>I remember reading an article on dev.to last year</p>",
+                });
+
+            Assert.AreEqual(origPost.Id, updatedPost.Id);
+            Assert.IsNull(origPost.Html);
+            Assert.IsNull(updatedPost.Html);
+            Assert.IsNotNull(origPost.MobileDoc);
+            Assert.IsNotNull(updatedPost.MobileDoc);
+            Assert.That(!updatedPost.MobileDoc.Contains("Random mobile doc content"));
+            Assert.That(updatedPost.MobileDoc.Contains("I remember reading an article on dev.to last year"));
+        }
+
+        [Test]
+        public void UpdatePost_IgnoresPlainText()
+        {
+            // There's nothing in the docs about plaintext being an option for posting content.
+            var post = auth.UpdatePost(
+                new Post
+                {
+                    Id = origPost.Id,
+                    Title = "This is a test post",
+                    PlainText = "plain stuff",
+                    Status = "draft"
+                });
+
+            Assert.IsNull(post.PlainText);
+            Assert.IsNotNull(post.MobileDoc);
+            Assert.That(!post.MobileDoc.Contains("plain stuff"));
+        }
     }
 }

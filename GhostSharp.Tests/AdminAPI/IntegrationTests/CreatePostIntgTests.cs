@@ -335,5 +335,62 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
 
             Assert.AreEqual(1, actualPost.Authors.Count);
         }
+
+        [Test]
+        public void CreatePost_UsesMobileDocAsSource_WhenNoHtmlProvided()
+        {
+            var post = auth.CreatePost(
+                new Post
+                {
+                    Title = "This is a test post",
+                    MobileDoc = "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[],\"sections\":[[1,\"p\",[[0,[],0,\"Random mobile doc content\"]]]]}",
+                    Status = "draft"
+                });
+
+            newPostId = post.Id;
+
+            Assert.IsNull(post.Html);
+            Assert.IsNotNull(post.MobileDoc);
+            Assert.That(post.MobileDoc.Contains("Random mobile doc content"));
+        }
+
+        [Test]
+        public void CreatePost_UsesHtmlAsSource_WhenHtmlProvided()
+        {
+            var post = auth.CreatePost(
+                new Post
+                {
+                    Title = "This is a test post",
+                    MobileDoc = "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[],\"sections\":[[1,\"p\",[[0,[],0,\"Random mobile doc content\"]]]]}",
+                    Html = "<p>I remember reading an article on dev.to last year</p>",
+                    Status = "draft"
+                });
+
+            newPostId = post.Id;
+
+            Assert.IsNull(post.Html);
+            Assert.IsNotNull(post.MobileDoc);
+            Assert.That(!post.MobileDoc.Contains("Random mobile doc content"));
+            Assert.That(post.MobileDoc.Contains("I remember reading an article on dev.to last year"));
+        }
+
+        [Test]
+        public void CreatePost_IgnoresPlainText()
+        {
+            // There's nothing in the docs about plaintext being an option for posting content.
+            var post = auth.CreatePost(
+                new Post
+                {
+                    Title = "This is a test post",
+                    PlainText = "plain stuff",
+                    Status = "draft"
+                });
+
+            newPostId = post.Id;
+
+            Assert.IsNull(post.PlainText);
+            Assert.IsNotNull(post.MobileDoc);
+            Assert.That(!post.MobileDoc.Contains("plain stuff"));
+        }
     }
 }

@@ -56,7 +56,9 @@ namespace GhostSharp
             };
             request.AddJsonBody(new PostRequest { Posts = new List<Post> { post } });
 
-            if (string.IsNullOrEmpty(post.MobileDoc) && !string.IsNullOrEmpty(post.Html))
+            // To use HTML as the source for your content instead of mobiledoc, use the source parameter.
+            // Ref: https://ghost.org/docs/api/v3/admin/#source-html
+            if (!string.IsNullOrEmpty(post.Html))
                 request.AddQueryParameter("source", "html");
 
             if (post.SendEmailWhenPublished)
@@ -75,6 +77,10 @@ namespace GhostSharp
                     property.SetValue(updatedPost, property.GetValue(originalPost));
             }
 
+            // Per the docs, the UpdatedAt field is used to avoid collision detection, yet
+            // any change to it that differ from the original post causes the API call to fail with:
+            // "Saving failed! Someone else is editing this post."
+            // Ref: https://ghost.org/docs/api/v3/admin/#updating-a-post
             updatedPost.UpdatedAt = originalPost.UpdatedAt;
 
             var serializedPost = JsonConvert.SerializeObject(
@@ -85,9 +91,10 @@ namespace GhostSharp
             var request = new RestRequest($"posts/{updatedPost.Id}/", Method.PUT, DataFormat.Json);
             request.AddJsonBody(serializedPost);
 
-            // TODO
-            //if (string.IsNullOrEmpty(post.MobileDoc) && !string.IsNullOrEmpty(post.Html))
-            //    request.AddQueryParameter("source", "html");
+            // To use HTML as the source for your content instead of mobiledoc, use the source parameter.
+            // Ref: https://ghost.org/docs/api/v3/admin/#source-html
+            if (!string.IsNullOrEmpty(updatedPost.Html))
+                request.AddQueryParameter("source", "html");
 
             if (updatedPost.SendEmailWhenPublished)
                 request.AddParameter("send_email_when_published", true);

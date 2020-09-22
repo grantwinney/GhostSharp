@@ -53,7 +53,7 @@ namespace GhostSharp.Entities
         public string MobileDoc { get; set; }
 
         /// <summary>
-        /// Post, formatted in HTML
+        /// Post, formatted in HTML (if specified, then MobileDoc is ignored)
         /// </summary>
         [JsonProperty("html")]
         [UpdatableField]
@@ -63,7 +63,6 @@ namespace GhostSharp.Entities
         /// Post, formatted in Plain Text
         /// </summary>
         [JsonProperty("plaintext")]
-        [UpdatableField]
         public string PlainText { get; set; }
 
         /// <summary>
