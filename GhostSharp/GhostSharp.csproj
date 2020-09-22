@@ -7,17 +7,15 @@
     <PackageId>GhostSharp</PackageId>
     <Authors>grant</Authors>
     <Company></Company>
-    <Description>This is a C# wrapper around the Ghost RESTful Content API, documented here: https://docs.ghost.org/api/content/</Description>
+    <Description>This is a C# wrapper around the Ghost RESTful API, documented here: https://docs.ghost.org/api</Description>
     <PackageProjectUrl>https://grantwinney.com/ghostsharp</PackageProjectUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryUrl>https://github.com/grantwinney/GhostSharp</RepositoryUrl>
     <RepositoryType></RepositoryType>
     <PackageTags>ghost api rest api-wrapper netstandard wrapper-api wrapper</PackageTags>
-    <PackageReleaseNotes>Wrapper for the new 2.0 version of the Ghost API, including the Content API as well as the stable endpoints of the Admin API (currently posts, pages, images, and site).
-
-Full release notes: https://github.com/grantwinney/GhostSharp/blob/master/README.md#release-notes</PackageReleaseNotes>
+    <PackageReleaseNotes>Wrapper for the Ghost API. Full release notes: https://github.com/grantwinney/GhostSharp/blob/master/README.md#release-notes</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.0.4</Version>
+    <Version>1.0.6</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 

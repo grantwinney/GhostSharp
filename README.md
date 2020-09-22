@@ -73,6 +73,7 @@ Feel free to [open a PR](https://github.com/grantwinney/GhostSharp/compare) if y
 
 ## Release Notes
 
+* 1.0.6 - Stabilize implementation of v3.
 * 1.0.5 - Implement v3 of the API.
 * 1.0.4 - General code cleanup. Added license to NuGet package.
 * 1.0.3 - Covers stable Admin API endpoints, currently posts, pages, images, site.
