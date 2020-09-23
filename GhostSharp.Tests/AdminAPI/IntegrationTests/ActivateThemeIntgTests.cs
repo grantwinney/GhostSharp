@@ -22,6 +22,9 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Thread.Sleep(5000);
 
             auth.ActivateTheme("symmetric");
+
+            // Wait a few more seconds, otherwise other tests may fail while Ghost is restarting again.
+            Thread.Sleep(5000);
         }
 
         [Test]
