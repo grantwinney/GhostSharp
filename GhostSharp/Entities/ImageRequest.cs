@@ -7,11 +7,11 @@ namespace GhostSharp.Entities
     public class ImageRequest
     {
         /// <summary>
-        /// Read in an image file from the given file path, and specify an optional filename.
+        /// Read in an image file from the given file path.
         /// </summary>
         /// <param name="filePath">The file path of the image file to load.</param>
         /// <remarks>
-        /// The file name and mime type are determined from the filename.
+        /// The file name and mime type are determined from the filepath.
         /// </remarks>
         public ImageRequest(string filePath)
         {

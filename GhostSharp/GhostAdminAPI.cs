@@ -1,6 +1,5 @@
 ﻿using System;
 using GhostSharp.Enums;
-using JWT;
 using JWT.Algorithms;
 using JWT.Builder;
 using JWT.Exceptions;

@@ -49,7 +49,7 @@ namespace GhostSharp
         /// <returns>The API response.</returns>
         /// <param name="request">A RestRequest representing the resource being requested.</param>
         /// <typeparam name="T">The type of object being requested</typeparam>
-        internal T Execute<T>(RestRequest request) where T : new()
+        internal T Execute<T>(IRestRequest request) where T : new()
         {
             if (key != null)
                 AuthorizeRequest(request);
@@ -82,7 +82,7 @@ namespace GhostSharp
         /// </summary>
         /// <returns>The API response.</returns>
         /// <param name="request">A RestRequest representing the resource being requested.</param>
-        internal bool Execute(RestRequest request)
+        internal bool Execute(IRestRequest request)
         {
             AuthorizeRequest(request);
 
@@ -114,7 +114,7 @@ namespace GhostSharp
         /// create and throw a GhostSharpException with the details.
         /// </summary>
         /// <param name="response">The API response</param>
-        private void TestResponseForErrors(IRestResponse response, RestRequest request)
+        private void TestResponseForErrors(IRestResponse response, IRestRequest request)
         {
             var apiFailure = JsonConvert.DeserializeObject<GhostApiFailure>(response.Content);
             if (apiFailure != null && apiFailure.Errors != null)
@@ -136,7 +136,7 @@ namespace GhostSharp
         /// Add the key as a query parameter or authorization token as a header, depending on the API being used.
         /// </summary>
         /// <param name="request">The request being made</param>
-        private void AuthorizeRequest(RestRequest request)
+        private void AuthorizeRequest(IRestRequest request)
         {
             switch (apiType)
             {
