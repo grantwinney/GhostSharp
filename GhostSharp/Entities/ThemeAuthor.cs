@@ -21,6 +21,5 @@ namespace GhostSharp.Entities
         /// </summary>
         [JsonProperty("url")]
         public string URL { get; set; }
-
     }
 }

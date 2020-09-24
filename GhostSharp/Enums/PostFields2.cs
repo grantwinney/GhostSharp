@@ -6,7 +6,6 @@ namespace GhostSharp.Enums
     /// <summary>
     /// More fields representing a Post
     /// </summary>
-
     [Flags]
     public enum PostFields2
     {
