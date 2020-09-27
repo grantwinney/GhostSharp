@@ -1,10 +1,7 @@
 ﻿using GhostSharp.Attributes;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace GhostSharp.Entities
 {
@@ -18,179 +15,160 @@ namespace GhostSharp.Entities
     public class Post
     {
         /// <summary>
-        /// ID (Update)
+        /// ID
         /// </summary>
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
-        /// Page (true if Page, false if Post)
+        /// IsPage (true if Page, false if Post)
         /// </summary>
-        [JsonProperty("page")]
-        public bool? Page { get; set; }
+        [JsonIgnore]
+        public bool IsPage => false;
 
         /// <summary>
         /// UUID
         /// </summary>
         [JsonProperty("uuid")]
-        public string Uuid { get; set; }
+        public string Uuid { get; private set; }
 
         /// <summary>
         /// Title
         /// </summary>
         [JsonProperty("title")]
-        [UpdatableField]
         public string Title { get; set; }
 
         /// <summary>
         /// Slug
         /// </summary>
         [JsonProperty("slug")]
-        [UpdatableField]
         public string Slug { get; set; }
 
         /// <summary>
         /// Post, formatted in Mobile Doc
         /// </summary>
         [JsonProperty("mobiledoc")]
-        [UpdatableField]
         public string MobileDoc { get; set; }
 
         /// <summary>
         /// Post, formatted in HTML (if specified, then MobileDoc is ignored)
         /// </summary>
         [JsonProperty("html")]
-        [UpdatableField]
         public string Html { get; set; }
 
         /// <summary>
         /// Post, formatted in Plain Text
         /// </summary>
         [JsonProperty("plaintext")]
-        public string PlainText { get; set; }
+        public string PlainText { get; private set; }
 
         /// <summary>
         /// Comment ID
         /// </summary>
         [JsonProperty("comment_id")]
-        public string CommentId { get; set; }
+        public string CommentId { get; private set; }
 
         /// <summary>
         /// Feature Image
         /// </summary>
         [JsonProperty("feature_image")]
-        [UpdatableField]
         public string FeatureImage { get; set; }
 
         /// <summary>
         /// Featured (true if featured)
         /// </summary>
         [JsonProperty("featured")]
-        [UpdatableField]
         public bool? Featured { get; set; }
 
         /// <summary>
         /// Meta Title
         /// </summary>
         [JsonProperty("meta_title")]
-        [UpdatableField]
         public string MetaTitle { get; set; }
 
         /// <summary>
         /// Meta Description
         /// </summary>
         [JsonProperty("meta_description")]
-        [UpdatableField]
         public string MetaDescription { get; set; }
 
         /// <summary>
         /// Created At
         /// </summary>
         [JsonProperty("created_at")]
-        public DateTime? CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; private set; }
 
         /// <summary>
         /// Updated At
         /// </summary>
         [JsonProperty("updated_at")]
-        [UpdatableField]
-        public DateTime? UpdatedAt { get; set; }
+        [RequiredForUpdate]
+        public DateTime? UpdatedAt { get; private set; }
 
         /// <summary>
-        /// Published At
+        /// Published At (UTC)
         /// </summary>
         [JsonProperty("published_at")]
-        [UpdatableField]
         public DateTime? PublishedAt { get; set; }
 
         /// <summary>
         /// Custom Excerpt
         /// </summary>
         [JsonProperty("custom_excerpt")]
-        [UpdatableField]
         public string CustomExcerpt { get; set; }
 
         /// <summary>
         /// Code Injected into Header
         /// </summary>
         [JsonProperty("codeinjection_head")]
-        [UpdatableField]
         public string CodeInjectionHead { get; set; }
 
         /// <summary>
         /// Code Injected into Footer
         /// </summary>
         [JsonProperty("codeinjection_foot")]
-        [UpdatableField]
         public string CodeInjectionFoot { get; set; }
 
         /// <summary>
         /// Facebook Card Image
         /// </summary>
         [JsonProperty("og_image")]
-        [UpdatableField]
         public string OgImage { get; set; }
 
         /// <summary>
         /// Facebook Card Title
         /// </summary>
         [JsonProperty("og_title")]
-        [UpdatableField]
         public string OgTitle { get; set; }
 
         /// <summary>
         /// Facebook Card Description
         /// </summary>
         [JsonProperty("og_description")]
-        [UpdatableField]
         public string OgDescription { get; set; }
 
         /// <summary>
         /// Twitter Card Image
         /// </summary>
         [JsonProperty("twitter_image")]
-        [UpdatableField]
         public string TwitterImage { get; set; }
 
         /// <summary>
         /// Twitter Card Title
         /// </summary>
         [JsonProperty("twitter_title")]
-        [UpdatableField]
         public string TwitterTitle { get; set; }
 
         /// <summary>
         /// Twitter Card Description
         /// </summary>
         [JsonProperty("twitter_description")]
-        [UpdatableField]
         public string TwitterDescription { get; set; }
 
         /// <summary>
         /// Custom Template
         /// </summary>
         [JsonProperty("custom_template")]
-        [UpdatableField]
         public string CustomTemplate { get; set; }
 
         /// <summary>
@@ -221,33 +199,30 @@ namespace GhostSharp.Entities
         /// URL
         /// </summary>
         [JsonProperty("url")]
-        public string Url { get; set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// Excerpt
         /// </summary>
         [JsonProperty("excerpt")]
-        [UpdatableField]
         public string Excerpt { get; set; }
 
         /// <summary>
         /// Reading time in minutes
         /// </summary>
         [JsonProperty("reading_time")]
-        public int? ReadingTime { get; set; }
+        public int? ReadingTime { get; private set; }
 
         /// <summary>
         /// Canonical URL
         /// </summary>
         [JsonProperty("canonical_url")]
-        [UpdatableField]
         public string CanonicalUrl { get; set; }
 
         /// <summary>
         /// Status (published, draft, scheduled) - If 'scheduled', a PublishedAt date is required
         /// </summary>
         [JsonProperty("status")]
-        [UpdatableField]
         public string Status { get; set; }
 
         /// <summary>
@@ -255,7 +230,6 @@ namespace GhostSharp.Entities
         /// </summary>
         /// <see cref="https://ghost.org/docs/members/content-visibility/#visibility"/>
         [JsonProperty("visibility")]
-        [UpdatableField]
         public string Visibility { get; set; }
 
         /// <summary>
@@ -265,8 +239,7 @@ namespace GhostSharp.Entities
         /// This field seems to be ignored, even if the status is changed to scheduled.
         /// </remarks>
         [JsonProperty("send_email_when_published")]
-        [UpdatableField]
-        public bool SendEmailWhenPublished { get; set; }
+        public bool SendEmailWhenPublished { get; private set; }
 
         /// <summary>
         /// Email Subject
@@ -278,13 +251,10 @@ namespace GhostSharp.Entities
         /// Access (true if members is disabled; otherwise, set to currently logged in members' access)
         /// </summary>
         /// <remarks>
-        /// This value seems to always be null on POST, and setting to a value on PUT has no effect.
+        /// This value seems to always be null on POST.
         /// </remarks>
         /// <see cref="https://github.com/TryGhost/Ghost/commit/289c1b3e8a5c03b868dde1a76f62661197e302d4"/>
         [JsonProperty("access")]
-        public bool? Access { get; set; }
-
-        public static IEnumerable<PropertyInfo> UpdatableProperties =>
-            typeof(Post).GetProperties().Where(x => x.GetCustomAttribute<UpdatableFieldAttribute>() != null);
+        public bool? Access { get; private set; }
     }
 }

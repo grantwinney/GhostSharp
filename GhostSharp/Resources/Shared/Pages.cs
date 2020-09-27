@@ -11,38 +11,21 @@ namespace GhostSharp
         {
             var request = new RestRequest("pages/", Method.GET);
             ApplyPageQueryParams(request, queryParams);
-            return SetDefaultValues(Execute<PageResponse>(request));
+            return Execute<PageResponse>(request);
         }
 
         public Page GetPageById(string id, PostQueryParams queryParams = null)
         {
             var request = new RestRequest($"pages/{id}/", Method.GET);
             ApplyPageQueryParams(request, queryParams);
-            return SetDefaultValues(Execute<PageResponse>(request)?.Pages?.Single());
+            return Execute<PageResponse>(request)?.Pages?.Single();
         }
 
-        public Post GetPageBySlug(string slug, PostQueryParams queryParams = null)
+        public Page GetPageBySlug(string slug, PostQueryParams queryParams = null)
         {
             var request = new RestRequest($"pages/slug/{slug}/", Method.GET);
             ApplyPageQueryParams(request, queryParams);
-            return SetDefaultValues(Execute<PageResponse>(request)?.Pages?.Single());
-        }
-
-        private PageResponse SetDefaultValues(PageResponse response)
-        {
-            if (response != null)
-                foreach (var post in response.Pages)
-                    SetDefaultValues(post);
-
-            return response;
-        }
-
-        private Page SetDefaultValues(Page page)
-        {
-            if (page != null)
-                page.Status = "published";
-
-            return page;
+            return Execute<PageResponse>(request)?.Pages?.Single();
         }
 
         /// <summary>

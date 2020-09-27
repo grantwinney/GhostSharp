@@ -82,6 +82,91 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         }
 
         [Test]
+        public void CreatePost_CreatesFullPost()
+        {
+            var title = "Original Title";
+            var slug = "original-improbable-sluggy-slug-name-sluggish-1234235";
+            var mobileDoc = "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[],\"sections\":[[1,\"p\",[[0,[],0,\"Original Post Content\"]]]]}";
+            var html = "<h1>Original</h1><p>Html</p>";
+            var featureImage = "original_image.jpg";
+            var metaTitle = "Original Meta Title";
+            var metaDescription = "Original Meta Description";
+            var publishedAt = DateTime.UtcNow.AddMinutes(10);
+            var customExcerpt = "Original Excerpt";
+            var codeInjectionHead = "Original Header";
+            var codeInjectionFoot = "Original Footer";
+            var ogImage = "original_og_image";
+            var ogTitle = "Original OG Title";
+            var ogDescription = "Original OG Description";
+            var twitterImage = "original_twitter_image";
+            var twitterTitle = "Original Twitter Title";
+            var twitterDescription = "Original Twitter Description";
+            var customTemplate = "Original Custom Template";
+            var canonicalUrl = "original_canonical_url";
+            var excerpt = "Original Excerpt";
+            var status = "draft";
+            var visibility = "public";
+            var emailSubject = "original email subject";
+
+            var post = auth.CreatePost(
+                new Post
+                {
+                    Title = title,
+                    Slug = slug,
+                    MobileDoc = mobileDoc,
+                    Html = html,
+                    FeatureImage = featureImage,
+                    Featured = true,
+                    MetaTitle = metaTitle,
+                    MetaDescription = metaDescription,
+                    PublishedAt = publishedAt,
+                    CustomExcerpt = customExcerpt,
+                    CodeInjectionHead = codeInjectionHead,
+                    CodeInjectionFoot = codeInjectionFoot,
+                    OgImage = ogImage,
+                    OgTitle = ogTitle,
+                    OgDescription = ogDescription,
+                    TwitterImage = twitterImage,
+                    TwitterTitle = twitterTitle,
+                    TwitterDescription = twitterDescription,
+                    CustomTemplate = customTemplate,
+                    Excerpt = excerpt,
+                    CanonicalUrl = canonicalUrl,
+                    Status = status,
+                    Visibility = visibility,
+                    EmailSubject = emailSubject,
+                });
+
+            newPostId = post.Id;
+
+            Assert.AreEqual(title, post.Title);
+            Assert.AreEqual(slug, post.Slug);
+            Assert.AreNotEqual(mobileDoc, post.MobileDoc);                                        // Html overrides MobileDoc
+            Assert.That(post.MobileDoc.Contains("Original") && post.MobileDoc.Contains("Html"));  // Html overrides MobileDoc
+            Assert.IsNull(post.Html);                                                             // Html isn't returned unless you specify
+            Assert.AreEqual(featureImage, post.FeatureImage);
+            Assert.IsTrue(post.Featured);
+            Assert.AreEqual(metaTitle, post.MetaTitle);
+            Assert.AreEqual(metaDescription, post.MetaDescription);
+            Assert.AreEqual(publishedAt.ToLongTimeString(), post.PublishedAt.Value.ToLongTimeString());
+            Assert.AreEqual(customExcerpt, post.CustomExcerpt);
+            Assert.IsNull(post.CodeInjectionHead);  // Works, but value doesn't get returned
+            Assert.IsNull(post.CodeInjectionFoot);  // Works, but value doesn't get returned
+            Assert.AreEqual(ogImage, post.OgImage);
+            Assert.AreEqual(ogTitle, post.OgTitle);
+            Assert.AreEqual(ogDescription, post.OgDescription);
+            Assert.AreEqual(twitterImage, post.TwitterImage);
+            Assert.AreEqual(twitterTitle, post.TwitterTitle);
+            Assert.AreEqual(twitterDescription, post.TwitterDescription);
+            Assert.AreEqual(customTemplate, post.CustomTemplate);
+            Assert.AreEqual(excerpt, post.Excerpt);
+            Assert.AreEqual(canonicalUrl, post.CanonicalUrl);
+            Assert.AreEqual(status, post.Status);
+            Assert.AreEqual(visibility, post.Visibility);
+            Assert.AreEqual(emailSubject, post.EmailSubject);
+        }
+
+        [Test]
         public void CreatePost_SetsMissingStatusToDraft()
         {
             var expectedPost = new Post
@@ -374,41 +459,22 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.That(post.MobileDoc.Contains("I remember reading an article on dev.to last year"));
         }
 
-        [Test]
-        public void CreatePost_IgnoresPlainText()
-        {
-            // There's nothing in the docs about plaintext being an option for posting content.
-            var post = auth.CreatePost(
-                new Post
-                {
-                    Title = "This is a test post",
-                    PlainText = "plain stuff",
-                    Status = "draft"
-                });
+        //[Test]
+        //public void CreatePost_IgnoresSendEmailWhenPublished_EvenWhenStatusIsScheduled()
+        //{
+        //    var post = auth.CreatePost(
+        //        new Post
+        //        {
+        //            Title = "This is a test post",
+        //            Status = "scheduled",
+        //            PublishedAt = DateTime.Now.AddYears(300),
+        //            SendEmailWhenPublished = true,
+        //        });
 
-            newPostId = post.Id;
+        //    newPostId = post.Id;
 
-            Assert.IsNull(post.PlainText);
-            Assert.IsNotNull(post.MobileDoc);
-            Assert.That(!post.MobileDoc.Contains("plain stuff"));
-        }
-
-        [Test]
-        public void CreatePost_IgnoresSendEmailWhenPublished_EvenWhenStatusIsScheduled()
-        {
-            var post = auth.CreatePost(
-                new Post
-                {
-                    Title = "This is a test post",
-                    Status = "scheduled",
-                    PublishedAt = DateTime.Now.AddYears(300),
-                    SendEmailWhenPublished = true,
-                });
-
-            newPostId = post.Id;
-
-            Assert.AreEqual("scheduled", post.Status);
-            Assert.IsFalse(post.SendEmailWhenPublished);
-        }
+        //    Assert.AreEqual("scheduled", post.Status);
+        //    Assert.IsFalse(post.SendEmailWhenPublished);
+        //}
     }
 }

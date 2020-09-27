@@ -13,7 +13,7 @@ namespace GhostSharp.Entities
         /// Collection of posts.
         /// </summary>
         [JsonProperty("posts")]
-        [UpdatableField]
+        [RequiredForUpdate]
         public List<Post> Posts { get; set; }
     }
 }

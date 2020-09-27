@@ -96,7 +96,7 @@ namespace GhostSharp
             {
                 if (ExceptionLevel == ExceptionLevel.Ghost || ExceptionLevel == ExceptionLevel.All)
                     throw;
-
+                
                 return default;
             }
             catch

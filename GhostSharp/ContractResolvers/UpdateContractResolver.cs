@@ -13,11 +13,15 @@ namespace GhostSharp.ContractResolvers
         {
             JsonProperty property = base.CreateProperty(member, memberSerialization);
 
+            var setterMethod = property.DeclaringType.GetProperty(property.UnderlyingName).GetSetMethod();
+
             property.ShouldSerialize =
                 instance =>
                 {
-                    return property.DeclaringType.GetProperty(property.UnderlyingName)
-                                   .GetCustomAttribute<UpdatableFieldAttribute>() != null;
+                    // Property must have a public setter or a RequiredForUpdate attribute
+                    return (setterMethod != null && setterMethod.IsPublic) ||
+                           property.DeclaringType.GetProperty(property.UnderlyingName)
+                                   .GetCustomAttribute<RequiredForUpdateAttribute>() != null;
                 };
 
             return property;

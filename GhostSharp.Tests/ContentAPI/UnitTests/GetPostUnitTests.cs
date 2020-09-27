@@ -45,7 +45,6 @@ namespace GhostSharp.Tests.ContentAPI.UnitTests
 
             var response = auth.GetPosts().Posts[0];
 
-            Assert.AreEqual(id, response.Id);
             Assert.AreEqual(title, response.Title);
             Assert.AreEqual(slug, response.Slug);
             Assert.AreEqual(html, response.Html);
@@ -123,7 +122,6 @@ namespace GhostSharp.Tests.ContentAPI.UnitTests
             
             var response = auth.GetPostById(id);
 
-            Assert.AreEqual(id, response.Id);
             Assert.AreEqual(title, response.Title);
             Assert.AreEqual(slug, response.Slug);
             Assert.AreEqual(html, response.Html);
@@ -201,7 +199,6 @@ namespace GhostSharp.Tests.ContentAPI.UnitTests
 
             var response = auth.GetPostBySlug(slug);
 
-            Assert.AreEqual(id, response.Id);
             Assert.AreEqual(title, response.Title);
             Assert.AreEqual(slug, response.Slug);
             Assert.AreEqual(html, response.Html);
@@ -279,8 +276,6 @@ namespace GhostSharp.Tests.ContentAPI.UnitTests
                 Posts = new List<Post>
                 {
                     new Post {
-                        Id = id,
-                        Page = false,
                         Title = title,
                         Slug = slug,
                         Html = html

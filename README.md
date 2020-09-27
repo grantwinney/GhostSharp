@@ -1,4 +1,4 @@
-[![Travis](https://img.shields.io/travis/grantwinney/GhostSharp.svg?branch=master)](https://travis-ci.org/grantwinney/GhostSharp)
+﻿[![Travis](https://img.shields.io/travis/grantwinney/GhostSharp.svg?branch=master)](https://travis-ci.org/grantwinney/GhostSharp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![NuGet](https://img.shields.io/nuget/v/GhostSharp.svg)](https://www.nuget.org/packages/GhostSharp)
 [![CodeFactor](https://www.codefactor.io/repository/github/grantwinney/ghostsharp/badge)](https://www.codefactor.io/repository/github/grantwinney/ghostsharp)
@@ -73,11 +73,10 @@ Feel free to [open a PR](https://github.com/grantwinney/GhostSharp/compare) if y
 
 ## Release Notes
 
-* 1.0.7 - Implement the Themes endpoint.
-* 1.0.6 - Stabilize for v3.
-* 1.0.5 - Begin implementing v3 of the API.
-* 1.0.4 - General code cleanup. Added license to NuGet package.
-* 1.0.3 - Covers stable Admin API endpoints, currently posts, pages, images, site.
-* 1.0.2 - Beginning work to support Admin API.<br>***Breaking change:** GhostAPI is now split into GhostContentAPI and GhostAdminAPI*
-* 1.0.1 - Added comments to aid in intellisense.
-* 1.0.0 - Covers the Content API endpoints.
+* 1.0.8 - 🐛 Several fields marked as updateable that aren't. (thx for the heads up @unnanego)
+* 1.0.7 - ⭐ Implement the Themes admin endpoint. (thx for pointing me in the right direction @naz)
+* 1.0.6 - ⭐ Implement API v3.
+* 1.0.4 - 🧹 Code cleanup. Added license to NuGet package.
+* 1.0.3 - ⭐ Implement Admin API v2 endpoints (posts, pages, images, site)<br>***Breaking change:** GhostAPI is now split into GhostContentAPI and GhostAdminAPI*
+* 1.0.1 - 🧹 Added comments to aid in intellisense.
+* 1.0.0 - ⭐ Implement Content API endpoints.

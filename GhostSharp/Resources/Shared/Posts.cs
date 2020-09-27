@@ -12,41 +12,21 @@ namespace GhostSharp
         {
             var request = new RestRequest("posts/", Method.GET);
             ApplyPostQueryParams(request, queryParams);
-            return SetDefaultValues(Execute<PostResponse>(request));
+            return Execute<PostResponse>(request);
         }
 
         public Post GetPostById(string id, PostQueryParams queryParams = null)
         {
             var request = new RestRequest($"posts/{id}/", Method.GET);
             ApplyPostQueryParams(request, queryParams);
-            return SetDefaultValues(Execute<PostResponse>(request)?.Posts?.Single());
+            return Execute<PostResponse>(request)?.Posts?.Single();
         }
 
         public Post GetPostBySlug(string slug, PostQueryParams queryParams = null)
         {
             var request = new RestRequest($"posts/slug/{slug}/", Method.GET);
             ApplyPostQueryParams(request, queryParams);
-            return SetDefaultValues(Execute<PostResponse>(request)?.Posts?.Single());
-        }
-
-        private PostResponse SetDefaultValues(PostResponse response)
-        {
-            if (response != null)
-                foreach (var post in response.Posts)
-                    SetDefaultValues(post);
-
-            return response;
-        }
-
-        private Post SetDefaultValues(Post post)
-        {
-            if (post != null)
-            {
-                //post.Status = "published";
-                post.Page = false;
-            }
-
-            return post;
+            return Execute<PostResponse>(request)?.Posts?.Single();
         }
 
         /// <summary>
@@ -64,8 +44,6 @@ namespace GhostSharp
                     request.AddQueryParameter("include", "authors");
                 else if (queryParams.IncludeTags)
                     request.AddQueryParameter("include", "tags");
-
-                var a = Ext.GetQueryStringFromFlagsEnum<PostFields>(queryParams.Fields);
 
                 if (queryParams.Fields != 0)
                     request.AddQueryParameter("fields", Ext.GetQueryStringFromFlagsEnum<PostFields>(queryParams.Fields));

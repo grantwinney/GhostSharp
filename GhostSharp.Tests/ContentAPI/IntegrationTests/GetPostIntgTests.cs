@@ -257,7 +257,6 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             var post = auth.GetPosts(new PostQueryParams { Limit = 1, Fields = PostFields.Id }).Posts[0];
 
             Assert.IsNotNull(post.Id);
-            Assert.IsFalse(post.Page);
 
             Assert.IsNull(post.Authors);
             Assert.IsNull(post.CodeInjectionFoot);

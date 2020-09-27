@@ -33,7 +33,7 @@ namespace GhostSharp
         /// <returns>The page matching the given slug. By default, returns MobileDoc format and author and tag data.</returns>
         /// <param name="slug">The slug of the page to retrieve.</param>
         /// <param name="queryParams">Parameters that affect the resultset.</param>
-        public new Post GetPageBySlug(string slug, PostQueryParams queryParams = null)
+        public new Page GetPageBySlug(string slug, PostQueryParams queryParams = null)
         {
             return base.GetPageBySlug(slug, queryParams);
         }

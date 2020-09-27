@@ -1,8 +1,6 @@
 ﻿using GhostSharp.Entities;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Threading;
 
 namespace GhostSharp.Tests.AdminAPI.IntegrationTests
 {
@@ -17,7 +15,12 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         {
             auth = new GhostAdminAPI(Host, ValidAdminApiKey);
 
-            origPost = auth.CreatePost(new Post { Title = "Sample post used for update post tests", MetaTitle = "sample meta title", Page = true });
+            origPost = auth.CreatePost(
+                new Post
+                {
+                    Title = "Sample post used for update post tests",
+                    MetaTitle = "sample meta title",
+                });
         }
 
         [TearDown]
@@ -29,143 +32,117 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             origPost = null;
         }
 
-        [TestCase(2)]
-        [TestCase(-2)]
         [Test]
-        public void UpdatePost_Succeeds_WhenUpdatedAtIsDifferent_BecauseItsForcedToBeSameAsOriginalPost(int minutes)
-        {
-            var updatedPost = new Post
-            {
-                Id = origPost.Id,
-                Title = "a different title...",
-                UpdatedAt = origPost.UpdatedAt.Value.AddMinutes(minutes)
-            };
-
-            Assert.DoesNotThrow(() => auth.UpdatePost(updatedPost));
-        }
-
-        [Test]
-        public void UpdatePost_Succeeds_WhenUpdatedAtIsSame_AndUpdatableFieldsChange()
-        {
-            var updatedPost = auth.UpdatePost(
-                new Post
-                {
-                    Id = origPost.Id,
-                    Title = "a different title...",
-                    UpdatedAt = origPost.UpdatedAt,
-                });
-
-            Assert.AreEqual(origPost.Id, updatedPost.Id);
-            Assert.AreEqual("a different title...", updatedPost.Title);
-            Assert.GreaterOrEqual(updatedPost.UpdatedAt, origPost.UpdatedAt);
-        }
-
-        [Test]
-        public void UpdatePost_Fails_WhenIdIsOmitted()
-        {
-            var ex = Assert.Throws<GhostSharpException>(() => auth.UpdatePost(
-                new Post
-                {
-                    UpdatedAt = origPost.UpdatedAt
-                }));
-
-            Assert.AreEqual("Resource not found", ex.Message);
-        }
-
-        [Test]
-        public void UpdatePost_Fails_WhenIdIsInvalid()
-        {
-            var ex = Assert.Throws<GhostSharpException>(() => auth.UpdatePost(
-                new Post
-                {
-                    Id = InvalidPostId,
-                    UpdatedAt = origPost.UpdatedAt,
-                    Title = origPost.Title
-                }));
-
-            Assert.AreEqual("Resource not found error, cannot read post.", ex.Message);
-        }
-
-        [Test]
-        public void UpdatePost_Succeeds_WhenAllFieldsChange_AsLongAsOnlyUpdatableFieldsAreSent()
+        public void UpdatePost_Succeeds_WhenAllFieldsChange()
         {
             Post origPost = null;
+
+            var originalTitle = "Original Title";
+            var originalSlug = "original-improbable-sluggy-slug-name-sluggish-1234235";
+            var originalMobileDoc = "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[],\"sections\":[[1,\"p\",[[0,[],0,\"Original Post Content\"]]]]}";
+            var originalHtml = "<h1>Original</h1><p>Html</p>";
+            var originalFeatureImage = "original_image.jpg";
+            var originalMetaTitle = "Original Meta Title";
+            var originalMetaDescription = "Original Meta Description";
+            var originalPublishedAt = DateTime.Now.AddMinutes(10);
+            var originalCustomExcerpt = "Original Excerpt";
+            var originalCodeInjectionHead = "Original Header";
+            var originalCodeInjectionFoot = "Original Footer";
+            var originalOgImage = "original_og_image";
+            var originalOgTitle = "Original OG Title";
+            var originalOgDescription = "Original OG Description";
+            var originalTwitterImage = "original_twitter_image";
+            var originalTwitterTitle = "Original Twitter Title";
+            var originalTwitterDescription = "Original Twitter Description";
+            var originalCustomTemplate = "Original Custom Template";
+            var originalCanonicalUrl = "original_canonical_url";
+            var originalExcerpt = "Original Excerpt";
+            var originalStatus = "draft";
+            var originalVisibility = "public";
+            var originalEmailSubject = "original email subject";
+
             try
             {
                 origPost = auth.CreatePost(
                     new Post
                     {
-                        Page = true,
-                        Title = "Original Title",
-                        Slug = "original-improbable-sluggy-slug-name-sluggish-1234235",
-                        MobileDoc = "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[],\"sections\":[[1,\"p\",[[0,[],0,\"Original Post Content\"]]]]}",
-                        Html = "<h1>Original</h1><p>Html</p>",
-                        PlainText = "original plaintext",
-                        FeatureImage = "original_image.jpg",
+                        Title = originalTitle,
+                        Slug = originalSlug,
+                        MobileDoc = originalMobileDoc,
+                        Html = originalHtml,
+                        FeatureImage = originalFeatureImage,
                         Featured = true,
-                        MetaTitle = "Original Meta Title",
-                        MetaDescription = "Original Meta Description",
-                        PublishedAt = DateTime.Now.AddMinutes(10),
-                        CustomExcerpt = "Original Excerpt",
-                        CodeInjectionHead = "Original Header",
-                        CodeInjectionFoot = "Original Footer",
-                        OgImage = "original_og_image",
-                        OgTitle = "Original OG Title",
-                        OgDescription = "Original OG Description",
-                        TwitterImage = "original_twitter_image",
-                        TwitterTitle = "Original Twitter Title",
-                        TwitterDescription = "Original Twitter Description",
-                        CustomTemplate = "Original Custom Template",
-                        Url = "original_url",
-                        CanonicalUrl = "original_canonical_url",
-                        Excerpt = "Original Excerpt",
-                        Status = "draft",
+                        MetaTitle = originalMetaTitle,
+                        MetaDescription = originalMetaDescription,
+                        PublishedAt = originalPublishedAt,
+                        CustomExcerpt = originalCustomExcerpt,
+                        CodeInjectionHead = originalCodeInjectionHead,
+                        CodeInjectionFoot = originalCodeInjectionFoot,
+                        OgImage = originalOgImage,
+                        OgTitle = originalOgTitle,
+                        OgDescription = originalOgDescription,
+                        TwitterImage = originalTwitterImage,
+                        TwitterTitle = originalTwitterTitle,
+                        TwitterDescription = originalTwitterDescription,
+                        CustomTemplate = originalCustomTemplate,
+                        Excerpt = originalExcerpt,
+                        CanonicalUrl = originalCanonicalUrl,
+                        Status = originalStatus,
+                        Visibility = originalVisibility,
+                        EmailSubject = originalEmailSubject,
                     });
 
-                var updatedPost = auth.UpdatePost(
-                    new Post
-                    {
-                        // must be provided, remain same
-                        Id = origPost.Id,
-                        UpdatedAt = origPost.UpdatedAt,
+                origPost.Title = "Updated Title";
+                origPost.Slug = "updated-improbable-sluggy-slug-name-sluggish-1234235";
+                origPost.MobileDoc = "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[],\"sections\":[[1,\"p\",[[0,[],0,\"Updated Post Content\"]]]]}";
+                origPost.Html = "<h1>Updated</h1><p>Html</p>";
+                origPost.FeatureImage = "updated_image.jpg";
+                origPost.Featured = false;
+                origPost.MetaTitle = "Updated Meta Title";
+                origPost.MetaDescription = "Updated Meta Description";
+                origPost.PublishedAt = DateTime.Now.AddMinutes(30);
+                origPost.CustomExcerpt = "Updated Excerpt";
+                origPost.CodeInjectionHead = "Updated Header";
+                origPost.CodeInjectionFoot = "Updated Footer";
+                origPost.OgImage = "updated_og_image";
+                origPost.OgTitle = "Updated OG Title";
+                origPost.OgDescription = "Updated OG Description";
+                origPost.TwitterImage = "updated_twitter_image";
+                origPost.TwitterTitle = "Updated Twitter Title";
+                origPost.TwitterDescription = "Updated Twitter Description";
+                origPost.CustomTemplate = "Updated Custom Template";
+                origPost.Excerpt = "Updated Excerpt";
+                origPost.CanonicalUrl = "updated_canonical_url";
+                origPost.Status = "scheduled";
+                origPost.Visibility = "paid";
+                origPost.EmailSubject = "updated email subject";
 
-                        // can be changed
-                        Title = "Updated Title",
-                        MobileDoc = "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[],\"sections\":[[1,\"p\",[[0,[],0,\"Updated Post Content\"]]]]}",
-                        Html = "<h1>Updated</h1><p>Html</p>",
-                        PlainText = "updated plaintext",
-                        FeatureImage = "updated_image.jpg",
-                        Featured = false,
-                        MetaTitle = "Updated Meta Title",
-                        MetaDescription = "Updated Meta Description",
-                        PublishedAt = DateTime.Now.AddMinutes(30),
-                        CustomExcerpt = "Updated Excerpt",
-                        CodeInjectionHead = "Updated Header",
-                        CodeInjectionFoot = "Updated Footer",
-                        OgImage = "updated_og_image",
-                        OgTitle = "Updated OG Title",
-                        OgDescription = "Updated OG Description",
-                        TwitterImage = "updated_twitter_image",
-                        TwitterTitle = "Updated Twitter Title",
-                        TwitterDescription = "Updated Twitter Description",
-                        CustomTemplate = "Updated Custom Template",
-                        CanonicalUrl = "updated_canonical_url",
-                        Excerpt = "Updated Excerpt",
-                        Status = "draft",
+                var updatedPost = auth.UpdatePost(origPost);
 
-                        // cannot be changed
-                        Slug = "updated-improbable-sluggy-slug-name-sluggish-1234235",
-                        Uuid = "FA6668B8-059B-495E-AD4C-7F4569AE2C26",
-                        CommentId = "5c9eccccccafbecccccccccc",
-
-                        // ignored either way
-                        Page = false,
-                        CreatedAt = origPost.CreatedAt.Value.AddSeconds(2),
-                        Url = "updated_url",
-                    });
-
-                Assert.AreEqual(origPost.Id, updatedPost.Id);
-                Assert.AreNotEqual(origPost.Title, updatedPost.Title);
+                Assert.AreNotEqual(originalTitle, updatedPost.Title);
+                Assert.AreNotEqual(originalSlug, updatedPost.Slug);
+                Assert.AreNotEqual(originalMobileDoc, updatedPost.MobileDoc);
+                Assert.AreNotEqual(originalHtml, updatedPost.Html);
+                Assert.AreNotEqual(originalFeatureImage, updatedPost.FeatureImage);
+                Assert.IsFalse(updatedPost.Featured);
+                Assert.AreNotEqual(originalMetaTitle, updatedPost.MetaTitle);
+                Assert.AreNotEqual(originalMetaDescription, updatedPost.MetaDescription);
+                Assert.Less(originalPublishedAt, updatedPost.PublishedAt);
+                Assert.AreNotEqual(originalCustomExcerpt, updatedPost.CustomExcerpt);
+                Assert.AreNotEqual(originalCodeInjectionHead, updatedPost.CodeInjectionHead);
+                Assert.AreNotEqual(originalCodeInjectionFoot, updatedPost.CodeInjectionFoot);
+                Assert.AreNotEqual(originalOgImage, updatedPost.OgImage);
+                Assert.AreNotEqual(originalOgTitle, updatedPost.OgTitle);
+                Assert.AreNotEqual(originalOgDescription, updatedPost.OgDescription);
+                Assert.AreNotEqual(originalTwitterImage, updatedPost.TwitterImage);
+                Assert.AreNotEqual(originalTwitterTitle, updatedPost.TwitterTitle);
+                Assert.AreNotEqual(originalTwitterDescription, updatedPost.TwitterDescription);
+                Assert.AreNotEqual(originalCustomTemplate, updatedPost.CustomTemplate);
+                Assert.AreNotEqual(originalExcerpt, updatedPost.Excerpt);
+                Assert.AreNotEqual(originalCanonicalUrl, updatedPost.CanonicalUrl);
+                Assert.AreNotEqual(originalStatus, updatedPost.Status);
+                Assert.AreNotEqual(originalVisibility, updatedPost.Visibility);
+                Assert.AreNotEqual(originalEmailSubject, updatedPost.EmailSubject);
             }
             finally
             {
@@ -174,64 +151,56 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             }
         }
 
-        [Test]
-        public void SendEmailWhenPublished_IsSentAsQueryParameter_ButStillDoesntSeemToWork()
-        {
-            var updatedPost = auth.UpdatePost(
-                new Post
-                {
-                    Id = origPost.Id,
-                    Status = "scheduled",
-                    PublishedAt = DateTime.Now.AddYears(300),
-                    SendEmailWhenPublished = true,
-                });
+        //[Test]
+        //public void SendEmailWhenPublished_IsSentAsQueryParameter_ButStillDoesntSeemToWork()
+        //{
+        //    origPost.Status = "scheduled";
+        //    origPost.PublishedAt = DateTime.Now.AddYears(300);
+        //    //origPost.SendEmailWhenPublished = true;
 
-            Assert.AreEqual(origPost.Id, updatedPost.Id);
-            Assert.False(origPost.SendEmailWhenPublished);
-            Assert.False(updatedPost.SendEmailWhenPublished);  // SHOULD BE TRUE
-        }
+        //    var updatedPost = auth.UpdatePost(origPost);
+
+        //    Assert.AreEqual(origPost.Id, updatedPost.Id);
+        //    Assert.False(origPost.SendEmailWhenPublished);
+        //    Assert.False(updatedPost.SendEmailWhenPublished);  // SHOULD BE TRUE
+        //}
 
         [Test]
         public void UpdatePost_DoesNotChangeSlugOrURL_WhenTitleIsModified()
         {
-            var updatedPost = auth.UpdatePost(
-                new Post
-                {
-                    Id = origPost.Id,
-                    Title = "a different title...",
-                });
+            var originalTitle = origPost.Title;
+
+            origPost.Title = "a different title...";
+
+            var updatedPost = auth.UpdatePost(origPost);
 
             Assert.AreEqual(origPost.Id, updatedPost.Id);
             Assert.AreEqual(origPost.Slug, updatedPost.Slug);
             Assert.AreEqual(origPost.Url, updatedPost.Url);
-            Assert.AreNotEqual(origPost.Title, updatedPost.Title);
+            Assert.AreNotEqual(originalTitle, updatedPost.Title);
         }
 
         [Test]
         public void UpdatePost_DoesNotChangeTitleOrURL_WhenSlugIsModified()
         {
-            var updatedPost = auth.UpdatePost(
-                new Post
-                {
-                    Id = origPost.Id,
-                    Slug = "a-different-title",
-                });
+            var originalSlug = origPost.Slug;
+
+            origPost.Slug = "a-different-title";
+
+            var updatedPost = auth.UpdatePost(origPost);
 
             Assert.AreEqual(origPost.Id, updatedPost.Id);
             Assert.AreEqual(origPost.Url, updatedPost.Url);
             Assert.AreEqual(origPost.Title, updatedPost.Title);
-            Assert.AreNotEqual(origPost.Slug, updatedPost.Slug);
+            Assert.AreNotEqual(originalSlug, updatedPost.Slug);
         }
 
         [Test]
         public void UpdatePost_UsesMobileDocAsSource_WhenNoHtmlProvided()
         {
-            var updatedPost = auth.UpdatePost(
-                new Post
-                {
-                    Id = origPost.Id,
-                    MobileDoc = "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[],\"sections\":[[1,\"p\",[[0,[],0,\"Random mobile doc content\"]]]]}",
-                });
+            origPost.MobileDoc = "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[],\"sections\":[[1,\"p\",[[0,[],0,\"Random mobile doc content\"]]]]}";
+
+            var updatedPost = auth.UpdatePost(origPost);
 
             Assert.AreEqual(origPost.Id, updatedPost.Id);
             Assert.IsNull(origPost.Html);
@@ -244,16 +213,12 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         [Test]
         public void UpdatePost_UsesHtmlAsSource_WhenHtmlProvided()
         {
-            var updatedPost = auth.UpdatePost(
-                new Post
-                {
-                    Id = origPost.Id,
-                    MobileDoc = "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[],\"sections\":[[1,\"p\",[[0,[],0,\"Random mobile doc content\"]]]]}",
-                    Html = "<p>I remember reading an article on dev.to last year</p>",
-                });
+            origPost.MobileDoc = "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[],\"sections\":[[1,\"p\",[[0,[],0,\"Random mobile doc content\"]]]]}";
+            origPost.Html = "<p>I remember reading an article on dev.to last year</p>";
+
+            var updatedPost = auth.UpdatePost(origPost);
 
             Assert.AreEqual(origPost.Id, updatedPost.Id);
-            Assert.IsNull(origPost.Html);
             Assert.IsNull(updatedPost.Html);
             Assert.IsNotNull(origPost.MobileDoc);
             Assert.IsNotNull(updatedPost.MobileDoc);
@@ -261,38 +226,17 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.That(updatedPost.MobileDoc.Contains("I remember reading an article on dev.to last year"));
         }
 
-        [Test]
-        public void UpdatePost_IgnoresPlainText()
-        {
-            // There's nothing in the docs about plaintext being an option for posting content.
-            var post = auth.UpdatePost(
-                new Post
-                {
-                    Id = origPost.Id,
-                    Title = "This is a test post",
-                    PlainText = "plain stuff",
-                    Status = "draft"
-                });
+        //[Test]
+        //public void UpdatePost_IgnoresSendEmailWhenPublished_EvenWhenStatusChangesToScheduled()
+        //{
+        //    origPost.Status = "scheduled";
+        //    origPost.PublishedAt = DateTime.Now.AddYears(300);
+        //    origPost.SendEmailWhenPublished = true;
 
-            Assert.IsNull(post.PlainText);
-            Assert.IsNotNull(post.MobileDoc);
-            Assert.That(!post.MobileDoc.Contains("plain stuff"));
-        }
+        //    var post = auth.UpdatePost(origPost);
 
-        [Test]
-        public void UpdatePost_IgnoresSendEmailWhenPublished_EvenWhenStatusChangesToScheduled()
-        {
-            var post = auth.UpdatePost(
-                new Post
-                {
-                    Id = origPost.Id,
-                    Status = "scheduled",
-                    PublishedAt = DateTime.Now.AddYears(300),
-                    SendEmailWhenPublished = true,
-                });
-
-            Assert.AreEqual("scheduled", post.Status);
-            Assert.IsFalse(post.SendEmailWhenPublished);
-        }
+        //    Assert.AreEqual("scheduled", post.Status);
+        //    Assert.IsFalse(post.SendEmailWhenPublished);
+        //}
     }
 }

@@ -248,7 +248,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.IsNull(page.OgDescription);
             Assert.IsNull(page.OgImage);
             Assert.IsNull(page.OgTitle);
-            Assert.IsNull(page.Page);
+            Assert.IsTrue(page.IsPage);
             Assert.IsNull(page.PlainText);
             Assert.IsNull(page.PrimaryAuthor);
             Assert.IsNull(page.PrimaryTag);

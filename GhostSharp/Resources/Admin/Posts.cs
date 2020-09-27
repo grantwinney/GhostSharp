@@ -66,24 +66,16 @@ namespace GhostSharp
 
         public Post UpdatePost(Post updatedPost)
         {
-            var originalPost = GetPostById(updatedPost.Id);
-
-            foreach (var property in Post.UpdatableProperties)
-            {
-                if (property.GetValue(updatedPost) == null)
-                    property.SetValue(updatedPost, property.GetValue(originalPost));
-            }
-
-            // Per the docs, the UpdatedAt field is used to avoid collision detection, yet
-            // any change to it that differ from the original post causes the API call to fail with:
-            // "Saving failed! Someone else is editing this post."
+            // Per the docs, the UpdatedAt field is used to avoid collision detection
+            // If an update fails, it might be that someone updated it more recently on site,
+            // and you should re-get it and re-apply your changes to it... otherwise you
+            // risk unintentionally overwriting later changes on the site.
             // Ref: https://ghost.org/docs/api/v3/admin/#updating-a-post
-            updatedPost.UpdatedAt = originalPost.UpdatedAt;
 
             var serializedPost = JsonConvert.SerializeObject(
-                    new PostRequest { Posts = new List<Post> { updatedPost } },
-                    new JsonSerializerSettings { ContractResolver = UpdateContractResolver.Instance }
-                );
+               new PostRequest { Posts = new List<Post> { updatedPost } },
+               new JsonSerializerSettings { ContractResolver = UpdateContractResolver.Instance }
+            );
 
             var request = new RestRequest($"posts/{updatedPost.Id}/", Method.PUT, DataFormat.Json);
             request.AddJsonBody(serializedPost);

@@ -15,7 +15,7 @@
     <PackageTags>ghost api rest api-wrapper netstandard wrapper-api wrapper</PackageTags>
     <PackageReleaseNotes>Wrapper for the Ghost API. Full release notes: https://github.com/grantwinney/GhostSharp/blob/master/README.md#release-notes</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.0.7</Version>
+    <Version>1.0.8</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
