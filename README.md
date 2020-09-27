@@ -73,7 +73,7 @@ Feel free to [open a PR](https://github.com/grantwinney/GhostSharp/compare) if y
 
 ## Release Notes
 
-* 1.0.8 - 🐛 Several fields marked as updateable that aren't. (thx for the heads up @unnanego)<br>***Breaking change:** This led to a larger refactoring, which might break some current implementations. Properties in the Post class that cannot be changed now have private setters (instead of just an attribute on them). The Page class was completely separated from the Post class, so RestSharp could correctly deserialize objects coming from Ghost.
+* 1.0.8 - 🐛 Several fields marked as updateable that aren't. (thx for the heads up @unnanego)<br>***Breaking change:** This led to a larger refactoring, which might break some current implementations. Properties in the Post class that cannot be changed now have private setters (instead of just an attribute on them). The Page class was completely separated from the Post class, so RestSharp could correctly deserialize objects coming from Ghost.*
 * 1.0.7 - ⭐ Implement the Themes admin endpoint. (thx for pointing me in the right direction @naz)
 * 1.0.6 - ⭐ Implement API v3.
 * 1.0.4 - 🧹 Code cleanup. Added license to NuGet package.
