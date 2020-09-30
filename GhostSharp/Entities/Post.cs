@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace GhostSharp.Entities
 {
     /// <summary>
-    /// Represents a Post.
+    /// Represents a Post or Page.
     /// </summary>
     /// <remarks>
     /// There are some constraints that exist on these fields, defined here:
@@ -19,12 +19,6 @@ namespace GhostSharp.Entities
         /// </summary>
         [JsonProperty("id")]
         public string Id { get; private set; }
-
-        /// <summary>
-        /// IsPage (true if Page, false if Post)
-        /// </summary>
-        [JsonIgnore]
-        public bool IsPage => false;
 
         /// <summary>
         /// UUID
@@ -232,19 +226,20 @@ namespace GhostSharp.Entities
         [JsonProperty("visibility")]
         public string Visibility { get; set; }
 
-        /// <summary>
-        /// Send Email When Published
-        /// </summary>
-        /// <remarks>
-        /// This field seems to be ignored, even if the status is changed to scheduled.
-        /// </remarks>
-        [JsonProperty("send_email_when_published")]
-        public bool SendEmailWhenPublished { get; private set; }
+        ///// <summary>
+        ///// Send Email When Published
+        ///// </summary>
+        ///// <remarks>
+        ///// This field seems to be ignored, even if the status is changed to scheduled.
+        ///// </remarks>
+        //[JsonProperty("send_email_when_published")]
+        //public bool SendEmailWhenPublished { get; private set; }
 
         /// <summary>
         /// Email Subject
         /// </summary>
         [JsonProperty("email_subject")]
+        [PostOnly]
         public string EmailSubject { get; set; }
 
         /// <summary>

@@ -42,7 +42,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
 
             var ex = Assert.Throws<GhostSharpException>(() => auth.DeletePost(InvalidPostId));
 
-            Assert.AreEqual("Resource not found error, cannot delete post.", ex.Message);
+            Assert.That(ex.Message.StartsWith("Resource not found error, cannot delete post."));
         }
     }
 }

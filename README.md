@@ -73,6 +73,7 @@ Feel free to [open a PR](https://github.com/grantwinney/GhostSharp/compare) if y
 
 ## Release Notes
 
+* 1.0.9 - 🐛 Noticed that pages aren't being created; other refactoring.<br>***Breaking change:** Eliminated Page in favor of a single Post object again, for simplicity. The split wasn't necessary as a Page is just a Post that doesn't end up in feeds. Also, a few fields in a Post don't play nicely when creating pages, but I figured out a different way to omit those.*
 * 1.0.8 - 🐛 Several fields marked as updateable that aren't. (thx for the heads up @unnanego)<br>***Breaking change:** This led to a larger refactoring, which might break some current implementations. Properties in the Post class that cannot be changed now have private setters (instead of just an attribute on them). The Page class was completely separated from the Post class, so RestSharp could correctly deserialize objects coming from Ghost.*
 * 1.0.7 - ⭐ Implement the Themes admin endpoint. (thx for pointing me in the right direction @naz)
 * 1.0.6 - ⭐ Implement API v3.

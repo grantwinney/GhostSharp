@@ -14,14 +14,14 @@ namespace GhostSharp
             return Execute<PageResponse>(request);
         }
 
-        public Page GetPageById(string id, PostQueryParams queryParams = null)
+        public Post GetPageById(string id, PostQueryParams queryParams = null)
         {
             var request = new RestRequest($"pages/{id}/", Method.GET);
             ApplyPageQueryParams(request, queryParams);
             return Execute<PageResponse>(request)?.Pages?.Single();
         }
 
-        public Page GetPageBySlug(string slug, PostQueryParams queryParams = null)
+        public Post GetPageBySlug(string slug, PostQueryParams queryParams = null)
         {
             var request = new RestRequest($"pages/slug/{slug}/", Method.GET);
             ApplyPageQueryParams(request, queryParams);

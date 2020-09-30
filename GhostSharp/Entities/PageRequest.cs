@@ -1,23 +1,19 @@
-﻿using Newtonsoft.Json;
+﻿using GhostSharp.Attributes;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace GhostSharp.Entities
 {
     /// <summary>
-    /// Response representing pages and any meta data.
+    /// Request sent to Ghost
     /// </summary>
-    public class PageResponse
+    public class PageRequest
     {
         /// <summary>
         /// Collection of pages.
         /// </summary>
         [JsonProperty("pages")]
+        [RequiredForUpdate]
         public List<Post> Pages { get; set; }
-
-        /// <summary>
-        /// Meta data regarding the response.
-        /// </summary>
-        [JsonProperty("meta")]
-        public Meta Meta { get; set; }
     }
 }

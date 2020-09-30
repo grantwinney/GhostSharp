@@ -262,9 +262,19 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         [Test]
         public void CreatePost_RequiresAtLeastATitle()
         {
-            var exception = Assert.Throws<GhostSharpException>(() => auth.CreatePost(new Post { Title = null }));
+            var exception = Assert.Throws<GhostSharpException>(() => auth.CreatePost(new Post { Title = null, Status = "draft" }));
 
-            Assert.AreEqual("Validation error, cannot save post.", exception.Message);
+            Assert.That(exception.Message.StartsWith("Validation error, cannot save post."));
+            Assert.That(exception.Message.Contains("missingProperty:title"));
+        }
+
+        [Test]
+        public void CreatePost_RequiresANonEmptyObject()
+        {
+            var exception = Assert.Throws<GhostSharpException>(() => auth.CreatePost(new Post()));
+
+            Assert.That(exception.Message.StartsWith("Validation error, cannot save post."));
+            Assert.That(exception.Message.Contains("missingProperty:title"));
         }
 
         [Test]

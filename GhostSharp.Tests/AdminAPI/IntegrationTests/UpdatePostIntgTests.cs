@@ -1,4 +1,5 @@
 ﻿using GhostSharp.Entities;
+using GhostSharp.Tests.TestHelpers;
 using NUnit.Framework;
 using System;
 
@@ -44,7 +45,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             var originalFeatureImage = "original_image.jpg";
             var originalMetaTitle = "Original Meta Title";
             var originalMetaDescription = "Original Meta Description";
-            var originalPublishedAt = DateTime.Now.AddMinutes(10);
+            var originalPublishedAt = DateTime.UtcNow;
             var originalCustomExcerpt = "Original Excerpt";
             var originalCodeInjectionHead = "Original Header";
             var originalCodeInjectionFoot = "Original Footer";
@@ -100,7 +101,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                 origPost.Featured = false;
                 origPost.MetaTitle = "Updated Meta Title";
                 origPost.MetaDescription = "Updated Meta Description";
-                origPost.PublishedAt = DateTime.Now.AddMinutes(30);
+                origPost.PublishedAt = originalPublishedAt.AddMinutes(20);
                 origPost.CustomExcerpt = "Updated Excerpt";
                 origPost.CodeInjectionHead = "Updated Header";
                 origPost.CodeInjectionFoot = "Updated Footer";
@@ -127,7 +128,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
                 Assert.IsFalse(updatedPost.Featured);
                 Assert.AreNotEqual(originalMetaTitle, updatedPost.MetaTitle);
                 Assert.AreNotEqual(originalMetaDescription, updatedPost.MetaDescription);
-                Assert.Less(originalPublishedAt, updatedPost.PublishedAt);
+                Assert.AreEqual(originalPublishedAt.AddMinutes(20).RemoveTicks(), updatedPost.PublishedAt);
                 Assert.AreNotEqual(originalCustomExcerpt, updatedPost.CustomExcerpt);
                 Assert.AreNotEqual(originalCodeInjectionHead, updatedPost.CodeInjectionHead);
                 Assert.AreNotEqual(originalCodeInjectionFoot, updatedPost.CodeInjectionFoot);
@@ -155,7 +156,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         //public void SendEmailWhenPublished_IsSentAsQueryParameter_ButStillDoesntSeemToWork()
         //{
         //    origPost.Status = "scheduled";
-        //    origPost.PublishedAt = DateTime.Now.AddYears(300);
+        //    origPost.PublishedAt = DateTime.UtcNow.AddYears(300);
         //    //origPost.SendEmailWhenPublished = true;
 
         //    var updatedPost = auth.UpdatePost(origPost);
@@ -230,7 +231,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         //public void UpdatePost_IgnoresSendEmailWhenPublished_EvenWhenStatusChangesToScheduled()
         //{
         //    origPost.Status = "scheduled";
-        //    origPost.PublishedAt = DateTime.Now.AddYears(300);
+        //    origPost.PublishedAt = DateTime.UtcNow.AddYears(300);
         //    origPost.SendEmailWhenPublished = true;
 
         //    var post = auth.UpdatePost(origPost);
@@ -238,5 +239,34 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         //    Assert.AreEqual("scheduled", post.Status);
         //    Assert.IsFalse(post.SendEmailWhenPublished);
         //}
+
+        [Test]
+        public void UpdatePost_Succeeds_WhenPublishedAtIsChangedToBeEarlierThanOriginal()
+        {
+            Post origPost = null;
+
+            var originalPublishedAt = DateTime.UtcNow.RemoveTicks();
+
+            try
+            {
+                origPost = auth.CreatePost(
+                    new Post
+                    {
+                        Title = "sample title",
+                        PublishedAt = originalPublishedAt,
+                    });
+
+                origPost.PublishedAt = originalPublishedAt.AddYears(-1);
+
+                var updatedPost = auth.UpdatePost(origPost);
+
+                Assert.AreEqual(originalPublishedAt.AddYears(-1), updatedPost.PublishedAt);
+            }
+            finally
+            {
+                if (origPost != null)
+                    auth.DeletePost(origPost.Id);
+            }
+        }
     }
 }

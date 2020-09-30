@@ -140,7 +140,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         {
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetTagBySlug(ValidTagWithNoPublishedPostsSlug));
 
-            Assert.AreEqual("Tag not found.", ex.Message);
+            Assert.That(ex.Message.StartsWith("Tag not found."));
         }
 
         [Test]

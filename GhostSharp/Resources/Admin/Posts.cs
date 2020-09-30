@@ -47,7 +47,7 @@ namespace GhostSharp
         /// Create a post
         /// </summary>
         /// <param name="post">Post to create</param>
-        /// <returns>Returns the same post, along with whatever other data Ghost appended to it (like default values)</returns>
+        /// <returns>Returns the created post</returns>
         public Post CreatePost(Post post)
         {
             var request = new RestRequest($"posts/", Method.POST, DataFormat.Json)
@@ -64,6 +64,11 @@ namespace GhostSharp
             return Execute<PostRequest>(request).Posts[0];
         }
 
+        /// <summary>
+        /// Update a post
+        /// </summary>
+        /// <param name="post">Post to update</param>
+        /// <returns>Returns the updated post</returns>
         public Post UpdatePost(Post updatedPost)
         {
             // Per the docs, the UpdatedAt field is used to avoid collision detection
@@ -74,7 +79,7 @@ namespace GhostSharp
 
             var serializedPost = JsonConvert.SerializeObject(
                new PostRequest { Posts = new List<Post> { updatedPost } },
-               new JsonSerializerSettings { ContractResolver = UpdateContractResolver.Instance }
+               new JsonSerializerSettings { ContractResolver = UpdatePostContractResolver.Instance }
             );
 
             var request = new RestRequest($"posts/{updatedPost.Id}/", Method.PUT, DataFormat.Json);
@@ -88,6 +93,11 @@ namespace GhostSharp
             return Execute<PostRequest>(request).Posts[0];
         }
 
+        /// <summary>
+        /// Delete a post
+        /// </summary>
+        /// <param name="id">The ID of the post to delete</param>
+        /// <returns>True if the delete succeeded; otherwise False</returns>
         public bool DeletePost(string id)
         {
             var request = new RestRequest($"posts/{id}/", Method.DELETE);

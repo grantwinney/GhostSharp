@@ -113,7 +113,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         {
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetAuthorBySlug(ValidAuthorWithNoPublishedPostsSlug));
 
-            Assert.AreEqual("Author not found.", ex.Message);
+            Assert.That(ex.Message.StartsWith("Author not found."));
         }
 
         [Test]

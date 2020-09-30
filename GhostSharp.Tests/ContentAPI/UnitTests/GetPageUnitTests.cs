@@ -61,8 +61,8 @@ namespace GhostSharp.Tests.ContentAPI.UnitTests
 
             Assert.IsNotEmpty(ex.Errors);
             Assert.IsNotNull(auth.LastException);
-            Assert.AreEqual(ghostErrorMessage, ex.Message);
-            Assert.AreEqual(ghostErrorType, ex.Errors[0].ErrorType);
+            Assert.That(ex.Message.StartsWith(ghostErrorMessage));
+            Assert.AreEqual(ghostErrorType, ex.Errors[0].Type);
         }
 
         [TestCase(ExceptionLevel.Ghost)]
@@ -102,8 +102,8 @@ namespace GhostSharp.Tests.ContentAPI.UnitTests
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetPages());
 
             Assert.IsNotEmpty(ex.Errors);
-            Assert.AreEqual(ghostErrorMessage, ex.Message);
-            Assert.AreEqual(ghostErrorType, ex.Errors[0].ErrorType);
+            Assert.That(ex.Message.StartsWith(ghostErrorMessage));
+            Assert.AreEqual(ghostErrorType, ex.Errors[0].Type);
         }
 
         [Test]
@@ -138,8 +138,8 @@ namespace GhostSharp.Tests.ContentAPI.UnitTests
 
             Assert.IsNotEmpty(ex.Errors);
             Assert.IsNotNull(auth.LastException);
-            Assert.AreEqual(ghostErrorMessage, ex.Message);
-            Assert.AreEqual(ghostErrorType, ex.Errors[0].ErrorType);
+            Assert.That(ex.Message.StartsWith(ghostErrorMessage));
+            Assert.AreEqual(ghostErrorType, ex.Errors[0].Type);
         }
 
         [TestCase(ExceptionLevel.Ghost)]
@@ -179,8 +179,8 @@ namespace GhostSharp.Tests.ContentAPI.UnitTests
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetPageById(id));
 
             Assert.IsNotEmpty(ex.Errors);
-            Assert.AreEqual(ghostErrorMessage, ex.Message);
-            Assert.AreEqual(ghostErrorType, ex.Errors[0].ErrorType);
+            Assert.That(ex.Message.StartsWith(ghostErrorMessage));
+            Assert.AreEqual(ghostErrorType, ex.Errors[0].Type);
         }
 
         [Test]
@@ -215,8 +215,8 @@ namespace GhostSharp.Tests.ContentAPI.UnitTests
 
             Assert.IsNotEmpty(ex.Errors);
             Assert.IsNotNull(auth.LastException);
-            Assert.AreEqual(ghostErrorMessage, ex.Message);
-            Assert.AreEqual(ghostErrorType, ex.Errors[0].ErrorType);
+            Assert.That(ex.Message.StartsWith(ghostErrorMessage));
+            Assert.AreEqual(ghostErrorType, ex.Errors[0].Type);
         }
 
         [TestCase(ExceptionLevel.Ghost)]
@@ -256,8 +256,8 @@ namespace GhostSharp.Tests.ContentAPI.UnitTests
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetPageBySlug(slug));
 
             Assert.IsNotEmpty(ex.Errors);
-            Assert.AreEqual(ghostErrorMessage, ex.Message);
-            Assert.AreEqual(ghostErrorType, ex.Errors[0].ErrorType);
+            Assert.That(ex.Message.StartsWith(ghostErrorMessage));
+            Assert.AreEqual(ghostErrorType, ex.Errors[0].Type);
         }
 
         [Test]
@@ -273,9 +273,9 @@ namespace GhostSharp.Tests.ContentAPI.UnitTests
         {
             var PageResponse = new
             {
-                Pages = new List<Page>
+                Pages = new List<Post>
                 {
-                    new Page {
+                    new Post {
                         Title = title,
                         Slug = slug,
                         Html = html
@@ -296,7 +296,7 @@ namespace GhostSharp.Tests.ContentAPI.UnitTests
                     {
                         new GhostError {
                             Message = ghostErrorMessage,
-                            ErrorType = ghostErrorType
+                            Type = ghostErrorType
                         }
                     }
             };
@@ -314,7 +314,7 @@ namespace GhostSharp.Tests.ContentAPI.UnitTests
                     {
                         new GhostError {
                             Message = ghostErrorMessage,
-                            ErrorType = ghostErrorType
+                            Type = ghostErrorType
                         }
                     }
             };
