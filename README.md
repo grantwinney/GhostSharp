@@ -1,4 +1,4 @@
-﻿[![Travis](https://img.shields.io/travis/grantwinney/GhostSharp.svg?branch=master)](https://travis-ci.org/grantwinney/GhostSharp)
+﻿[![CI Build](https://github.com/grantwinney/GhostSharp/actions/workflows/dotnet.yml/badge.svg)](https://github.com/grantwinney/GhostSharp/actions/workflows/dotnet.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![NuGet](https://img.shields.io/nuget/v/GhostSharp.svg)](https://www.nuget.org/packages/GhostSharp)
 [![CodeFactor](https://www.codefactor.io/repository/github/grantwinney/ghostsharp/badge)](https://www.codefactor.io/repository/github/grantwinney/ghostsharp)
