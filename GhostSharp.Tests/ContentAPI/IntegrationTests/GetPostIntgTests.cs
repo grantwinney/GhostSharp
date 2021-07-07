@@ -353,16 +353,16 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             Assert.AreEqual("5e90d3eb1318020e53971b5c", post.Id);
         }
 
-        [Test]
-        public void GetPosts_ReturnsExpectedPost_WhenGettingSecondPage()
-        {
-            var auth = new GhostContentAPI(Host, ValidContentApiKey);
+        // Fragile Test
+        //[Test]
+        //public void GetPosts_ReturnsExpectedPost_WhenGettingSecondPage()
+        //{
+        //    var auth = new GhostContentAPI(Host, ValidContentApiKey);
 
-            var post = auth.GetPosts(new PostQueryParams { Page = 2, Limit = 2, Order = new List<Tuple<PostFields, OrderDirection>> { Tuple.Create(PostFields.CreatedAt, OrderDirection.asc) }, Fields = PostFields.Id }).Posts[0];
+        //    var post = auth.GetPosts(new PostQueryParams { Page = 2, Limit = 2, Order = new List<Tuple<PostFields, OrderDirection>> { Tuple.Create(PostFields.CreatedAt, OrderDirection.asc) }, Fields = PostFields.Id }).Posts[0];
 
-            // potentially fragile
-            Assert.AreEqual("5e90d3eb1318020e53971b5e", post.Id);
-        }
+        //    Assert.AreEqual("5e90d3eb1318020e53971b5e", post.Id);
+        //}
 
         [Test]
         public void GetPosts_ReturnsExpectedPosts_WhenApplyingFilter()
