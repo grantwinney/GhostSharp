@@ -1,0 +1,30 @@
+name: .NET
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      env:
+        ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY}}
+        CONTENT_API_KEY: ${{ secrets.CONTENT_API_KEY}}
+        VALID_AUTHOR_1_EMAIL_ADDRESS: ${{ secrets.VALID_AUTHOR_1_EMAIL_ADDRESS}}
+        VALID_AUTHOR_2_EMAIL_ADDRESS: ${{ secrets.VALID_AUTHOR_2_EMAIL_ADDRESS}}
+      run: dotnet test --no-build --verbosity normal
