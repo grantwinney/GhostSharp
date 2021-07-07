@@ -11,7 +11,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
     [TestFixture]
     public class GetPostIntgTests : TestBase
     {
-        private const int MINIMUM_POST_COUNT_THRESHHOLD = 200;
+        private const int MINIMUM_POST_COUNT_THRESHHOLD = 160;
 
         private GhostAPI auth;
 
