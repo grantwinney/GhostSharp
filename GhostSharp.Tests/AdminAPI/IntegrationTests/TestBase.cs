@@ -47,7 +47,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         protected static string ValidTag1Visibility = "public";
         protected static string ValidTag1MetaTitle = "sample meta title";
         protected static string ValidTag1MetaDescription = "sample meta description";
-        protected static int ValidTag1PostCount = 6;
+        protected static int ValidTag1PostCount = 1;
         protected static string ValidTag1Url = "https://grantwinney.com/tag/gs-test/";
 
         protected static string ValidTag2Id = "5e90d3e71318020e53971b04";
