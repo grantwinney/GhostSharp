@@ -22,7 +22,7 @@
   <ItemGroup>
     <PackageReference Include="JWT" Version="8.2.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="RestSharp" Version="106.11.7" />
+    <PackageReference Include="RestSharp" Version="106.12.0" />
   </ItemGroup>
 
   <ItemGroup>
