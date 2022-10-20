@@ -8,7 +8,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
     {
         // The base host URL of your Ghost site, like https://your-blog.com
         protected static string Host = "https://grantwinney.com/";
-        protected static string SiteTitle = "Grant Winney";
+        protected static string SiteTitle = "G.Winney 🖱";
 
         protected static string ValidContentApiKey = Environment.GetEnvironmentVariable("CONTENT_API_KEY");
 

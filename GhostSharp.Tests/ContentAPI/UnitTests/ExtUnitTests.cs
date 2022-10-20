@@ -87,13 +87,5 @@ namespace GhostSharp.Tests.ContentAPI.UnitTests
         {
             Assert.AreEqual(expectedResult, Ext.GetFieldName(input));
         }
-
-        [TestCase("abcdef", new byte[] { 171, 205, 239})]
-        [TestCase("123456", new byte[] { 18, 52, 86})]
-        [TestCase("deadbeef", new byte[] { 222, 173, 190, 239})]
-        public void StringToByteArray_ReturnsCorrectValues(string hex, byte[] expectedByteArray)
-        {
-            Assert.AreEqual(expectedByteArray, Ext.StringToByteArray(hex));
-        }
     }
 }

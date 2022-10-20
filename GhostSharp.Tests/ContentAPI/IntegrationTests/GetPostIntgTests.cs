@@ -410,7 +410,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetPostById(InvalidPostId));
 
             Assert.IsNotEmpty(ex.Errors);
-            Assert.AreEqual("Post not found.", ex.Errors[0].Message);
+            Assert.AreEqual("Resource not found error, cannot read post.", ex.Errors[0].Message);
         }
 
         [TestCase(ExceptionLevel.None)]
@@ -431,7 +431,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetPostBySlug(InvalidPostSlug));
 
             Assert.IsNotEmpty(ex.Errors);
-            Assert.AreEqual("Post not found.", ex.Errors[0].Message);
+            Assert.AreEqual("Resource not found error, cannot read post.", ex.Errors[0].Message);
         }
 
         [TestCase(ExceptionLevel.None)]

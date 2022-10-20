@@ -27,7 +27,7 @@ namespace GhostSharp
         /// <returns>Returns metadata about the theme.</returns>
         public Theme ActivateTheme(string name)
         {
-            var request = new RestRequest("themes/{themename}/activate/", Method.PUT)
+            var request = new RestRequest($"themes/{name}/activate/", Method.PUT)
                 .AddUrlSegment("themename", name);
 
             return Execute<ThemeResponse>(request).Themes[0];

@@ -113,7 +113,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         {
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetAuthorBySlug(ValidAuthorWithNoPublishedPostsSlug));
 
-            Assert.That(ex.Message.StartsWith("Author not found."));
+            Assert.AreEqual("Resource not found error, cannot read author.", ex.Errors[0].Message);
         }
 
         [Test]
@@ -242,7 +242,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetAuthorById(InvalidAuthorId));
 
             Assert.IsNotEmpty(ex.Errors);
-            Assert.AreEqual("Author not found.", ex.Errors[0].Message);
+            Assert.AreEqual("Resource not found error, cannot read author.", ex.Errors[0].Message);
         }
 
         [TestCase(ExceptionLevel.None)]
@@ -263,7 +263,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetAuthorBySlug(InvalidAuthorSlug));
 
             Assert.IsNotEmpty(ex.Errors);
-            Assert.AreEqual("Author not found.", ex.Errors[0].Message);
+            Assert.AreEqual("Resource not found error, cannot read author.", ex.Errors[0].Message);
         }
 
         [TestCase(ExceptionLevel.None)]

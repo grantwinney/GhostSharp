@@ -19,8 +19,8 @@ namespace GhostSharp
         /// </summary>
         /// <param name="host">The Host for which to access the Admin API.</param>
         /// <param name="adminApiKey">Admin API key.</param>
-        public GhostAdminAPI(string host, string adminApiKey, ExceptionLevel exceptionLevel = ExceptionLevel.All)
-            : base(host, adminApiKey, exceptionLevel, "/ghost/api/v3/admin/", APIType.Admin)
+        public GhostAdminAPI(string host, string adminApiKey, ExceptionLevel exceptionLevel = ExceptionLevel.All, string baseUrl = "/ghost/api/v3/admin/")
+            : base(host, adminApiKey, exceptionLevel, baseUrl, APIType.Admin)
         {
             var adminKeyParts = adminApiKey.Split(':');
 
@@ -37,7 +37,7 @@ namespace GhostSharp
             var unixEpochInSeconds = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
 
             var token = new JwtBuilder().WithAlgorithm(new HMACSHA256Algorithm())
-                                        .WithSecret(Ext.StringToByteArray(secret))
+                                        .WithSecret(Convert.FromHexString(secret))
                                         .AddHeader(HeaderName.KeyId, id)
                                         .AddHeader(HeaderName.Type, "JWT")
                                         .AddClaim("exp", unixEpochInSeconds + 300)
@@ -49,7 +49,7 @@ namespace GhostSharp
             {
                 var json = new JwtBuilder()
                     .WithAlgorithm(new HMACSHA256Algorithm())
-                    .WithSecret(Ext.StringToByteArray(secret))
+                    .WithSecret(Convert.FromHexString(secret))
                     .MustVerifySignature()
                     .Decode(token);
             }
@@ -74,8 +74,8 @@ namespace GhostSharp
         /// This is only useful if auth is not required, which is only the /site endpoint.
         /// </summary>
         /// <param name="host">The Host for which to access the Admin API.</param>
-        public GhostAdminAPI(string host, ExceptionLevel exceptionLevel = ExceptionLevel.All)
-            : base(host, exceptionLevel, "/ghost/api/v3/admin/", APIType.Admin)
+        public GhostAdminAPI(string host, ExceptionLevel exceptionLevel = ExceptionLevel.All, string baseUrl = "/ghost/api/v3/content/")
+            : base(host, exceptionLevel, baseUrl, APIType.Admin)
         {
         }
     }

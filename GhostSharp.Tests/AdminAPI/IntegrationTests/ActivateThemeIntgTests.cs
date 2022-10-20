@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System.Threading;
 
 namespace GhostSharp.Tests.AdminAPI.IntegrationTests
 {
@@ -17,14 +16,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         [TearDown]
         public void TearDown()
         {
-            // Activating a new theme seems to trigger a reboot of Ghost, which takes a few seconds to come back up.
-            // The API call here fails if I don't wait a couple seconds at least.
-            Thread.Sleep(5000);
-
             auth.ActivateTheme("symmetric");
-
-            // Wait a few more seconds, otherwise other tests may fail while Ghost is restarting again.
-            Thread.Sleep(5000);
         }
 
         [Test]

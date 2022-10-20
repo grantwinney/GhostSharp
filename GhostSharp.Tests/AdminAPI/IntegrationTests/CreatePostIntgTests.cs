@@ -228,7 +228,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.AreEqual(expectedPost.Title, actualPost.Title);
             Assert.AreEqual(expectedPost.Status, actualPost.Status);
             Assert.AreEqual(actualPost.Title.Replace(' ', '-').ToLower(), actualPost.Slug);
-            Assert.AreEqual("Test Header\nTest Body", actualPost.Excerpt);
+            Assert.AreEqual("Test Header\n\nTest Body", actualPost.Excerpt);
 
             Assert.AreEqual(
                 "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[[\"b\"]],\"sections\":[[1,\"h1\",[[0,[],0,\"Test Header\"]]],[1,\"p\",[[0,[0],1,\"Test Body\"]]]]}",

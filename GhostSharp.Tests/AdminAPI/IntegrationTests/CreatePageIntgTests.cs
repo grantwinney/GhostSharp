@@ -226,7 +226,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.AreEqual(expectedPage.Title, actualPage.Title);
             Assert.AreEqual(expectedPage.Status, actualPage.Status);
             Assert.AreEqual(actualPage.Title.Replace(' ', '-').ToLower(), actualPage.Slug);
-            Assert.AreEqual("Test Header\nTest Body", actualPage.Excerpt);
+            Assert.AreEqual("Test Header\n\nTest Body", actualPage.Excerpt);
 
             Assert.AreEqual(
                 "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[[\"b\"]],\"sections\":[[1,\"h1\",[[0,[],0,\"Test Header\"]]],[1,\"p\",[[0,[0],1,\"Test Body\"]]]]}",

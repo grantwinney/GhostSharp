@@ -372,7 +372,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetPageById(InvalidPageId));
 
             Assert.IsNotEmpty(ex.Errors);
-            Assert.AreEqual("Page not found.", ex.Errors[0].Message);
+            Assert.AreEqual("Resource not found error, cannot read page.", ex.Errors[0].Message);
         }
 
         [TestCase(ExceptionLevel.None)]
@@ -393,7 +393,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetPageBySlug(InvalidPageSlug));
 
             Assert.IsNotEmpty(ex.Errors);
-            Assert.AreEqual("Page not found.", ex.Errors[0].Message);
+            Assert.AreEqual("Resource not found error, cannot read page.", ex.Errors[0].Message);
         }
 
         [TestCase(ExceptionLevel.None)]

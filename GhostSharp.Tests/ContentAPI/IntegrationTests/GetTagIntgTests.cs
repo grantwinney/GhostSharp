@@ -140,7 +140,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         {
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetTagBySlug(ValidTagWithNoPublishedPostsSlug));
 
-            Assert.That(ex.Message.StartsWith("Tag not found."));
+            Assert.That(ex.Message.StartsWith("Resource not found error, cannot read tag."));
         }
 
         [Test]
@@ -270,7 +270,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetTagById(InvalidTagId));
 
             Assert.IsNotEmpty(ex.Errors);
-            Assert.AreEqual("Tag not found.", ex.Errors[0].Message);
+            Assert.AreEqual("Resource not found error, cannot read tag.", ex.Errors[0].Message);
         }
 
         [TestCase(ExceptionLevel.None)]
@@ -291,7 +291,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             var ex = Assert.Throws<GhostSharpException>(() => auth.GetTagBySlug(InvalidTagSlug));
 
             Assert.IsNotEmpty(ex.Errors);
-            Assert.AreEqual("Tag not found.", ex.Errors[0].Message);
+            Assert.AreEqual("Resource not found error, cannot read tag.", ex.Errors[0].Message);
         }
 
         [TestCase(ExceptionLevel.None)]
