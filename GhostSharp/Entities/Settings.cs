@@ -33,6 +33,12 @@ namespace GhostSharp.Entities
         public string Icon { get; set; }
 
         /// <summary>
+        /// Accent color.
+        /// </summary>
+        [JsonProperty("accent_color")]
+        public string AccentColor { get; set; }
+
+        /// <summary>
         /// An optional large background image for your site.
         /// </summary>
         [JsonProperty("cover_image")]
@@ -63,12 +69,6 @@ namespace GhostSharp.Entities
         public string TimeZone { get; set; }
 
         /// <summary>
-        /// Your publication's navigation menu.
-        /// </summary>
-        [JsonProperty("navigation")]
-        public List<Navigation> Navigation { get; set; }
-
-        /// <summary>
         /// Code injected into your publication's header.
         /// </summary>
         [JsonProperty("codeinjection_head")]
@@ -79,5 +79,77 @@ namespace GhostSharp.Entities
         /// </summary>
         [JsonProperty("codeinjection_foot")]
         public string CodeInjectionFoot { get; set; }
+
+        /// <summary>
+        /// Your publication's navigation menu.
+        /// </summary>
+        [JsonProperty("navigation")]
+        public List<Navigation> Navigation { get; set; }
+
+        /// <summary>
+        /// Your publication's navigation menu.
+        /// </summary>
+        [JsonProperty("secondary_navigation")]
+        public List<Navigation> SecondaryNavigation { get; set; }
+
+        /// <summary>
+        /// Meta title.
+        /// </summary>
+        [JsonProperty("meta_title")]
+        public string MetaTitle { get; set; }
+
+        /// <summary>
+        /// Meta description.
+        /// </summary>
+        [JsonProperty("meta_description")]
+        public string MetaDescription { get; set; }
+
+        /// <summary>
+        /// OG image.
+        /// </summary>
+        [JsonProperty("og_image")]
+        public string OgImage { get; set; }
+
+        /// <summary>
+        /// OG title.
+        /// </summary>
+        [JsonProperty("og_title")]
+        public string OgTitle { get; set; }
+
+        /// <summary>
+        /// OG description.
+        /// </summary>
+        [JsonProperty("og_description")]
+        public string OgDescription { get; set; }
+
+        /// <summary>
+        /// Twitter image.
+        /// </summary>
+        [JsonProperty("twitter_image")]
+        public string TwitterImage { get; set; }
+
+        /// <summary>
+        /// Twitter title.
+        /// </summary>
+        [JsonProperty("twitter_title")]
+        public string TwitterTitle { get; set; }
+
+        /// <summary>
+        /// Twitter description.
+        /// </summary>
+        [JsonProperty("twitter_description")]
+        public string TwitterDescription { get; set; }
+
+        /// <summary>
+        /// Support email address. (i.e. noreply@docs.ghost.io)
+        /// </summary>
+        [JsonProperty("members_support_address")]
+        public string MembersSupportAddress { get; set; }
+
+        /// <summary>
+        /// URL. (i.e. https://docs.ghost.io/)
+        /// </summary>
+        [JsonProperty("url")]
+        public string URL { get; set; }
     }
 }

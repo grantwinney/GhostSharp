@@ -53,6 +53,9 @@ Welcome to <a href='https://grantwinney.com/'>Grant Winney</a>
 Running Ghost v2.23
 ```
 
+You can optionally pass in a version number for the API (i.e. 4.0), or omit it to default to the latest ([currently 5.0](https://ghost.org/docs/faq/major-versions-lts/)).
+I'm only able to support one version (due to there only being 24 hours in a day), currently 5.0, but setting that to a lesser value will probably work in some cases too.
+
 ## Versioning
 
 This wrapper is written around the [Content](https://ghost.org/docs/content-api/) and [Admin](https://ghost.org/docs/admin-api/) APIs, currently the latest version. As they update the API, I'll create a tag for the current release, before updating to the newest one.
