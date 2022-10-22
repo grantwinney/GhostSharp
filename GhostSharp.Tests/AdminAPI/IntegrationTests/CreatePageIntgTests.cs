@@ -149,8 +149,8 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.AreEqual(metaDescription, page.MetaDescription);
             Assert.AreEqual(publishedAt.RemoveTicks(), page.PublishedAt.Value);
             Assert.AreEqual(customExcerpt, page.CustomExcerpt);
-            Assert.IsNull(page.CodeInjectionHead);  // Works, but value doesn't get returned
-            Assert.IsNull(page.CodeInjectionFoot);  // Works, but value doesn't get returned
+            Assert.AreEqual(codeInjectionHead, page.CodeInjectionHead);
+            Assert.AreEqual(codeInjectionFoot, page.CodeInjectionFoot);
             Assert.AreEqual(ogImage, page.OgImage);
             Assert.AreEqual(ogTitle, page.OgTitle);
             Assert.AreEqual(ogDescription, page.OgDescription);

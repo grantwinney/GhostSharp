@@ -1,5 +1,4 @@
-﻿using GcmSharp.Serialization;
-using GhostSharp.ContractResolvers;
+﻿using GhostSharp.ContractResolvers;
 using GhostSharp.Entities;
 using GhostSharp.QueryParams;
 using Newtonsoft.Json;
@@ -59,11 +58,11 @@ namespace GhostSharp
                 }
              );
 
-            var request = new RestRequest($"pages/", Method.POST, DataFormat.Json);
+            var request = new RestRequest($"pages/", Method.Post);
             request.AddJsonBody(serializedPage);
 
             // To use HTML as the source for your content instead of mobiledoc, use the source parameter.
-            // Ref: https://ghost.org/docs/api/v3/admin/#source-html
+            // Ref: https://ghost.org/docs/admin-api/#source-html
             if (!string.IsNullOrEmpty(page.Html))
                 request.AddQueryParameter("source", "html");
 
@@ -81,18 +80,18 @@ namespace GhostSharp
             // If an update fails, it might be that someone updated it more recently on site,
             // and you should re-get it and re-apply your changes to it... otherwise you
             // risk unintentionally overwriting later changes on the site.
-            // Ref: https://ghost.org/docs/api/v3/admin/#updating-a-post
+            // Ref: https://ghost.org/docs/admin-api/#updating-a-post
 
             var serializedPage = JsonConvert.SerializeObject(
                new PageRequest { Pages = new List<Post> { updatedPage } },
                new JsonSerializerSettings { ContractResolver = UpdatePageContractResolver.Instance }
             );
 
-            var request = new RestRequest($"pages/{updatedPage.Id}/", Method.PUT, DataFormat.Json);
+            var request = new RestRequest($"pages/{updatedPage.Id}/", Method.Put);
             request.AddJsonBody(serializedPage);
 
             // To use HTML as the source for your content instead of mobiledoc, use the source parameter.
-            // Ref: https://ghost.org/docs/api/v3/admin/#source-html
+            // Ref: https://ghost.org/docs/admin-api/#source-html
             if (!string.IsNullOrEmpty(updatedPage.Html))
                 request.AddQueryParameter("source", "html");
 
@@ -106,7 +105,7 @@ namespace GhostSharp
         /// <returns>True if the delete succeeded; otherwise False</returns>
         public bool DeletePage(string id)
         {
-            var request = new RestRequest($"pages/{id}/", Method.DELETE);
+            var request = new RestRequest($"pages/{id}/", Method.Delete);
 
             return Execute(request);
         }

@@ -11,7 +11,7 @@ namespace GhostSharp
         /// <returns>Returns metadata about the theme.</returns>
         public Theme UploadTheme(ThemeRequest theme)
         {
-            var request = new RestRequest("themes/upload/", Method.POST);
+            var request = new RestRequest("themes/upload/", Method.Post);
 
             if (theme.FilePath != null)
                 request.AddFile("file", theme.FilePath, "application/zip");
@@ -27,7 +27,7 @@ namespace GhostSharp
         /// <returns>Returns metadata about the theme.</returns>
         public Theme ActivateTheme(string name)
         {
-            var request = new RestRequest($"themes/{name}/activate/", Method.PUT)
+            var request = new RestRequest($"themes/{name}/activate/", Method.Put)
                 .AddUrlSegment("themename", name);
 
             return Execute<ThemeResponse>(request).Themes[0];

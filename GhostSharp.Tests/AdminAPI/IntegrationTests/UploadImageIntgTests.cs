@@ -34,7 +34,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             var actualImage = auth.UploadImage(expectedPost);
 
             Assert.AreEqual($"{Host}content/images/{DateTime.Now:yyyy/MM}/{randomImageName}.jpeg", actualImage.Url);
-            Assert.IsNull(actualImage.Reference);  // why isn't this working?
+            Assert.AreEqual(expectedPost.Reference, actualImage.Reference);  // why isn't this working?
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
 
             var imageFilePattern = Regex.Escape($"{Host}content/images/{DateTime.Now:yyyy/MM}/{Path.GetFileNameWithoutExtension(imageFilePath)}") + @"-?\d*" + Regex.Escape(".jpeg");
             Assert.IsTrue(Regex.IsMatch(actualImage.Url, imageFilePattern));
-            Assert.IsNull(actualImage.Reference);  // Why isn't this working? https://ghost.org/docs/api/v3/admin/#the-image-object
+            Assert.AreEqual(expectedPost.Reference, actualImage.Reference);  // why isn't this working?
         }
     }
 }

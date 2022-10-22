@@ -11,7 +11,7 @@ namespace GhostSharp
         /// <returns>Basic information about a site. (i.e. title, version, URL)</returns>
         public Site GetSite()
         {
-            var request = new RestRequest("site/", Method.GET);
+            var request = new RestRequest("site/", Method.Get);
 
             return Execute<SiteResponse>(request).Site;
         }

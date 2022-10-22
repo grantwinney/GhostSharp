@@ -3,6 +3,7 @@ using GhostSharp.Entities;
 using GhostSharp.Enums;
 using Newtonsoft.Json;
 using RestSharp;
+using RestSharp.Serializers.NewtonsoftJson;
 
 namespace GhostSharp
 {
@@ -16,18 +17,21 @@ namespace GhostSharp
     {
         internal string key;
         private readonly APIType apiType;
-        public IRestClient Client { internal get; set; }
+        private readonly string minimumVersion;
+        public RestClient Client { internal get; set; }
 
-        internal GhostAPI(string host, string key, ExceptionLevel exceptionLevel, string baseUrl, APIType apiType)
-            : this(host, exceptionLevel, baseUrl, apiType)
+        internal GhostAPI(string host, string key, ExceptionLevel exceptionLevel, string baseUrl, APIType apiType, string minimumVersion)
+            : this(host, exceptionLevel, baseUrl, apiType, minimumVersion)
         {
             this.key = key;
         }
 
-        internal GhostAPI(string host, ExceptionLevel exceptionLevel, string baseUrl, APIType apiType)
+        internal GhostAPI(string host, ExceptionLevel exceptionLevel, string baseUrl, APIType apiType, string minimumVersion)
         {
             this.apiType = apiType;
-            Client = new RestClient { BaseUrl = new Uri(new Uri(host), baseUrl) };
+            this.minimumVersion = minimumVersion;
+            Client = new RestClient(host + baseUrl);
+            Client.UseNewtonsoftJson();
             ExceptionLevel = exceptionLevel;
         }
 
@@ -49,10 +53,12 @@ namespace GhostSharp
         /// <returns>The API response.</returns>
         /// <param name="request">A RestRequest representing the resource being requested.</param>
         /// <typeparam name="T">The type of object being requested</typeparam>
-        internal T Execute<T>(IRestRequest request) where T : new()
+        internal T Execute<T>(RestRequest request) where T : new()
         {
             if (key != null)
                 AuthorizeRequest(request);
+
+            request.AddOrUpdateHeader("Accept-Version", $@"v{minimumVersion ?? "5.0"}");
 
             try
             {
@@ -82,7 +88,7 @@ namespace GhostSharp
         /// </summary>
         /// <returns>The API response.</returns>
         /// <param name="request">A RestRequest representing the resource being requested.</param>
-        internal bool Execute(IRestRequest request)
+        internal bool Execute(RestRequest request)
         {
             AuthorizeRequest(request);
 
@@ -114,7 +120,7 @@ namespace GhostSharp
         /// create and throw a GhostSharpException with the details.
         /// </summary>
         /// <param name="response">The API response</param>
-        private void TestResponseForErrors(IRestResponse response, IRestRequest request)
+        private void TestResponseForErrors(RestResponse response, RestRequest request)
         {
             var apiFailure = JsonConvert.DeserializeObject<GhostApiFailure>(response.Content);
             if (apiFailure != null && apiFailure.Errors != null)
@@ -136,7 +142,7 @@ namespace GhostSharp
         /// Add the key as a query parameter or authorization token as a header, depending on the API being used.
         /// </summary>
         /// <param name="request">The request being made</param>
-        private void AuthorizeRequest(IRestRequest request)
+        private void AuthorizeRequest(RestRequest request)
         {
             switch (apiType)
             {

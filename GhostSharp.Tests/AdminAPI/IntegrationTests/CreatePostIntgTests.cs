@@ -150,8 +150,8 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.AreEqual(metaDescription, post.MetaDescription);
             Assert.AreEqual(publishedAt.ToLongTimeString(), post.PublishedAt.Value.ToLongTimeString());
             Assert.AreEqual(customExcerpt, post.CustomExcerpt);
-            Assert.IsNull(post.CodeInjectionHead);  // Works, but value doesn't get returned
-            Assert.IsNull(post.CodeInjectionFoot);  // Works, but value doesn't get returned
+            Assert.AreEqual(codeInjectionHead, post.CodeInjectionHead);
+            Assert.AreEqual(codeInjectionFoot, post.CodeInjectionFoot);
             Assert.AreEqual(ogImage, post.OgImage);
             Assert.AreEqual(ogTitle, post.OgTitle);
             Assert.AreEqual(ogDescription, post.OgDescription);

@@ -10,21 +10,21 @@ namespace GhostSharp
     {
         public PostResponse GetPosts(PostQueryParams queryParams = null)
         {
-            var request = new RestRequest("posts/", Method.GET);
+            var request = new RestRequest("posts/", Method.Get);
             ApplyPostQueryParams(request, queryParams);
             return Execute<PostResponse>(request);
         }
 
         public Post GetPostById(string id, PostQueryParams queryParams = null)
         {
-            var request = new RestRequest($"posts/{id}/", Method.GET);
+            var request = new RestRequest($"posts/{id}/", Method.Get);
             ApplyPostQueryParams(request, queryParams);
             return Execute<PostResponse>(request)?.Posts?.Single();
         }
 
         public Post GetPostBySlug(string slug, PostQueryParams queryParams = null)
         {
-            var request = new RestRequest($"posts/slug/{slug}/", Method.GET);
+            var request = new RestRequest($"posts/slug/{slug}/", Method.Get);
             ApplyPostQueryParams(request, queryParams);
             return Execute<PostResponse>(request)?.Posts?.Single();
         }

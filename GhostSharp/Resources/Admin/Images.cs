@@ -12,7 +12,7 @@ namespace GhostSharp
         /// <returns>Returns location from which the image can be fetched, and reference string if any.</returns>
         public Image UploadImage(ImageRequest image)
         {
-            var request = new RestRequest("images/upload/", Method.POST);
+            var request = new RestRequest("images/upload/", Method.Post);
 
             if (image.FilePath != null)
                 request.AddFile("file", image.FilePath, GetMimeType(image.ImageType));

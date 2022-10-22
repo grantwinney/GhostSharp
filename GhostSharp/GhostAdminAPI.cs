@@ -19,8 +19,8 @@ namespace GhostSharp
         /// </summary>
         /// <param name="host">The Host for which to access the Admin API.</param>
         /// <param name="adminApiKey">Admin API key.</param>
-        public GhostAdminAPI(string host, string adminApiKey, ExceptionLevel exceptionLevel = ExceptionLevel.All, string baseUrl = "/ghost/api/v3/admin/")
-            : base(host, adminApiKey, exceptionLevel, baseUrl, APIType.Admin)
+        public GhostAdminAPI(string host, string adminApiKey, ExceptionLevel exceptionLevel = ExceptionLevel.All, string baseUrl = "/ghost/api/admin/", string minimumVersion = null)
+            : base(host, adminApiKey, exceptionLevel, baseUrl, APIType.Admin, minimumVersion)
         {
             var adminKeyParts = adminApiKey.Split(':');
 
@@ -42,7 +42,7 @@ namespace GhostSharp
                                         .AddHeader(HeaderName.Type, "JWT")
                                         .AddClaim("exp", unixEpochInSeconds + 300)
                                         .AddClaim("iat", unixEpochInSeconds)
-                                        .AddClaim("aud", "/v3/admin/")
+                                        .AddClaim("aud", "/admin/")
                                         .Encode();
 
             try
@@ -74,8 +74,8 @@ namespace GhostSharp
         /// This is only useful if auth is not required, which is only the /site endpoint.
         /// </summary>
         /// <param name="host">The Host for which to access the Admin API.</param>
-        public GhostAdminAPI(string host, ExceptionLevel exceptionLevel = ExceptionLevel.All, string baseUrl = "/ghost/api/v3/content/")
-            : base(host, exceptionLevel, baseUrl, APIType.Admin)
+        public GhostAdminAPI(string host, ExceptionLevel exceptionLevel = ExceptionLevel.All, string baseUrl = "/ghost/api/content/", string minimumVersion = null)
+            : base(host, exceptionLevel, baseUrl, APIType.Admin, minimumVersion)
         {
         }
     }

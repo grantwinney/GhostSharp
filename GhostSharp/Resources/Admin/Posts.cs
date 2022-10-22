@@ -1,5 +1,4 @@
-﻿using GcmSharp.Serialization;
-using GhostSharp.ContractResolvers;
+﻿using GhostSharp.ContractResolvers;
 using GhostSharp.Entities;
 using GhostSharp.QueryParams;
 using Newtonsoft.Json;
@@ -50,14 +49,11 @@ namespace GhostSharp
         /// <returns>Returns the created post</returns>
         public Post CreatePost(Post post)
         {
-            var request = new RestRequest($"posts/", Method.POST, DataFormat.Json)
-            {
-                JsonSerializer = NewtonsoftJsonSerializer.Default
-            };
+            var request = new RestRequest($"posts/", Method.Post);
             request.AddJsonBody(new PostRequest { Posts = new List<Post> { post } });
 
             // To use HTML as the source for your content instead of mobiledoc, use the source parameter.
-            // Ref: https://ghost.org/docs/api/v3/admin/#source-html
+            // Ref: https://ghost.org/docs/admin-api/#source-html
             if (!string.IsNullOrEmpty(post.Html))
                 request.AddQueryParameter("source", "html");
 
@@ -75,18 +71,18 @@ namespace GhostSharp
             // If an update fails, it might be that someone updated it more recently on site,
             // and you should re-get it and re-apply your changes to it... otherwise you
             // risk unintentionally overwriting later changes on the site.
-            // Ref: https://ghost.org/docs/api/v3/admin/#updating-a-post
+            // Ref: https://ghost.org/docs/admin-api/#updating-a-post
 
             var serializedPost = JsonConvert.SerializeObject(
                new PostRequest { Posts = new List<Post> { updatedPost } },
                new JsonSerializerSettings { ContractResolver = UpdatePostContractResolver.Instance }
             );
 
-            var request = new RestRequest($"posts/{updatedPost.Id}/", Method.PUT, DataFormat.Json);
+            var request = new RestRequest($"posts/{updatedPost.Id}/", Method.Put);
             request.AddJsonBody(serializedPost);
 
             // To use HTML as the source for your content instead of mobiledoc, use the source parameter.
-            // Ref: https://ghost.org/docs/api/v3/admin/#source-html
+            // Ref: https://ghost.org/docs/admin-api/#source-html
             if (!string.IsNullOrEmpty(updatedPost.Html))
                 request.AddQueryParameter("source", "html");
 
@@ -100,7 +96,7 @@ namespace GhostSharp
         /// <returns>True if the delete succeeded; otherwise False</returns>
         public bool DeletePost(string id)
         {
-            var request = new RestRequest($"posts/{id}/", Method.DELETE);
+            var request = new RestRequest($"posts/{id}/", Method.Delete);
 
             return Execute(request);
         }

@@ -10,21 +10,21 @@ namespace GhostSharp
     {
         public TagResponse GetTags(TagQueryParams queryParams = null)
         {
-            var request = new RestRequest("tags/", Method.GET);
+            var request = new RestRequest("tags/", Method.Get);
             ApplyTagQueryParams(request, queryParams);
             return Execute<TagResponse>(request);
         }
 
         public Tag GetTagById(string id, TagQueryParams queryParams = null)
         {
-            var request = new RestRequest($"tags/{id}/", Method.GET);
+            var request = new RestRequest($"tags/{id}/", Method.Get);
             ApplyTagQueryParams(request, queryParams);
             return Execute<TagResponse>(request)?.Tags?.Single();
         }
 
         public Tag GetTagBySlug(string slug, TagQueryParams queryParams = null)
         {
-            var request = new RestRequest($"tags/slug/{slug}/", Method.GET);
+            var request = new RestRequest($"tags/slug/{slug}/", Method.Get);
             ApplyTagQueryParams(request, queryParams);
             return Execute<TagResponse>(request)?.Tags?.Single();
         }
