@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace GhostSharp.Entities
 {
@@ -11,7 +12,7 @@ namespace GhostSharp.Entities
         /// Represents your publication's tiers.
         /// </summary>
         [JsonProperty("tiers")]
-        public Tiers Tiers { get; set; }
+        public List<Tier> Tiers { get; set; }
 
         /// <summary>
         /// Meta data regarding the response.

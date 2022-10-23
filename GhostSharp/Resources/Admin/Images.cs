@@ -25,7 +25,7 @@ namespace GhostSharp
             return Execute<ImageResponse>(request).Images[0];
         }
 
-        private string GetMimeType(ImageType imageType)
+        private static string GetMimeType(ImageType imageType)
         {
             switch (imageType)
             {

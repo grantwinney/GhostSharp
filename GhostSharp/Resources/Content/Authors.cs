@@ -52,7 +52,7 @@ namespace GhostSharp
         /// </summary>
         /// <param name="request">A user REST request.</param>
         /// <param name="queryParams">Query parameters.</param>
-        void ApplyAuthorQueryParams(RestRequest request, AuthorQueryParams queryParams)
+        private static void ApplyAuthorQueryParams(RestRequest request, AuthorQueryParams queryParams)
         {
             if (queryParams != null)
             {

@@ -1,13 +1,14 @@
 ﻿using GhostSharp.Attributes;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace GhostSharp.Entities
 {
     /// <summary>
     /// Represents your publication's tiers.
     /// </summary>
-    public class Tiers
+    public class Tier
     {
         /// <summary>
         /// The unique ID of the tier.
@@ -71,16 +72,39 @@ namespace GhostSharp.Entities
         public string StripePrices { get; set; }
 
         /// <summary>
+        /// Monthly price.
+        /// </summary>
+        [JsonProperty("monthly_price")]
+        public decimal? MonthlyPrice { get; set; }
+
+        /// <summary>
+        /// Yearly price.
+        /// </summary>
+        [JsonProperty("yearly_price")]
+        public decimal? YearlyPrice { get; set; }
+
+        /// <summary>
+        /// Currency of prices.
+        /// </summary>
+        [JsonProperty("currency")]
+        public string Currency { get; set; }
+
+        /// <summary>
         /// Benefits of the tier.
         /// </summary>
         [JsonProperty("benefits")]
-        public string Benefits { get; set; }
+        public List<string> Benefits { get; set; }
+
+        /// <summary>
+        /// Trial days.
+        /// </summary>
+        [JsonProperty("trial_days")]
+        public int TrialDays { get; set; }
 
         /// <summary>
         /// Visibility of the tier. (i.e. public)
         /// </summary>
         [JsonProperty("visibility")]
         public string Visibility { get; set; }
-
     }
 }

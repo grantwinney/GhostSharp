@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GhostSharp.Entities;
-using GhostSharp.Enums;
 using GhostSharp.QueryParams;
 using RestSharp;
 
@@ -21,7 +20,7 @@ namespace GhostSharp
         /// </summary>
         /// <param name="request">A post REST request.</param>
         /// <param name="queryParams">Query parameters.</param>
-        private void ApplyTierQueryParams(RestRequest request, TierQueryParams queryParams)
+        private static void ApplyTierQueryParams(RestRequest request, TierQueryParams queryParams)
         {
             if (queryParams != null)
             {
