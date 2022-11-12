@@ -18,8 +18,8 @@ namespace GhostSharp.ContractResolvers
             jsonProp.ShouldSerialize =
                 instance =>
                 {
-                    return (property.GetSetMethod()?.IsPublic == true && property.GetCustomAttribute<PostOnly>() == null)
-                            || property.GetCustomAttribute<RequiredForUpdateAttribute>() != null;
+                    return (property.GetSetMethod()?.IsPublic == true)
+                        || property.GetCustomAttribute<RequiredForUpdateAttribute>() != null;
                 };
 
             return jsonProp;
