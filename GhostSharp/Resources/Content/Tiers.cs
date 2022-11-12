@@ -10,7 +10,7 @@ namespace GhostSharp
         /// code injected into the header or footer (if any), etc.
         /// </summary>
         /// <returns>The blog settings.</returns>
-        public new TiersResponse GetTiers(TierQueryParams queryParams = null)
+        public new TierResponse GetTiers(TierQueryParams queryParams = null)
         {
             return base.GetTiers(queryParams);
         }

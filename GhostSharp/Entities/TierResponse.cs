@@ -6,7 +6,7 @@ namespace GhostSharp.Entities
     /// <summary>
     /// Response representing tiers and any meta data
     /// </summary>
-    public class TiersResponse
+    public class TierResponse
     {
         /// <summary>
         /// Represents your publication's tiers.

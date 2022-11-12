@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using GhostSharp.Entities;
 using GhostSharp.Enums;
 using Newtonsoft.Json;
@@ -96,7 +97,7 @@ namespace GhostSharp
             {
                 var response = Client.Execute(request);
                 TestResponseForErrors(response, request);
-                return response.StatusCode == System.Net.HttpStatusCode.NoContent;  // vs NotFound
+                return response.StatusCode == HttpStatusCode.NoContent;
             }
             catch (GhostSharpException)
             {

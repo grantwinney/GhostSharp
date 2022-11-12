@@ -5,9 +5,9 @@ using System.Reflection;
 
 namespace GhostSharp.ContractResolvers
 {
-    public class UpdatePostContractResolver : DefaultContractResolver
+    public class UpdateOfferContractResolver : DefaultContractResolver
     {
-        public static readonly UpdatePostContractResolver Instance = new UpdatePostContractResolver();
+        public static readonly UpdateOfferContractResolver Instance = new UpdateOfferContractResolver();
 
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
@@ -18,9 +18,8 @@ namespace GhostSharp.ContractResolvers
             jsonProp.ShouldSerialize =
                 instance =>
                 {
-                    // Property must have a public setter or a RequiredForUpdate attribute
                     return property.GetSetMethod()?.IsPublic == true
-                        || property.GetCustomAttribute<RequiredForUpdateAttribute>() != null;
+                        && property.GetCustomAttribute<Updateable>() != null;
                 };
 
             return jsonProp;

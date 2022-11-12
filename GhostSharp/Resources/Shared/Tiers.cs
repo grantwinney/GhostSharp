@@ -8,11 +8,16 @@ namespace GhostSharp
 {
     public partial class GhostAPI
     {
-        public TiersResponse GetTiers(TierQueryParams queryParams = null)
+        /// <summary>
+        /// Get all tiers
+        /// </summary>
+        /// <returns>Returns all available tiers</returns>
+        /// <seealso cref="https://ghost.org/docs/content-api/#usage"/>
+        public TierResponse GetTiers(TierQueryParams queryParams = null)
         {
             var request = new RestRequest("tiers/", Method.Get);
             ApplyTierQueryParams(request, queryParams);
-            return Execute<TiersResponse>(request);
+            return Execute<TierResponse>(request);
         }
 
         /// <summary>

@@ -5,22 +5,23 @@ using System.Reflection;
 
 namespace GhostSharp.ContractResolvers
 {
-    public class UpdatePostContractResolver : DefaultContractResolver
+    public class UpdateTierContractResolver : DefaultContractResolver
     {
-        public static readonly UpdatePostContractResolver Instance = new UpdatePostContractResolver();
+        public static readonly UpdateTierContractResolver Instance = new UpdateTierContractResolver();
 
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
             JsonProperty jsonProp = base.CreateProperty(member, memberSerialization);
 
-            var property = jsonProp.DeclaringType.GetProperty(jsonProp.UnderlyingName);
+            var setterMethod = jsonProp.DeclaringType.GetProperty(jsonProp.UnderlyingName).GetSetMethod();
 
             jsonProp.ShouldSerialize =
                 instance =>
                 {
                     // Property must have a public setter or a RequiredForUpdate attribute
-                    return property.GetSetMethod()?.IsPublic == true
-                        || property.GetCustomAttribute<RequiredForUpdateAttribute>() != null;
+                    return setterMethod?.IsPublic == true
+                           || jsonProp.DeclaringType.GetProperty(jsonProp.UnderlyingName)
+                                      .GetCustomAttribute<RequiredForUpdateAttribute>() != null;
                 };
 
             return jsonProp;

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace GhostSharp.Entities
 {
     /// <summary>
-    /// Represents your publication's tiers.
+    /// Represents a tier.
     /// </summary>
     public class Tier
     {
@@ -29,7 +29,7 @@ namespace GhostSharp.Entities
         public string Description { get; set; }
 
         /// <summary>
-        /// The slug for the tier. (i.e. free or gold)
+        /// The slug for the tier. (i.e. free, gold)
         /// </summary>
         [JsonProperty("slug")]
         public string Slug { get; set; }
@@ -41,7 +41,7 @@ namespace GhostSharp.Entities
         public bool Active { get; set; }
 
         /// <summary>
-        /// The type of tier. (i.e. free or paid)
+        /// The type of tier. (i.e. free, paid)
         /// </summary>
         [JsonProperty("type")]
         public string Type { get; set; }
@@ -72,16 +72,16 @@ namespace GhostSharp.Entities
         public string StripePrices { get; set; }
 
         /// <summary>
-        /// Monthly price.
+        /// Monthly price. (note: 1000 = $10.00)
         /// </summary>
         [JsonProperty("monthly_price")]
-        public decimal? MonthlyPrice { get; set; }
+        public int? MonthlyPrice { get; set; }
 
         /// <summary>
-        /// Yearly price.
+        /// Yearly price. (note: 12000 = $120.00)
         /// </summary>
         [JsonProperty("yearly_price")]
-        public decimal? YearlyPrice { get; set; }
+        public int? YearlyPrice { get; set; }
 
         /// <summary>
         /// Currency of prices.
@@ -102,7 +102,7 @@ namespace GhostSharp.Entities
         public int TrialDays { get; set; }
 
         /// <summary>
-        /// Visibility of the tier. (i.e. public)
+        /// Visibility of the tier. (i.e. public, none)
         /// </summary>
         [JsonProperty("visibility")]
         public string Visibility { get; set; }

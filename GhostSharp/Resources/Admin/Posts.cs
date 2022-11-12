@@ -49,7 +49,7 @@ namespace GhostSharp
         /// <returns>Returns the created post</returns>
         public Post CreatePost(Post post)
         {
-            var request = new RestRequest($"posts/", Method.Post);
+            var request = new RestRequest("posts/", Method.Post);
             request.AddJsonBody(new PostRequest { Posts = new List<Post> { post } });
 
             // To use HTML as the source for your content instead of mobiledoc, use the source parameter.

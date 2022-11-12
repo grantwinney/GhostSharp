@@ -50,10 +50,10 @@ namespace GhostSharp
                 if (queryParams.NoLimit)
                     request.AddQueryParameter("limit", "all");
                 else if (queryParams.Limit > 0)
-                    request.AddQueryParameter("limit", queryParams.Limit.ToString());
+                    request.AddQueryParameter("limit", queryParams.Limit);
 
                 if (queryParams.Page > 0)
-                    request.AddQueryParameter("page", queryParams.Page.ToString());
+                    request.AddQueryParameter("page", queryParams.Page);
 
                 if (queryParams.Order?.Any() == true)
                     request.AddQueryParameter("order", Ext.GetOrderQueryString(queryParams.Order));

@@ -30,6 +30,8 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.AreEqual(ValidPost1Slug, post.Slug);
             Assert.AreEqual(ValidPost1Title, post.Title);
             Assert.AreEqual(ValidPost1Url, post.Url);
+            Assert.AreEqual(ValidPost1CodeInjectionHeader, post.CodeInjectionHead);
+            Assert.AreEqual(ValidPost1CodeInjectionFooter, post.CodeInjectionFoot);
 
             Assert.IsNotNull(post.Uuid);
             Assert.IsNotNull(post.MobileDoc);
@@ -52,8 +54,6 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.AreEqual(3, post.Tags.Count);
 
             Assert.IsNull(post.MetaTitle);
-            Assert.IsNull(post.CodeInjectionHead);
-            Assert.IsNull(post.CodeInjectionFoot);
             Assert.IsNull(post.OgImage);
             Assert.IsNull(post.OgTitle);
             Assert.IsNull(post.TwitterImage);
@@ -143,6 +143,8 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.AreEqual(ValidPost1Slug, post.Slug);
             Assert.AreEqual(ValidPost1Title, post.Title);
             Assert.AreEqual(ValidPost1Url, post.Url);
+            Assert.AreEqual(ValidPost1CodeInjectionHeader, post.CodeInjectionHead);
+            Assert.AreEqual(ValidPost1CodeInjectionFooter, post.CodeInjectionFoot);
 
             Assert.IsNotNull(post.Uuid);
             Assert.IsNotNull(post.MobileDoc);
@@ -165,8 +167,6 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.AreEqual(3, post.Tags.Count);
 
             Assert.IsNull(post.MetaTitle);
-            Assert.IsNull(post.CodeInjectionHead);
-            Assert.IsNull(post.CodeInjectionFoot);
             Assert.IsNull(post.OgImage);
             Assert.IsNull(post.OgTitle);
             Assert.IsNull(post.TwitterImage);

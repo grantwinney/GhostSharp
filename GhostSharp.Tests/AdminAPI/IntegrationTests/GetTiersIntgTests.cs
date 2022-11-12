@@ -2,27 +2,27 @@ using GhostSharp.QueryParams;
 using NUnit.Framework;
 using System.Linq;
 
-namespace GhostSharp.Tests.ContentAPI.IntegrationTests
+namespace GhostSharp.Tests.AdminAPI.IntegrationTests
 {
     [TestFixture]
     public class GetTiersIntgTests : TestBase
     {
-        private GhostAPI auth;
+        private GhostAdminAPI auth;
 
         [SetUp]
         public void SetUp()
         {
-            auth = new GhostContentAPI(Host, ValidContentApiKey);
+            auth = new GhostAdminAPI(Host, ValidAdminApiKey);
         }
 
         [Test]
         public void GetTiers_ReturnsTiers()
         {
-            var tiersResponse = auth.GetTiers();
+            var tiers = auth.GetTiers();
 
-            Assert.AreEqual(2, tiersResponse.Tiers.Where(x => x.Active).Count());
+            Assert.AreEqual(2, tiers.Tiers.Count);
 
-            var freeTier = tiersResponse.Tiers.Single(x => x.Type == "free");
+            var freeTier = tiers.Tiers.Single(x => x.Type == "free");
 
             Assert.AreEqual("Free", freeTier.Name);
             Assert.True(freeTier.Active);
@@ -41,7 +41,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             Assert.IsNull(freeTier.YearlyPrice);
             Assert.IsNull(freeTier.Currency);
 
-            var paidTier = tiersResponse.Tiers.Single(x => x.Type == "paid");
+            var paidTier = tiers.Tiers.Single(x => x.Type == "paid");
 
             Assert.AreEqual("Ghost Subscription", paidTier.Name);
             Assert.True(paidTier.Active);
@@ -61,16 +61,16 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         [Test]
         public void GetTiersWithIncludes_ReturnsTiersWithExtraData()
         {
-            var tiers = auth.GetTiers(new TierQueryParams
+            var tiersResponse = auth.GetTiers(new TierQueryParams
             {
                 IncludeBenefits = true,
                 IncludeMonthlyPrice = true,
                 IncludeYearlyPrice = true
             });
 
-            Assert.AreEqual(2, tiers.Tiers.Count);
+            Assert.AreEqual(2, tiersResponse.Tiers.Where(x => x.Active).Count());
 
-            var freeTier = tiers.Tiers.Single(x => x.Type == "free");
+            var freeTier = tiersResponse.Tiers.Single(x => x.Type == "free");
 
             Assert.AreEqual("Free", freeTier.Name);
             Assert.True(freeTier.Active);
