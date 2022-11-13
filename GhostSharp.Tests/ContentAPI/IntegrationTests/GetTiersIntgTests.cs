@@ -20,7 +20,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
         {
             var tiersResponse = auth.GetTiers();
 
-            Assert.AreEqual(2, tiersResponse.Tiers.Where(x => x.Active).Count());
+            Assert.GreaterOrEqual(tiersResponse.Tiers.Where(x => x.Active).Count(), 2);
 
             var freeTier = tiersResponse.Tiers.Single(x => x.Type == "free");
 
