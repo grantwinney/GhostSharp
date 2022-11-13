@@ -41,7 +41,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             Assert.IsNull(freeTier.YearlyPrice);
             Assert.IsNull(freeTier.Currency);
 
-            var paidTier = tiersResponse.Tiers.Single(x => x.Type == "paid");
+            var paidTier = tiersResponse.Tiers.Single(x => x.Name == "Ghost Subscription");
 
             Assert.AreEqual("Ghost Subscription", paidTier.Name);
             Assert.True(paidTier.Active);
@@ -53,9 +53,9 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
             Assert.AreEqual(0, paidTier.TrialDays);
             
             Assert.IsEmpty(paidTier.Benefits);
-            Assert.IsNull(paidTier.MonthlyPrice);
-            Assert.IsNull(paidTier.YearlyPrice);
-            Assert.IsNull(paidTier.Currency);
+            Assert.AreEqual(500, paidTier.MonthlyPrice); // $5
+            Assert.AreEqual(5000, paidTier.YearlyPrice); // $50
+            Assert.AreEqual("USD", paidTier.Currency);
         }
 
         [Test]

@@ -59,7 +59,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         {
             var newsletter = new Newsletter
             {
-                Name = "integration test newsletter",
+                Name = $"integration test newsletter ({Guid.NewGuid()})",
                 Description = "integration test newsletter description",
                 SenderReplyTo = "newsletter",
                 Status = "archived",

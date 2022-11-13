@@ -18,11 +18,11 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
         [Test]
         public void GetTiers_ReturnsTiers()
         {
-            var tiers = auth.GetTiers();
+            var tiersResponse = auth.GetTiers();
 
-            Assert.AreEqual(2, tiers.Tiers.Count);
+            Assert.GreaterOrEqual(tiersResponse.Tiers.Where(x => x.Active).Count(), 2);
 
-            var freeTier = tiers.Tiers.Single(x => x.Type == "free");
+            var freeTier = tiersResponse.Tiers.Single(x => x.Type == "free");
 
             Assert.AreEqual("Free", freeTier.Name);
             Assert.True(freeTier.Active);
@@ -41,7 +41,7 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.IsNull(freeTier.YearlyPrice);
             Assert.IsNull(freeTier.Currency);
 
-            var paidTier = tiers.Tiers.Single(x => x.Type == "paid");
+            var paidTier = tiersResponse.Tiers.Single(x => x.Name == "Ghost Subscription");
 
             Assert.AreEqual("Ghost Subscription", paidTier.Name);
             Assert.True(paidTier.Active);
@@ -51,11 +51,11 @@ namespace GhostSharp.Tests.AdminAPI.IntegrationTests
             Assert.IsNotNull(paidTier.Visibility);
             Assert.IsNotNull(paidTier.WelcomePageURL);
             Assert.AreEqual(0, paidTier.TrialDays);
-            
+
             Assert.IsEmpty(paidTier.Benefits);
-            Assert.IsNull(paidTier.MonthlyPrice);
-            Assert.IsNull(paidTier.YearlyPrice);
-            Assert.IsNull(paidTier.Currency);
+            Assert.AreEqual(500, paidTier.MonthlyPrice); // $5
+            Assert.AreEqual(5000, paidTier.YearlyPrice); // $50
+            Assert.AreEqual("USD", paidTier.Currency);
         }
 
         [Test]
