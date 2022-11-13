@@ -8,7 +8,7 @@
 
 # GhostSharp
 
-This is a [wrapper](https://grantwinney.com/what-is-an-api-wrapper-and-how-do-i-write-one/) around the [Ghost API v3.0](https://ghost.org/docs/content-api/), a RESTful JSON API built into the core of the [Ghost blogging platform](https://ghost.org/). Check out the [official Ghost API docs](https://ghost.org/docs/api/) and read about [my own experience using them](https://grantwinney.com/what-is-the-ghost-api/).
+This is a [wrapper](https://grantwinney.com/what-is-an-api-wrapper-and-how-do-i-write-one/) around v5.0 of the [Content](https://ghost.org/docs/content-api/) and [Admin](https://ghost.org/docs/admin-api/) APIs. They are RESTful JSON APIs built into the core of the [Ghost blogging platform](https://ghost.org/). Check out the [official Ghost API docs](https://ghost.org/docs/api/) and read [a little about my experience using them](https://grantwinney.com/what-is-the-ghost-api/).
 
 ## Usage
 
@@ -54,11 +54,7 @@ Running Ghost v2.23
 ```
 
 You can optionally pass in a version number for the API (i.e. 4.0), or omit it to default to the latest ([currently 5.0](https://ghost.org/docs/faq/major-versions-lts/)).
-I'm only able to support one version (due to there only being 24 hours in a day), currently 5.0, but setting that to a lesser value will probably work in some cases too.
-
-## Versioning
-
-This wrapper is written around the [Content](https://ghost.org/docs/content-api/) and [Admin](https://ghost.org/docs/admin-api/) APIs, currently the latest version. As they update the API, I'll create a tag for the current release, before updating to the newest one.
+I'm only able to support one version (due to there only being 24 hours in a day), but setting that to a lesser value may work in some cases too.
 
 ## Running the Tests
 
@@ -76,7 +72,7 @@ Feel free to [open a PR](https://github.com/grantwinney/GhostSharp/compare) if y
 
 ## Release Notes
 
-* 2.0.0 - ⭐ Upgrade to .NET 6. Upgrade to API v5.0. Implement most of the 'stable' endpoints.
+* 2.0.0 - ⭐ Upgraded to .NET 6 and API v5. Implemented the stable endpoints, except for members.
 * 1.0.9 - 🐛 Noticed that pages aren't being created; other refactoring.<br>***Breaking change:** Eliminated Page in favor of a single Post object again, for simplicity. The split wasn't necessary as a Page is just a Post that doesn't end up in feeds. Also, a few fields in a Post don't play nicely when creating pages, but I figured out a different way to omit those.*
 * 1.0.8 - 🐛 Several fields marked as updateable that aren't. (thx for the heads up @unnanego)<br>***Breaking change:** This led to a larger refactoring, which might break some current implementations. Properties in the Post class that cannot be changed now have private setters (instead of just an attribute on them). The Page class was completely separated from the Post class, so RestSharp could correctly deserialize objects coming from Ghost.*
 * 1.0.7 - ⭐ Implement the Themes admin endpoint. (thx for pointing me in the right direction @naz)
