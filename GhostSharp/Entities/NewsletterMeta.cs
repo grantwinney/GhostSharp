@@ -19,5 +19,11 @@ namespace GhostSharp.Entities
         /// <seealso cref="https://ghost.org/docs/admin-api/#sender-email-validation"/>
         [JsonProperty("sent_email_verification")]
         public List<string> SentEmailVerification { get; private set; }
+
+        /// <summary>
+        /// When opt_in_existing is set to true, this shows the number of members opted-in.
+        /// </summary>
+        [JsonProperty("opted_in_member_count")]
+        public int OptedInMemberCount { get; private set; }
     }
 }

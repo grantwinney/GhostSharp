@@ -25,13 +25,15 @@ namespace GhostSharp
         /// Create a newsletter
         /// </summary>
         /// <param name="newsletter">Newsletter to create</param>
-        /// <param name="optInExisting">When set to true, existing members with a subscription to one or more active newsletters are also subscribed to this newsletter. The response metadata will include the number of members opted-in.</param>
+        /// <param name="optInExisting">When set to true, existing members with a subscription to one or more active newsletters are also subscribed to this newsletter.</param>
         /// <returns>Returns the created newsletter</returns>
         /// <seealso cref="https://ghost.org/docs/admin-api/#creating-a-newsletter"/>
         public Newsletter CreateNewsletter(Newsletter newsletter, bool optInExisting = false)
         {
             var request = new RestRequest("newsletters/", Method.Post);
             request.AddJsonBody(new NewsletterRequest { Newsletters = new List<Newsletter> { newsletter } });
+            if (optInExisting)
+                request.AddQueryParameter("opt_in_existing", optInExisting);
             return Execute<NewsletterRequest>(request).Newsletters[0];
         }
 

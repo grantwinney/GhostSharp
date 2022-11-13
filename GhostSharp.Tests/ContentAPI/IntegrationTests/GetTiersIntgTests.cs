@@ -68,7 +68,7 @@ namespace GhostSharp.Tests.ContentAPI.IntegrationTests
                 IncludeYearlyPrice = true
             });
 
-            Assert.AreEqual(2, tiers.Tiers.Count);
+            Assert.GreaterOrEqual(tiers.Tiers.Count, 2);
 
             var freeTier = tiers.Tiers.Single(x => x.Type == "free");
 
