@@ -6,6 +6,9 @@
 ![Language](https://img.shields.io/github/languages/top/grantwinney/GhostSharp.svg)
 [![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg)](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fgrantwinney%2FGhostSharp&text=GhostSharp,%20a%20C%23%20Wrapper%20for%20the%20Ghost%20API&hashtags=tryghost,api)
 
+> [!NOTE]  
+> This project has been archived, as I no longer use Ghost and have no personal interest in continuing development on it. Leaving it here in case someone would like to fork the project and use it for their own needs.
+
 # GhostSharp
 
 This is a [wrapper](https://grantwinney.com/what-is-an-api-wrapper-and-how-do-i-write-one/) around v5.0 of the [Content](https://ghost.org/docs/content-api/) and [Admin](https://ghost.org/docs/admin-api/) APIs. They are RESTful JSON APIs built into the core of the [Ghost blogging platform](https://ghost.org/). Check out the [official Ghost API docs](https://ghost.org/docs/api/) and read [a little about my experience using them](https://grantwinney.com/what-is-the-ghost-api/).
